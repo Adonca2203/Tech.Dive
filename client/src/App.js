@@ -2,9 +2,7 @@ import { Route,  createBrowserRouter, createRoutesFromElements, RouterProvider }
 
 import './App.css';
 
-import Admin from './components/Admin';
-import Exams from  './components/Exams';
-import HeaderCom  from './components/HeaderCom';
+import { Admin, Exams, HeaderCom } from './components';
 import { useApi } from './hooks/use-api';
 
 
