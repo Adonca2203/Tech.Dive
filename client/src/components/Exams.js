@@ -9,7 +9,7 @@ import Search from '../subComponent/Search';
 const Exams = () => {
     const [isPatientInfo, setIsPatientInfo] = useState(false);
     const[isExamInfo, setIsExamInfo] = useState(false);
-    // const columns = useMemo(() => Columns, []);
+   // const columns = useMemo(() => Columns, []);
     // const data = useMemo(( )=> examData, [] );
   
 //    const dataTable = useTable({columns, data});
