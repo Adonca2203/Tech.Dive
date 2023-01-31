@@ -2,7 +2,7 @@ export const examData = [
     {
         patientId: 'COVID-19-16406513',
         examId: 3,
-        image: '',
+        image: 'https://via.placeholder.com/150',
         keyFindings: 'The lungs are free of air space disease',
         brixiaScore: [1, 2, 3, 4],
         age: 20,
@@ -15,7 +15,7 @@ export const examData = [
     {
         patientId: 'COVID-19-16406513',
         examId: 3,
-        image: '',
+        image: 'https://via.placeholder.com/150',
         keyFindings: 'The lungs are free of air space disease',
         brixiaScore: [1, 2, 3, 4],
         age: 20,
@@ -28,7 +28,7 @@ export const examData = [
     {
         patientId: 'COVID-19-16406513',
         examId: 3,
-        image: '',
+        image: 'https://via.placeholder.com/150',
         keyFindings: 'The lungs are free of air space disease',
         brixiaScore: [1, 2, 3, 4],
         age: 20,
