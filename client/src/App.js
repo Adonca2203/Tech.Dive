@@ -1,10 +1,10 @@
 import './App.css';
 //importing component routes
 import { Routes, Route } from "react-router-dom"
-import Main from './components/Main';
-import Admin from './components/Admin';
-import Detail from './components/Detail';
-import About from './components/About';
+import Main from './pages/Main';
+import Admin from './pages/Admin';
+import Detail from './pages/Detail';
+import About from './pages/About';
 
 import { useApi } from './hooks/use-api';
 
