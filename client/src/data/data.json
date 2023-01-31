@@ -1,0 +1,76 @@
+ [
+    {
+
+    "patientId":"COVID-19-164065",
+    "examId": "3",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2,3,4]",
+    "age": "20",
+    "sex": "M",
+    "bmi":"23",
+    "zipCode":"01119"
+   },
+   {
+
+    "patientId":"COVID-19-777778",
+    "examId": "9",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2,3,4]",
+    "age": "27",
+    "sex": "F",
+    "bmi":"22",
+    "zipCode":"01119"
+   },
+   {
+
+    "patientId":"COVID-19-222222",
+    "examId": "4",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2,3,4]",
+    "age": "19",
+    "sex": "M",
+    "bmi":"25",
+    "zipCode":"01319"
+   },
+   {
+
+    "patientId":"COVID-19-444446",
+    "examId": "1",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2,3,4,5]",
+    "age": "60",
+    "sex": "M",
+    "bmi":"21",
+    "zipCode":"01444"
+   },
+   {
+
+    "patientId":"COVID-19-555557",
+    "examId": "2",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2]",
+    "age": "29",
+    "sex": "F",
+    "bmi":"33",
+    "zipCode":"02119"
+   },
+   {
+
+    "patientId":"COVID-19-666669",
+    "examId": "6",
+    "image": " ",
+    "keyFindings": "The lungs are free of air space disease",
+    "brixiaScore": "[1,2]",
+    "age": "26",
+    "sex": "F",
+    "bmi":"27",
+    "zipCode":"02222"
+   }
+]
+
+ 

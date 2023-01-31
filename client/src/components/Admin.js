@@ -1,11 +1,27 @@
-import React, { useState } from 'react'
-import { CreateExam, ExamDetails, UpdateExam, Search } from '../subComponent';
+import React, { useState, useMemo } from 'react'
+import { useTable} from 'react-table';
 
+import { CreateExam, ExamDetails, UpdateExam, Search } from '../subComponent';
+import {Columns } from '../data/columns';
+import fakeData from '../data/data.json';
 const Admin = () => {
     const [isCreatExam, setCreatExam] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
+
+    const columns = useMemo(() => Columns, []);
+  const data = useMemo(( )=> fakeData, [] );
+  
+   const dataTable = useTable({columns, data});
+   const {
+       getTableProps,
+       getTableBodyProps,
+       headerGroups,
+       rows,
+       prepareRow,
+   } = dataTable;
+
     return (
         <>
             {!(isCreatExam || isUpdate || isDeleted || isExamInf) &&
@@ -13,83 +29,35 @@ const Admin = () => {
                     <div className='btn_sty'>
                         <button className='btn btn-primary' onClick={() => setCreatExam(!isCreatExam)} >Create Exam</button>
                     </div>
+                    <div> 
                     <Search />
-                    <table>
-                        <thead>
-                            <tr>
-                                <th> Patient ID</th>
-                                <th>Exam ID</th>
-                                <th> Image</th>
-                                <th>Key Findings</th>
-                                <th> Brixia Score</th>
-                                <th>Age</th>
-                                <th> Sex</th>
-                                <th>Bmi</th>
-                                <th>Zip Code</th>
-                                <th>Update</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        style={{ color: 'blue' }} className='btn bg-transparent'
-                                        onClick={() => setIsExamInf(!isExamInf)}>Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        style={{ color: 'blue' }} className='btn bg-transparent'
-                                        onClick={() => setIsUpdate(!isUpdate)}>Update</button>
-                                </th>
-                                <th>
-                                    <button
-                                        style={{ color: 'red' }} className='btn bg-transparent'
-                                        onClick={() => setIsDeleted(!isDeleted)}>Delete</button>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </div>
+                    <div>     
+            <table {...getTableProps()}  className='tableH'>
+                <thead  className='tableH'>                  
+                        { headerGroups.map((hg) => (
+                            <tr {...hg.getHeaderGroupProps()}>
+                               {
+                                 hg.headers.map((column) => (
+                                    <th {...column.getHeaderProps()}> {column.render('Header')} </th> ))}  
+                            </tr> ))
+                        }              
+                </thead>
+                <tbody {...getTableBodyProps()} className='tableH' >
+                        {
+                           rows.map(row => {
+                                prepareRow(row)
+                                return (
+                                      <tr {...row.getRowProps()}>
+                                         {
+                                            row.cells.map((cell, id) => {
+                                            return <td {...cell.getCellProps()}>{cell.render('Cell')} </td> })
+                                         }
+                                     </tr> ) })
+                        }                
+                </tbody>
+        </table> 
+        </div>
                 </div>}
             {isCreatExam && <CreateExam />}
             {isDeleted && alert('recoed deleted')}
