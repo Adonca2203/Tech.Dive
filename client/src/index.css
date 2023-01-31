@@ -11,3 +11,62 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.ul_top li {
+  display: inline;
+  margin: 5px;
+  padding: 10px;
+  color: white;
+
+}
+
+.sea-label {
+  margin: 1rem;
+}
+
+.nav {
+  margin: auto;
+  gap: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: underline;
+
+
+}
+
+.nav li.active {
+  background-color: gray;
+}
+
+.nav li:hover {
+  background-color: gray;
+}
+
+.btn_sty {
+  padding: 3px;
+  align-items: center;
+}
+
+.createBtn {
+  display: inline-block;
+
+}
+
+.createBtn>.button:not(:last-child) {
+  padding: 4px;
+}
+
+.rowIn {
+  display: inline;
+  padding: 3px;
+  margin-right: 10rem;
+  margin-top: 42rem;
+}
+
+.inputToLeft {
+  margin-left: 30px;
+}
+
+.inputToLeftF {
+  margin-left: 24rem;
+}
