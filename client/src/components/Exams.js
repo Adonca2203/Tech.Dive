@@ -3,21 +3,23 @@ import React, { useState, useMemo } from 'react';
 import { useTable } from 'react-table';
 
 import { ExamDetails, PatientDetails, Search } from '../subComponent';
+import { Columns } from '../data/columns';
+import fakeData from '../data/data.json';
 
 const Exams = () => {
     const [isPatientInfo, setIsPatientInfo] = useState(false);
     const [isExamInfo, setIsExamInfo] = useState(false);
-    // const columns = useMemo(() => Columns, []);
-    // const data = useMemo(( )=> examData, [] );
+    const columns = useMemo(() => Columns, []);
+    const data = useMemo(() => fakeData, []);
 
-    //    const dataTable = useTable({columns, data});
-    //    const {
-    //        getTableProps,
-    //        getTableBodyProps,
-    //        headeerGroups,
-    //        rows,
-    //        prepareRow,
-    //    } = dataTable;
+    const dataTable = useTable({ columns, data });
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = dataTable;
 
     return (
         <>
@@ -27,70 +29,35 @@ const Exams = () => {
                         Exam page
                         <Search />
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th> Patient ID</th>
-                                <th>Exam ID</th>
-                                <th> Image</th>
-                                <th>Key Findings</th>
-                                <th> Brixia Score</th>
-                                <th>Age</th>
-                                <th> Sex</th>
-                                <th>Bmi</th>
-                                <th>Zip Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>
-                                    <button
-                                        style={{ color: 'blue' }} className='btn bg-transparent'
-                                        onClick={() => setIsPatientInfo(!isPatientInfo)}>Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        style={{ color: 'blue' }} className='btn bg-transparent'
-                                        onClick={() => setIsExamInfo(!isExamInfo)}>Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Patient Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                                <th>
-                                    <button
-                                        className='btn bg-transparent'
-                                    >Exam Id</button>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div>
+                        <table {...getTableProps()} className='tableH'>
+                            <thead >
+                                {headerGroups.map((hg) => (
+                                    <tr {...hg.getHeaderGroupProps()}>
+                                        {
+                                            hg.headers.map((column) => (
+                                                <th {...column.getHeaderProps()}> {column.render('Header')} </th>))}
+                                    </tr>))
+                                }
+                            </thead>
+                            <tbody {...getTableBodyProps()} >
+                                {
+                                    rows.map(row => {
+                                        prepareRow(row)
+                                        return (
+                                            <tr {...row.getRowProps()}>
+                                                {
+                                                    row.cells.map((cell, id) => {
+                                                        return <td {...cell.getCellProps()}>{cell.render('Cell')} </td>
+                                                    })
+                                                }
+                                            </tr>)
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>}
             {isExamInfo && <ExamDetails />}
             {isPatientInfo && <PatientDetails />}
