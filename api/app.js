@@ -10,6 +10,8 @@ const mongoDB = "mongodb://127.0.0.1:27017";
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var examsRouter = require('./routes/exam');
+var patientRouter = require('./routes/patient');
 
 var app = express();
 
@@ -23,6 +25,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/exams', examsRouter);
+app.use('/patients', patientRouter);
 
 mongoose.set('strictQuery', false);
 

@@ -11,4 +11,6 @@ var PatientSchema = new Schema({
 
 var Patient = mongoose.model('Patient', PatientSchema);
 
+Patient.createCollection();
+
 module.exports = Patient;

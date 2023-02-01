@@ -14,6 +14,8 @@ const ExamsSchema = new Schema({
 
 var Exams = mongoose.model('Exam', ExamsSchema);
 
+Exams.createCollection();
+
 module.exports = Exams;
 /* reference
  const schema = new Schema({

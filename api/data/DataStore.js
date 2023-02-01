@@ -1,17 +1,10 @@
 var Exam = require('../schemas/ExamSchema');
-const mongoose = require('mongoose');
 const Patient = require('../schemas/PatientSchema');
 
 var ExamDataStore = (() => {
     var instance;
-    var exams;
 
-    function createInstance() {
-        var object = new Object();
-        return object;
-    }
-
-    function generateData() {
+    async function generatePatientData() {
         Patient.create({
             firstName: "John",
             lastName: "Doe",
@@ -19,6 +12,7 @@ var ExamDataStore = (() => {
             sex: 'M',
             zipCode: 722
         });
+
         Patient.create({
             firstName: "Jane",
             lastName: "Doe",
@@ -26,6 +20,7 @@ var ExamDataStore = (() => {
             sex: 'F',
             zipCode: 721
         });
+
         Patient.create({
             firstName: "Abigail",
             lastName: "Doe",
@@ -33,6 +28,10 @@ var ExamDataStore = (() => {
             sex: 'F',
             zipCode: 721
         });
+        return true;
+    }
+
+    async function generateExamData() {
         Patient.find({ firstName: 'John', lastName: 'Doe' }, function (err, docs) {
             Exam.create({
                 patientID: docs[0]._id,
@@ -72,11 +71,12 @@ var ExamDataStore = (() => {
     }
 
     return {
-        getInstance: () => {
-            if (!instance) {
-                instance = createInstance();
+        generateData: async () => {
+            patientsGenerated = await generatePatientData();
+            if (patientsGenerated == true) {
+                await generateExamData();
             }
-            return instance;
+            
         }
     };
 })();
