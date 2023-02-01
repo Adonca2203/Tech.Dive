@@ -20,6 +20,7 @@ const CreateExam = () => {
     let newPatient = {...patient, id:patient.patientId }
     //console.log(newPatient )
       setPatient(newPatient)
+      alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
       setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: ''});
      
     }

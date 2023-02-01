@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react'
-import { useTable} from 'react-table';
+import { useTable } from 'react-table';
 
 import { CreateExam, ExamDetails, UpdateExam, Search } from '../subComponent';
-import {Columns } from '../data/columns';
+import { Columns } from '../data/columns';
 import fakeData from '../data/data.json';
+
 const Admin = () => {
-    const [isCreatExam, setCreatExam] = useState(false);
+    const [isCreateExam, setCreatExam] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
@@ -24,10 +25,10 @@ const Admin = () => {
 
     return (
         <>
-         { !(isCreatExam || isUpdate || isDeleted || isExamInf) &&
+         { !(isCreateExam || isUpdate || isDeleted || isExamInf) &&
            <div >
             <div className='btn_sty'>
-              <button className='btn btn-primary' onClick={() => setCreatExam(!isCreatExam)} >Create Exam</button>
+              <button className='btn btn-primary' onClick={() => setCreatExam(!isCreateExam)} >Create Exam</button>
                 </div>
                   <div> 
                    <Search />
@@ -79,7 +80,7 @@ const Admin = () => {
                       </table> 
                  </div>
               </div> }
-            {isCreatExam && <CreateExam />}
+            {isCreateExam && <CreateExam />}
             {isDeleted && alert('data deleted')}
             {isUpdate && <UpdateExam />}
             {isExamInf && <ExamDetails />}

@@ -3,7 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { useTable } from 'react-table';
 
 import { ExamDetails, PatientDetails, Search } from '../subComponent';
-import {Columns } from '../data/columns';
+import { Columns } from '../data/columns';
 import fakeData from '../data/data.json';
 
 const Exams = () => {
@@ -11,17 +11,17 @@ const Exams = () => {
     const [isExamInfo, setIsExamInfo] = useState(false);
     
     const columns = useMemo(() => Columns, []);
-    const data = useMemo(( )=> fakeData, [] );
- 
-   const dataTable = useTable({columns, data});
-   const {
-       getTableProps,
-       getTableBodyProps,
-       headerGroups,
-       rows,
-       prepareRow,
-   } = dataTable;
- 
+    const data = useMemo(() => fakeData, []);
+
+    const dataTable = useTable({ columns, data });
+    const {
+        getTableProps,
+        getTableBodyProps,
+        headerGroups,
+        rows,
+        prepareRow,
+    } = dataTable;
+
     return (
         <>
             {!(isExamInfo || isPatientInfo) &&
