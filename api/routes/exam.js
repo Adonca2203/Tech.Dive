@@ -109,8 +109,7 @@ router.delete('/:id', async (req, res, next) => {
     try {
         const exam = await Exams.find({ _id: req.params.id });
         if (exam.length == 0) {
-            res.statusMessage = "No Exam found with id " + req.params.id;
-            return res.status(404).send();
+            return res.status(404).send("No Exam found with id " + req.params.id);
         }
 
         deleted = await Exams.deleteOne({ _id: exam[0]._id });
