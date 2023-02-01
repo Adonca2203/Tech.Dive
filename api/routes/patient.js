@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
         const returnData = await Patients.find()
             .limit(parseInt(req.query.pageSize))
             .skip((parseInt(req.query.pageNumber - 1) * req.query.pageSize))
-            .sort({firstName: 1})
+            .sort({ firstName: 1 })
             .exec();
 
         res.set({
@@ -35,7 +35,6 @@ router.get('/', async (req, res, next) => {
 
         res.send(returnData);
     }
-
     catch (err) {
         console.log(err.message);
     }
@@ -49,16 +48,13 @@ router.get('/:id', async (req, res, next) => {
     try {
         const patient = await Patients.find({ _id: req.params.id });
         if (patient.length == 0) {
-            res.statusMessage = "No Patient found with id " + req.params.id;
-            res.status(404).end();
-            return;
+            return res.status(404).send("No Patient found with id " + req.params.id);
         }
         res.send(patient[0]);
     }
     catch (err) {
         console.error(err);
-        res.statusMessage = "No Patient found with id " + req.params.id;
-        res.status(404).end();
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -69,7 +65,7 @@ router.post('/', async (req, res, next) => {
     try {
         var body = req.body;
 
-        Patients.create({
+        created = await Patients.create({
             firstName: body['firstName'],
             lastName: body['lastName'],
             age: body['age'],
@@ -77,20 +73,21 @@ router.post('/', async (req, res, next) => {
             zipCode: body['zipCode']
         });
 
-        res.statusMessage = "Successfully created!";
-        res.status(201).end();
+        if (created) {
+            return res.status(201).send("Successfully created!");
+        }
     }
     catch (err) {
-        console.log(err.name);
-        if (err.name === "ValidatorError") {
-            let errors = []
+        if (err.name === "ValidationError") {
+            let errors = {}
 
             Object.keys(err.errors).forEach((key) => {
                 errors[key] = err.errors[key].message;
             });
-            res.status(400).send(errors).end();
+            res.statusMessage = "Validation Error, please check that you have all fields";
+            return res.status(400).send(errors);
         }
-        res.status(500).send("Something went wrong!").end();        
+        res.status(500).send("Something went wrong!").end();
     }
 });
 
@@ -112,7 +109,22 @@ router.patch('/:id', async (req, res, next) => {
  * DELETE an exam by ID
  */
 router.delete('/:id', async (req, res, next) => {
-    res.send("Received delete request with ID: " + req.params.id);
+    try {
+        const patient = await Patients.find({ _id: req.params.id });
+        if (patient.length == 0) {
+            return res.status(404).send("No Patient found with id " + req.params.id);
+        }
+
+        deleted = await Patients.deleteOne({ _id: patient[0]._id });
+
+        if (deleted) {
+            return res.status(204).send();
+        }
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 module.exports = router;

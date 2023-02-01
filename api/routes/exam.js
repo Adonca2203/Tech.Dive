@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 const Exams = require('../schemas/ExamSchema');
 const PaginationMetadata = require('../services/PaginationMetadata');
-var mongoose = require('mongoose');
-const { json } = require('express');
 
 /*
  * GET all exams (filtered by pages)
@@ -34,7 +32,6 @@ router.get('/', async (req, res, next) => {
 
         res.send(returnData);
     }
-
     catch (err) {
         console.error(err.message);
         res.status(500).send("Something went wrong!");
@@ -49,8 +46,7 @@ router.get('/:id', async function (req, res, next) {
     try {
         const exam = await Exams.find({ _id: req.params.id });
         if (exam.length == 0) {
-            res.statusMessage = "No Exam found with id " + req.params.id;
-            return res.status(404).send();
+            return res.status(404).send("No Exam found with id " + req.params.id);
         }
         res.send(exam[0]);
     }
@@ -75,8 +71,7 @@ router.post('/', async (req, res, next) => {
         });
 
         if (created) {
-            res.statusMessage = "Successfully created!";
-            return res.status(201).send();
+            return res.status(201).send("Successfully created!");
         }
     }
     catch (err) {
@@ -121,7 +116,7 @@ router.delete('/:id', async (req, res, next) => {
         deleted = await Exams.deleteOne({ _id: exam[0]._id });
 
         if (deleted) {
-            res.status(204).send("Successfully removed");
+            return res.status(204).send();
         }
         
     }
