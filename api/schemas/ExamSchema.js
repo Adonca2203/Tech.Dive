@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Patient = require('./PatientSchema')
+const Patient = require('./PatientSchema');
 
 const Schema = mongoose.Schema;
 
 const ExamsSchema = new Schema({
-	patientID: { type: Schema.Types.ObjectId, ref: 'Patient' },
+	patientID: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
 	image: String,
 	keyFindings: { type: String, required: true },
 	brixiaScore: { type: [Number], required: true },

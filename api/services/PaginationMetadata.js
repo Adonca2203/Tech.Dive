@@ -11,4 +11,4 @@ class PaginationMetadata {
     }
 }
 
-export default PaginationMetadata;
+module.exports = PaginationMetadata;
