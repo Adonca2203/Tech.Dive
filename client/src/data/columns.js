@@ -44,4 +44,5 @@ export const Columns = [
         accessor: 'zipCode'
 
     },
+   
 ]

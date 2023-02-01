@@ -1,38 +1,57 @@
 import React, { useState } from 'react'
+import Admin from '../components/Admin';
 
 const CreateExam = () => {
  const [patient, setPatient] = useState({patientId:'', age:'', sex: '', bmi: '', zipCode: ''});
- 
+ const [cancel, setCancel] = useState(false);
+
  const handleCreate = (e) => {
   const name = e.target.name;
   const value = e.target.value;
   setPatient({...patient, [name]:value})
- }
+ //console.log(patient)
+}
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //let id = patient.patientId.split('-')[3];
+  console.log(`${patient}befor `)
+    if(patient.patientId && patient.age && patient.sex ){
+    let newPatient = {...patient, id:patient.patientId }
+    //console.log(newPatient )
+      setPatient(newPatient)
+      setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: ''});
+     
+    }
+  }
   return (
     <>
-      <div>
+     {!cancel ?
+      <div> 
+       <div>
        <h3>Create Exam </h3>
       </div>
       <div className='createBtn'>
-        <button  type='submit' className='btn btn-primary btn-small'> Add Exam</button>
-        <button type='submit' className='btn btn-primary btn-small'> Random Exam</button>
-        <button type='submit' className='btn btn-danger btn-small'> Cancel</button>
+        <button type='submit' onClick={ handleSubmit } className='btn btn-primary  createBtn'> Add Exam</button>{"  "}
+        <button type='submit' className='btn btn-primary  createBtn'> Random Exam</button>{"  "}
+        <button type='button' onClick={ () => setCancel(!cancel) } className='btn btn-danger'> Cancel</button>
       </div>
-      <section>
+      <section className='tableH'>
         <div >
              <h5 className='rowIn' >Pateient info </h5> 
              <h5 className='rowIn'>Exam info </h5> 
         </div>
-         <form >
+         <div>
+            <form >
               <div className='row g-3'>
                 <div className='col-md-5 inputToLeft'> 
-                  <lable htmlFor='patientId'>Age</lable>
+                  <lable htmlFor='patientId'>Patient ID</lable>
                     <input
                     className='form-control'
                     type='text'
-                    id='age'
-                    name='age'
-                    value={patient.age}
+                    id='patientId'
+                    name='patientId'
+                    value={patient.patientId}
                     onChange={handleCreate}/>
                   </div>
                   <div className='col-md-5 '> 
@@ -48,13 +67,13 @@ const CreateExam = () => {
               </div>
               <div className='row g-3'>
                 <div className='col-md-5 inputToLeft'> 
-                 <lable htmlFor='sex'>Sex</lable>
+                 <lable htmlFor='sex'>Age</lable>
                   <input
                   className='form-control'
                   type='text'
-                  id='sex'
-                  name='sex'
-                  value={patient.sex}
+                  id='age'
+                  name='age'
+                  value={patient.age}
                   onChange={handleCreate}/>
                 </div>
                 <div className='col-md-5'> 
@@ -69,14 +88,14 @@ const CreateExam = () => {
                    </div>
               </div>
               <div className='row g-3'>
-                <div className='col-md-5 inputToLeft'> 
-                 <lable htmlFor='patientId'>BMI</lable>
+                 <div className='col-md-5 inputToLeft'> 
+                 <lable htmlFor='sex'>Sex</lable>
                   <input
                   className='form-control'
                   type='text'
-                  id='bni'
-                  name='bmi'
-                  value={patient.bmi}
+                  id='sex'
+                  name='sex'
+                  value={patient.sex}
                   onChange={handleCreate}/>
                 </div>
                 <div className='col-md-5'> 
@@ -91,6 +110,28 @@ const CreateExam = () => {
                    </div>
               </div>
               <div className='row g-3'>
+                 <div className='col-md-5 inputToLeft'> 
+                 <lable htmlFor='patientId'>BMI</lable>
+                  <input
+                  className='form-control'
+                  type='text'
+                  id='bni'
+                  name='bmi'
+                  value={patient.bmi}
+                  onChange={handleCreate}/>
+                </div>
+                <div className='col-md-5'> 
+                    <lable htmlFor='keyFindings'>Key Findings</lable>
+                      <textarea
+                      className='form-control'
+                      type='text'
+                      id='keyFindings'
+                      name='keyFindings'
+                      value={patient.keyFindings}
+                      onChange={handleCreate}/>
+                </div>
+              </div>
+              <div className='row g-3'>
                 <div className='col-md-5 inputToLeft'> 
                  <lable htmlFor='zipCode'>Zip Code</lable>
                   <input
@@ -101,18 +142,6 @@ const CreateExam = () => {
                   value={patient.zipCode}
                   onChange={handleCreate}/>
                 </div>
-                <div className='col-md-5'> 
-                    <lable htmlFor='keyFindings'>Key Findings</lable>
-                      <input
-                      className='form-control'
-                      type='text'
-                      id='keyFindings'
-                      name='keyFindings'
-                      value={patient.keyFindings}
-                      onChange={handleCreate}/>
-                </div>
-              </div>
-              <div className='row g-3'>
                 <div className='col-md-5 inputToLeftF'> 
                  <lable htmlFor='brixiaScore'>Brixia Score</lable>
                   <input
@@ -126,7 +155,9 @@ const CreateExam = () => {
                </div>
               
          </form>
+         </div>
       </section>
+      </div>  : <Admin/> }
     </>
     
   )

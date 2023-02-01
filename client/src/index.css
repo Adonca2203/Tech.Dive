@@ -1,3 +1,4 @@
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -49,6 +50,7 @@ code {
 
 .createBtn {
   display: inline-block;
+  gap:5rem;
 
 }
 
@@ -68,13 +70,13 @@ code {
 }
 
 .inputToLeftF {
-  margin-left: 24rem;
+  margin-left: 32rem;
 }
 .tableH {
-
-  margin: 12px;
-  padding-right: 55px;
-  gap: 5px
+  margin: auto;
+  gap: 5px;
+  width: 70pc;
+  align-items: center;
 }
 
 th,
