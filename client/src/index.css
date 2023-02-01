@@ -70,3 +70,18 @@ code {
 .inputToLeftF {
   margin-left: 24rem;
 }
+.tableH {
+
+  margin: 12px;
+  padding-right: 55px;
+  gap: 5px
+}
+
+th,
+td {
+  padding-left: 10px;
+}
+
+thead {
+  background-color: antiquewhite;
+}
