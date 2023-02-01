@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const Exams = require('../schemas/ExamSchema');
 const PaginationMetadata = require('../services/PaginationMetadata');
+var mongoose = require('mongoose');
+const { json } = require('express');
 
 /*
  * GET all exams (filtered by pages)
@@ -17,7 +19,6 @@ router.get('/', async (req, res, next) => {
 
     try {
         const exams = await Exams.find().exec();
-
         const paginationMetaData = new PaginationMetadata(exams.length,
             parseInt(req.query.pageSize),
             parseInt(req.query.pageNumber));
@@ -35,7 +36,8 @@ router.get('/', async (req, res, next) => {
     }
 
     catch (err) {
-        console.log(err.message);
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
     }
 
 });
@@ -48,57 +50,85 @@ router.get('/:id', async function (req, res, next) {
         const exam = await Exams.find({ _id: req.params.id });
         if (exam.length == 0) {
             res.statusMessage = "No Exam found with id " + req.params.id;
-            res.status(404).end();
-            return;
+            return res.status(404).send();
         }
+        res.send(exam[0]);
     }
     catch (err) {
-        console.log(err);
-        res.statusMessage = "No Exam found with id " + req.params.id;
-        res.status(404).end();
+        res.status(500).send("Something went wrong!");
     }
 });
 
 /*
  * POST a new exam
  */
-router.post('/', function (req, res, next) {
-    if (Object.keys(req.body).length === 0) {
-        res.statusMessage = "No Body Given";
-        res.status(400).end();
+router.post('/', async (req, res, next) => {
+    try {
+        var body = req.body;
+
+        created = await Exams.create({
+            patientID: body['patientId'],
+            image: body['image'],
+            keyFindings: body['keyFindings'],
+            brixiaScore: body['brixiaScore'],
+            bmi: body['bmi']
+        });
+
+        if (created) {
+            res.statusMessage = "Successfully created!";
+            return res.status(201).send();
+        }
     }
-    var body = req.body;
+    catch (err) {
+        if (err.name === "ValidationError") {
+            let errors = {}
 
-    Exams.create({
-        patientID: body[patientId],
-        image: body[image],
-        keyFindings: body[keyFindings],
-        brixiaScore: body[brixiaScore],
-        bmi: body[bmi]
-    });
-
-    res.status(201).end();
+            Object.keys(err.errors).forEach((key) => {
+                errors[key] = err.errors[key].message;
+            });
+            res.statusMessage = "Validation Error, please check that you have all fields";
+            return res.status(400).send(errors);
+        }
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 /*
  * REPLACE an exam by ID
  */
-router.put('/:id', function (req, res, next) {
+router.put('/:id', async (req, res, next) => {
     res.send("Received put request with ID: " + req.params.id);
 });
 
 /*
  * UPDATE an exam by ID
  */
-router.patch('/:id', function (req, res, next) {
+router.patch('/:id', async (req, res, next) => {
     res.send("Received patch request with ID: " + req.params.id);
 });
 
 /*
  * DELETE an exam by ID
  */
-router.delete('/:id', function (req, res, next) {
-    res.send("Received delete request with ID: " + req.params.id);
+router.delete('/:id', async (req, res, next) => {
+    try {
+        const exam = await Exams.find({ _id: req.params.id });
+        if (exam.length == 0) {
+            res.statusMessage = "No Exam found with id " + req.params.id;
+            return res.status(404).send();
+        }
+
+        deleted = await Exams.deleteOne({ _id: exam[0]._id });
+
+        if (deleted) {
+            res.status(204).send("Successfully removed");
+        }
+        
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 module.exports = router;

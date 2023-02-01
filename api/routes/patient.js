@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Patients = require('../schemas/PatientSchema.js');
 const PaginationMetadata = require('../services/PaginationMetadata');
+var mongoose = require('mongoose');
 
 /*
  * GET all patients 
@@ -25,6 +26,7 @@ router.get('/', async (req, res, next) => {
         const returnData = await Patients.find()
             .limit(parseInt(req.query.pageSize))
             .skip((parseInt(req.query.pageNumber - 1) * req.query.pageSize))
+            .sort({firstName: 1})
             .exec();
 
         res.set({
@@ -43,7 +45,7 @@ router.get('/', async (req, res, next) => {
 /*
  * GET specific patient by ID
  */
-router.get('/:id', async function (req, res, next) {
+router.get('/:id', async (req, res, next) => {
     try {
         const patient = await Patients.find({ _id: req.params.id });
         if (patient.length == 0) {
@@ -54,7 +56,7 @@ router.get('/:id', async function (req, res, next) {
         res.send(patient[0]);
     }
     catch (err) {
-        console.log(err);
+        console.error(err);
         res.statusMessage = "No Patient found with id " + req.params.id;
         res.status(404).end();
     }
@@ -63,34 +65,53 @@ router.get('/:id', async function (req, res, next) {
 /*
  * POST a new exam
  */
-router.post('/', function (req, res, next) {
-    if (Object.keys(req.body).length === 0) {
-        res.statusMessage = "No Body Given";
-        res.status(400).end();
-    }
-    console.log(req.body);
+router.post('/', async (req, res, next) => {
+    try {
+        var body = req.body;
 
-    res.status(201).end();
+        Patients.create({
+            firstName: body['firstName'],
+            lastName: body['lastName'],
+            age: body['age'],
+            sex: body['sex'],
+            zipCode: body['zipCode']
+        });
+
+        res.statusMessage = "Successfully created!";
+        res.status(201).end();
+    }
+    catch (err) {
+        console.log(err.name);
+        if (err.name === "ValidatorError") {
+            let errors = []
+
+            Object.keys(err.errors).forEach((key) => {
+                errors[key] = err.errors[key].message;
+            });
+            res.status(400).send(errors).end();
+        }
+        res.status(500).send("Something went wrong!").end();        
+    }
 });
 
 /*
  * REPLACE an exam by ID
  */
-router.put('/:id', function (req, res, next) {
+router.put('/:id', async (req, res, next) => {
     res.send("Received put request with ID: " + req.params.id);
 });
 
 /*
  * UPDATE an exam by ID
  */
-router.patch('/:id', function (req, res, next) {
+router.patch('/:id', async (req, res, next) => {
     res.send("Received patch request with ID: " + req.params.id);
 });
 
 /*
  * DELETE an exam by ID
  */
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', async (req, res, next) => {
     res.send("Received delete request with ID: " + req.params.id);
 });
 
