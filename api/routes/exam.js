@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
             "X-Pagination": JSON.stringify(paginationMetaData)
         });
 
-        res.send(returnData);
+        return res.status(200).send(returnData);
     }
     catch (err) {
         console.error(err.message);
@@ -44,11 +44,12 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/:id', async function (req, res, next) {
     try {
-        const exam = await Exams.find({ _id: req.params.id });
+        const { id } = req.params;
+        const exam = await Exams.find({ _id: id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + req.params.id);
+            return res.status(404).send("No Exam found with id " + id);
         }
-        res.send(exam[0]);
+        res.status(200).send(exam[0]);
     }
     catch (err) {
         res.status(500).send("Something went wrong!");
@@ -60,14 +61,14 @@ router.get('/:id', async function (req, res, next) {
  */
 router.post('/', async (req, res, next) => {
     try {
-        var body = req.body;
+        var newExam = req.body;
 
         created = await Exams.create({
-            patientID: body['patientId'],
-            image: body['image'],
-            keyFindings: body['keyFindings'],
-            brixiaScore: body['brixiaScore'],
-            bmi: body['bmi']
+            patientID: newExam['patientId'],
+            image: newExam['image'],
+            keyFindings: newExam['keyFindings'],
+            brixiaScore: newExam['brixiaScore'],
+            bmi: newExam['bmi']
         });
 
         if (created) {
@@ -92,14 +93,48 @@ router.post('/', async (req, res, next) => {
  * REPLACE an exam by ID
  */
 router.put('/:id', async (req, res, next) => {
-    res.send("Received put request with ID: " + req.params.id);
+    try {
+        const { id } = req.params;
+        const exam = await Exams.find({ _id: id });
+        if (exam.length == 0) {
+            return res.status(404).send("No Exam found with id " + id);
+        }
+        const changes = req.body;
+
+        replaced = await Exams.replaceOne({ _id: id }, changes);
+
+        if (replaced) {
+            res.status(204).send();
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 /*
  * UPDATE an exam by ID
  */
 router.patch('/:id', async (req, res, next) => {
-    res.send("Received patch request with ID: " + req.params.id);
+    try {
+        const { id } = req.params;
+        const exam = await Exams.find({ _id: id });
+        if (exam.length == 0) {
+            return res.status(404).send("No Exam found with id " + id);
+        }
+        const changes = req.body;
+
+        updated = await Exams.findByIdAndUpdate({ _id: id }, changes, { new: false });
+
+        if (updated) {
+            res.status(204).send();
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 /*
@@ -107,17 +142,18 @@ router.patch('/:id', async (req, res, next) => {
  */
 router.delete('/:id', async (req, res, next) => {
     try {
+        const { id } = req.params;
         const exam = await Exams.find({ _id: req.params.id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + req.params.id);
+            return res.status(404).send("No Exam found with id " + id);
         }
 
-        deleted = await Exams.deleteOne({ _id: exam[0]._id });
+        deleted = await Exams.deleteOne({ _id: id });
 
         if (deleted) {
             return res.status(204).send();
         }
-        
+
     }
     catch (err) {
         console.error(err.message);

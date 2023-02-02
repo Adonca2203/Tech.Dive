@@ -46,9 +46,10 @@ router.get('/', async (req, res, next) => {
  */
 router.get('/:id', async (req, res, next) => {
     try {
-        const patient = await Patients.find({ _id: req.params.id });
+        const { id } = req.params;
+        const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            return res.status(404).send("No Patient found with id " + req.params.id);
+            return res.status(404).send("No Patient found with id " + id);
         }
         res.send(patient[0]);
     }
@@ -59,18 +60,18 @@ router.get('/:id', async (req, res, next) => {
 });
 
 /*
- * POST a new exam
+ * POST a new patient
  */
 router.post('/', async (req, res, next) => {
     try {
-        var body = req.body;
+        var newPatient = req.body;
 
         created = await Patients.create({
-            firstName: body['firstName'],
-            lastName: body['lastName'],
-            age: body['age'],
-            sex: body['sex'],
-            zipCode: body['zipCode']
+            firstName: newPatient['firstName'],
+            lastName: newPatient['lastName'],
+            age: newPatient['age'],
+            sex: newPatient['sex'],
+            zipCode: newPatient['zipCode']
         });
 
         if (created) {
@@ -95,14 +96,48 @@ router.post('/', async (req, res, next) => {
  * REPLACE an exam by ID
  */
 router.put('/:id', async (req, res, next) => {
-    res.send("Received put request with ID: " + req.params.id);
+    try {
+        const { id } = req.params;
+        const patient = await Patients.find({ _id: id });
+        if (patient.length == 0) {
+            return res.status(404).send("No Patient found with id " + id);
+        }
+        const changes = req.body;
+
+        replaced = await Patients.replaceOne({ _id: id }, changes);
+
+        if (replaced) {
+            res.status(204).send();
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 /*
  * UPDATE an exam by ID
  */
 router.patch('/:id', async (req, res, next) => {
-    res.send("Received patch request with ID: " + req.params.id);
+    try {
+        const { id } = req.params;
+        const patient = await Patients.find({ _id: id });
+        if (patient.length == 0) {
+            return res.status(404).send("No Patient found with id " + id);
+        }
+        const changes = req.body;
+
+        updated = await Patients.findByIdAndUpdate({ _id: id }, changes);
+
+        if (updated) {
+            res.status(204).send();
+        }
+    }
+    catch (err) {
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
+    }
 });
 
 /*
@@ -110,12 +145,13 @@ router.patch('/:id', async (req, res, next) => {
  */
 router.delete('/:id', async (req, res, next) => {
     try {
-        const patient = await Patients.find({ _id: req.params.id });
+        const { id } = req.params;
+        const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            return res.status(404).send("No Patient found with id " + req.params.id);
+            return res.status(404).send("No Patient found with id " + id);
         }
 
-        deleted = await Patients.deleteOne({ _id: patient[0]._id });
+        deleted = await Patients.deleteOne({ _id: id });
 
         if (deleted) {
             return res.status(204).send();
