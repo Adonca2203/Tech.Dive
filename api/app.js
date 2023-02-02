@@ -4,9 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const mongoDB = "mongodb://127.0.0.1:27017";
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var examsRouter = require('./routes/exam');
+var patientRouter = require('./routes/patient');
 
 var app = express();
 
@@ -16,9 +21,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/exams', examsRouter);
+app.use('/patients', patientRouter);
+
+mongoose.set('strictQuery', false);
+
+connectToDB().catch(err => console.log(err));
+async function connectToDB() {
+    await mongoose.connect(mongoDB);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
