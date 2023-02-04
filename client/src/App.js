@@ -4,6 +4,7 @@ import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
 import { useApi } from './hooks/use-api';
+import { ExamDetails } from "./subComponent";
 
 
 const router = createBrowserRouter(
@@ -11,6 +12,7 @@ const router = createBrowserRouter(
         <Route path='/' element={<HeaderCom />}>
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
+            <Route path='/examdetails' element={<ExamDetails />} />
         </Route>
 
     )
