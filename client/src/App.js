@@ -27,7 +27,7 @@ function App() {
             <header className="App-header">
                 <p>
                     
-                    <ExamDetails/ >
+                  
                 </p>
             </header>
 
