@@ -3,7 +3,8 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
-import { useApi } from './hooks/use-api';
+// useApi commented out because it renders raw data from the API, and I don't need that here -  KB
+// import { useApi } from './hooks/use-api';
 import { ExamDetails } from "./subComponent";
 
 
@@ -18,14 +19,15 @@ const router = createBrowserRouter(
     )
 )
 function App() {
-    const { response } = useApi({ path: 'exams' });
+    // const { response } = useApi({ path: 'exams' });
 
     return (
         <div className="App">
             <RouterProvider router={router} />
             <header className="App-header">
                 <p>
-                    {response}
+                    
+                    <ExamDetails/ >
                 </p>
             </header>
 

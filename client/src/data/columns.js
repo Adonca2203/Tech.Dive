@@ -43,5 +43,6 @@ export const Columns = [
         Header: 'Zip Code',
         accessor: 'zipCode'
 
-    },
+    }
 ]
+
