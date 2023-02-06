@@ -26,7 +26,7 @@ const Exams = () => {
             {!(isExamInfo || isPatientInfo) &&
                 <div>
                     <div>
-                        Exam page
+                        <h1> Exam page</h1>
                         <Search />
                     </div>
                     <div>

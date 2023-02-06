@@ -8,8 +8,7 @@ import { useApi } from './hooks/use-api';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/' element={<HeaderCom />}>
-            <Route path='exams' element={<Exams />} />
+        <Route path='/' element={<div><HeaderCom /> <Exams /></div>}>
             <Route path='/admin' element={<Admin />} />
         </Route>
 
