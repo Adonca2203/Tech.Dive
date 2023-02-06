@@ -14,6 +14,26 @@ const router = createBrowserRouter(
 
     )
 )
+
+const ExamList = (props) => {
+    if (props.resp) {
+        let jsonRep = JSON.parse(props.resp);
+        return (
+            <>
+                {
+                    jsonRep.map(exam => (
+                        <>
+                            <p>{exam["_id"]}</p>
+                            <p>{exam["keyFindings"]}</p>
+                        </>
+                    ))
+                }
+            </>
+        );
+    }
+    return <p>Loading...</p>
+}
+
 function App() {
     const { response } = useApi({ path: 'exams' });
 
@@ -21,9 +41,7 @@ function App() {
         <div className="App">
             <RouterProvider router={router} />
             <header className="App-header">
-                <p>
-                    {response}
-                </p>
+                <ExamList resp={response} />
             </header>
 
         </div>
