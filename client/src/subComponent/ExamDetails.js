@@ -5,66 +5,36 @@
 //I'm commenting out the table I'm trying to use in order to get a dummy table on the screen
 
 
-import { React, useMemo } from 'react'
-import { useTable } from 'react-table'
-import { Columns } from '../data/columns'
-import examData from '../data/data.json'
-import { Search } from '../subComponent';
+// import { React, useMemo } from 'react'
+// import { useTable } from 'react-table'
+// import { Columns } from '../data/columns'
+// import examData from '../data/data.json'
+// import { Search } from '../subComponent';
 
 const ExamDetails = () => {
 // const columns = useMemo(() => Columns, [])
 // const ExamData = useMemo(() => examData, [])
 
-const tableInstance = useTable({})
+// const tableInstance = useTable({})
 
 
-  const {
-   getTableProps,
-   getTableBodyProps,
-   headerGroups,
-   rows,
-   prepareRow,
-  } = tableInstance    
+//   const {
+//    getTableProps,
+//    getTableBodyProps,
+//    headerGroups,
+//    rows,
+//    prepareRow,
+//   } = tableInstance    
   
   return (
-        //   <table>
-        //     <thead>
-        //       <tr>
-        //         <th>Patient ID</th>
-        //         <th>Exam ID</th>
-        //         <th>Image</th>
-        //         <th>Key Findings</th>
-        //         <th>Brixia Score</th>
-        //         <th>Age</th>
-        //         <th>Sex</th>
-        //         <th>Zip Code</th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>
-        //       <tr>
-        //         <td>John Doe</td>
-        //         <td>30</td>
-        //         <td>New York</td>
-        //       </tr>
-        //       <tr>
-        //         <td>Jane Doe</td>
-        //         <td>25</td>
-        //         <td>London</td>
-        //       </tr>
-        //     </tbody>
-        //   </table>
-        // );
-
-    
-
     <>
       <div>
         <h3>Exam Details</h3>
-        <Search />
+        {/* <Search /> */}
         </div>
 
       <container>
-        <table {...getTableProps()}>
+        {/* <table {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>
@@ -76,32 +46,33 @@ const tableInstance = useTable({})
                   ))}
               </tr>
             ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {
-              rows.map(row => {
-                prepareRow(row)
-                return (
-                  <tr {...row.getRowProps()}>
-                    {
-                      row.cells.map(cell => {
-                        return (
-                          <td {...cell.getCellProps()}>
-                            {
-                              cell.render('Cell')
-                            }
-                          </td>
-                        )
-                      })
-                    }
-
-                  </tr>
-                )
-              })
-            }
-
-          </tbody>
-        </table>
+          </thead> */}
+          <table>
+            <thead>
+              <tr>
+                <th>Patient ID</th>
+                <th>Exam ID</th>
+                <th>Image</th>
+                <th>Key Findings</th>
+                <th>Brixia Score</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Zip Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>John Doe</td>
+                <td>30</td>
+                <td>New York</td>
+              </tr>
+              <tr>
+                <td>Jane Doe</td>
+                <td>25</td>
+                <td>London</td>
+              </tr>
+            </tbody>
+          </table>
       </container>
     </>
   );
