@@ -23,12 +23,10 @@ const ExamList = (props) => {
             <>
                 {
                     resp.map(exam => (
-                        <>
-                            <div key={ exam["_id"] }>
-                                <p>{exam["_id"]}</p>
-                                <p>{exam["keyFindings"]}</p>
-                            </div>
-                        </>
+                        <div key={exam["_id"]}>
+                            <p>{exam["_id"]}</p>
+                            <p>{exam["keyFindings"]}</p>
+                        </div>
                     ))
                 }
             </>
