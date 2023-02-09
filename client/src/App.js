@@ -25,6 +25,7 @@ const ExamList = (props) => {
                         <div key={exam["_id"]}>
                             <p>{exam["_id"]}</p>
                             <p>{exam["keyFindings"]}</p>
+                            <p>{exam["brixiaScore"]}</p>
                         </div>
                     ))
                 }
