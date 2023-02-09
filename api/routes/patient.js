@@ -2,17 +2,18 @@ var express = require('express');
 var router = express.Router();
 const Patients = require('../schemas/PatientSchema.js');
 const PaginationMetadata = require('../services/PaginationMetadata');
-var mongoose = require('mongoose');
 
 /*
  * GET all patients 
  */
 router.get('/', async (req, res, next) => {
     //Pagination Metadata
-    if (!req.query.pageNumber) {
+    const { pageNumber, pageSize } = req.query;
+
+    if (!pageNumber) {
         req.query.pageNumber = 1;
     }
-    if (!req.query.pageSize) {
+    if (!pageSize) {
         req.query.pageSize = 10;
     }
 
@@ -93,7 +94,7 @@ router.post('/', async (req, res, next) => {
 });
 
 /*
- * REPLACE an exam by ID
+ * REPLACE a patient by ID
  */
 router.put('/:id', async (req, res, next) => {
     try {
@@ -117,7 +118,7 @@ router.put('/:id', async (req, res, next) => {
 });
 
 /*
- * UPDATE an exam by ID
+ * UPDATE a patient by ID
  */
 router.patch('/:id', async (req, res, next) => {
     try {
@@ -141,7 +142,7 @@ router.patch('/:id', async (req, res, next) => {
 });
 
 /*
- * DELETE an exam by ID
+ * DELETE a patient by ID
  */
 router.delete('/:id', async (req, res, next) => {
     try {
