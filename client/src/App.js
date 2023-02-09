@@ -11,9 +11,29 @@ const router = createBrowserRouter(
         <Route path='/' element={<div><HeaderCom /> <Exams /></div>}>
             <Route path='/admin' element={<Admin />} />
         </Route>
-
     )
 )
+
+const ExamList = (props) => {
+    if (props.resp) {
+        let resp = props.resp;
+        return (
+            <>
+                {
+                    resp.map(exam => (
+                        <div key={exam["_id"]}>
+                            <p>{exam["_id"]}</p>
+                            <p>{exam["keyFindings"]}</p>
+                            <p>{exam["brixiaScore"]}</p>
+                        </div>
+                    ))
+                }
+            </>
+        );
+    }
+    return <p>Loading...</p>
+}
+
 function App() {
     const { response } = useApi({ path: 'exams' });
 
@@ -21,9 +41,7 @@ function App() {
         <div className="App">
             <RouterProvider router={router} />
             <header className="App-header">
-                <p>
-                    {response}
-                </p>
+                <ExamList resp={response} />
             </header>
 
         </div>
