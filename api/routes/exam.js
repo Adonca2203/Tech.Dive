@@ -8,10 +8,12 @@ const PaginationMetadata = require('../services/PaginationMetadata');
  */
 router.get('/', async (req, res, next) => {
     //Pagination Metadata
-    if (!req.query.pageNumber) {
+    const { pageNumber, pageSize } = req.query;
+
+    if (!pageNumber) {
         req.query.pageNumber = 1;
     }
-    if (!req.query.pageSize) {
+    if (!pageSize) {
         req.query.pageSize = 10;
     }
 
