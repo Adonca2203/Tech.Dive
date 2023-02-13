@@ -26,7 +26,8 @@ export function useApi({ path } = { path: '' }, { method } = { method: Methods.G
         }
         catch (err) {
             console.log(err.message);
-            setResponse(`Could not make a ${method} request, check that data is valid JSON.`);
+            message = { message: `Could not make a ${method} request, check that data is valid JSON.` };
+            setResponse(message);
         }
     }
     
