@@ -35,8 +35,8 @@ router.get('/', async (req, res, next) => {
         return res.status(200).send(returnData);
     }
     catch (err) {
-        console.error(err.message);
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 
 });
@@ -49,12 +49,14 @@ router.get('/:id', async function (req, res, next) {
         const { id } = req.params;
         const exam = await Exams.find({ _id: id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + id);
+            message = { message: `No Exam found with id ${id}` };
+            return res.status(404).send(message);
         }
         res.status(200).send(exam[0]);
     }
     catch (err) {
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 });
 
@@ -66,7 +68,7 @@ router.post('/', async (req, res, next) => {
         var newExam = req.body;
 
         created = await Exams.create({
-            patientID: newExam['patientId'],
+            patientID: newExam['patientID'],
             image: newExam['image'],
             keyFindings: newExam['keyFindings'],
             brixiaScore: newExam['brixiaScore'],
@@ -74,7 +76,8 @@ router.post('/', async (req, res, next) => {
         });
 
         if (created) {
-            return res.status(201).send("Successfully created!");
+            message = { message: "Successfully created!" };
+            return res.status(201).send(message);
         }
     }
     catch (err) {
@@ -85,9 +88,11 @@ router.post('/', async (req, res, next) => {
                 errors[key] = err.errors[key].message;
             });
             res.statusMessage = "Validation Error, please check that you have all fields";
-            return res.status(400).send(errors);
+            message = { message: errors };
+            return res.status(400).send(message);
         }
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 });
 
@@ -99,19 +104,21 @@ router.put('/:id', async (req, res, next) => {
         const { id } = req.params;
         const exam = await Exams.find({ _id: id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + id);
+            message = { message: `No Exam found with id ${id}` };
+            return res.status(404).send(message);
         }
         const changes = req.body;
 
         replaced = await Exams.replaceOne({ _id: id }, changes);
 
         if (replaced) {
-            res.status(204).send();
+            return res.status(204).send();
         }
     }
     catch (err) {
         console.error(err.message);
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 });
 
@@ -123,7 +130,8 @@ router.patch('/:id', async (req, res, next) => {
         const { id } = req.params;
         const exam = await Exams.find({ _id: id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + id);
+            message = { message: `No Exam found with id ${id}` };
+            return res.status(404).send(message);
         }
         const changes = req.body;
 
@@ -135,7 +143,8 @@ router.patch('/:id', async (req, res, next) => {
     }
     catch (err) {
         console.error(err.message);
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 });
 
@@ -147,7 +156,8 @@ router.delete('/:id', async (req, res, next) => {
         const { id } = req.params;
         const exam = await Exams.find({ _id: req.params.id });
         if (exam.length == 0) {
-            return res.status(404).send("No Exam found with id " + id);
+            message = { message: `No Exam found with id ${id}` };
+            return res.status(404).send(message);
         }
 
         deleted = await Exams.deleteOne({ _id: id });
@@ -159,7 +169,8 @@ router.delete('/:id', async (req, res, next) => {
     }
     catch (err) {
         console.error(err.message);
-        res.status(500).send("Something went wrong!");
+        message = { message: "Something went wrong!" };
+        res.status(500).send(message);
     }
 });
 
