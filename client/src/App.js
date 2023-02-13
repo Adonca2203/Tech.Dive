@@ -3,7 +3,11 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
+<<<<<<< HEAD
 // useApi commented out because it renders raw data from the API, and I don't need that here -  KB
+=======
+
+>>>>>>> b9084dd3faf8983b96c27deb32271c425b1184a9
 import { useApi } from './hooks/use-api';
 import { ExamDetails } from "./subComponent";
 
@@ -39,7 +43,11 @@ const ExamList = (props) => {
 }
 
 function App() {
+<<<<<<< HEAD
     const { response } = useApi({ path: 'exams' });
+=======
+     const { response } = useApi({ path: 'exams' });
+>>>>>>> b9084dd3faf8983b96c27deb32271c425b1184a9
 
     return (
         <div className="App">
