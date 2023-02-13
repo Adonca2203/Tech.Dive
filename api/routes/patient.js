@@ -37,8 +37,7 @@ router.get('/', async (req, res, next) => {
         res.send(returnData);
     }
     catch (err) {
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        console.log(err.message);
     }
 
 });
@@ -51,14 +50,13 @@ router.get('/:id', async (req, res, next) => {
         const { id } = req.params;
         const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            message = { message: `No Patient found with id  ${id}` };
-            return res.status(404).send(message);
+            return res.status(404).send("No Patient found with id " + id);
         }
         res.send(patient[0]);
     }
     catch (err) {
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        console.error(err);
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -78,8 +76,7 @@ router.post('/', async (req, res, next) => {
         });
 
         if (created) {
-            message = { message: "Successfully created!" };
-            return res.status(201).send(message);
+            return res.status(201).send("Successfully created!");
         }
     }
     catch (err) {
@@ -90,11 +87,9 @@ router.post('/', async (req, res, next) => {
                 errors[key] = err.errors[key].message;
             });
             res.statusMessage = "Validation Error, please check that you have all fields";
-            message = { message: errors };
-            return res.status(400).send(message);
+            return res.status(400).send(errors);
         }
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        res.status(500).send("Something went wrong!").end();
     }
 });
 
@@ -106,8 +101,7 @@ router.put('/:id', async (req, res, next) => {
         const { id } = req.params;
         const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            message = { message: `No Patient found with id  ${id}` };
-            return res.status(404).send(message);
+            return res.status(404).send("No Patient found with id " + id);
         }
         const changes = req.body;
 
@@ -118,8 +112,8 @@ router.put('/:id', async (req, res, next) => {
         }
     }
     catch (err) {
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        console.error(err.message);
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -131,8 +125,7 @@ router.patch('/:id', async (req, res, next) => {
         const { id } = req.params;
         const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            message = { message: `No Patient found with id  ${id}` };
-            return res.status(404).send(message);
+            return res.status(404).send("No Patient found with id " + id);
         }
         const changes = req.body;
 
@@ -144,8 +137,7 @@ router.patch('/:id', async (req, res, next) => {
     }
     catch (err) {
         console.error(err.message);
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        res.status(500).send("Something went wrong!");
     }
 });
 
@@ -157,8 +149,7 @@ router.delete('/:id', async (req, res, next) => {
         const { id } = req.params;
         const patient = await Patients.find({ _id: id });
         if (patient.length == 0) {
-            message = { message: `No Patient found with id  ${id}` };
-            return res.status(404).send(message);
+            return res.status(404).send("No Patient found with id " + id);
         }
 
         deleted = await Patients.deleteOne({ _id: id });
@@ -169,8 +160,7 @@ router.delete('/:id', async (req, res, next) => {
     }
     catch (err) {
         console.error(err);
-        message = { message: "Something went wrong!" };
-        res.status(500).send(message);
+        res.status(500).send("Something went wrong!");
     }
 });
 

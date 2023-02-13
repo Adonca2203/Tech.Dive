@@ -3,7 +3,7 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
-import { useApi, useAddApi } from './hooks/use-api';
+import { useApi } from './hooks/use-api';
 
 
 const router = createBrowserRouter(
@@ -15,29 +15,6 @@ const router = createBrowserRouter(
     )
 )
 
-//Example create Exam
-/*
-let data = {
-    patientID: '63dab6944ef6a5f886ec8cbb',
-    keyFindings: "This is a test made",
-    brixiaScore: [2, 3, 4, 5],
-    bmi: 12.2
-};
-const { response } = useAddApi({ path: "exams" }, { data: data });
-response['message'] will return a success or failure message.
-const ExamCreate = (props) => {
-    let data = {
-        patientID: '63dab6944ef6a5f886ec8cbb',
-        keyFindings: "This is a test made",
-        brixiaScore: [2, 3, 4, 5],
-        bmi: 12.2
-    };
-    const { createResponse } = useAddApi({ path: "exams" }, { data: data });
-    if (createResponse) return <p>{createResponse["message"]}</p>;
-    return <p>Loading...</p>;
-}/*
-
-//Example Exam List
 const ExamList = (props) => {
     if (props.resp) {
         let resp = props.resp;
@@ -59,7 +36,8 @@ const ExamList = (props) => {
 }
 
 function App() {
-    const { response } = useApi();
+    const { response } = useApi({ path: 'exams' });
+
     return (
         <div className="App">
             <RouterProvider router={router} />
