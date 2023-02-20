@@ -1,12 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { ExamDetails, PatientDetails, Search } from "../subComponent";
+import { useApi } from "../hooks/use-api";
 
 
 const Exams = (props) => {
   const [isPatientInfo, setIsPatientInfo] = useState(false);
   const [isExamInfo, setIsExamInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Track selected row
-
+  const { response } = useApi({ path: "exams" });
+  const { response2 } = useApi({ path: "patients" });
   // Function to handle row click
   const handleRowClick = (row) => {
     setSelectedRow(row); // Set selected row to the clicked row
@@ -15,8 +17,9 @@ const Exams = (props) => {
     // Go to ExamDetails Page
   };
 
-  if (props.resp) {
-    let resp = props.resp;
+  if (response) {
+    let resp = response
+    let patients = response2
     return (
       <>
         {!(isExamInfo || isPatientInfo) && (

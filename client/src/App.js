@@ -27,8 +27,7 @@ const router = createBrowserRouter(
 
 function App() {
   // Use the useApi hook to fetch the list of exams
-  const { response } = useApi({ path: "exams" });
-  const { response2 } = useApi({ path: "patients" });
+  
 
   return (
     <div className="App">
@@ -37,7 +36,6 @@ function App() {
       <header className="App-header">
         {/* Render the Exams component, passing in the response as a prop */}
 
-        <Exams resp={response} resp2={response2} />
       </header>
     </div>
   );
