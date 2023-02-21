@@ -3,9 +3,7 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
-
-import { useApi } from './hooks/use-api';
-import { ExamDetails } from "./subComponent";
+import { Methods, useApi } from './hooks/use-api';
 
 
 const router = createBrowserRouter(
@@ -39,7 +37,7 @@ const ExamList = (props) => {
 }
 
 function App() {
-     const { response } = useApi({ path: 'exams' });
+    const { response } = useApi({ path: 'exams' }, {method: Methods.GET});
 
     return (
         <div className="App">
