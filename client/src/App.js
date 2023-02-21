@@ -4,7 +4,7 @@ import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
 import { useApi } from './hooks/use-api';
-import { ExamDetails } from "./subComponent";
+import { ExamDetails }  from "./subComponent";
 
 
 const router = createBrowserRouter(

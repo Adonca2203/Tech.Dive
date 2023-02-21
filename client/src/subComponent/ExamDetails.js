@@ -1,5 +1,7 @@
-import { Search } from "../subComponent";
-import { Card, Container } from "react-bootstrap";
+// import { Search } from "../subComponent";
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+
 import axios from 'axios'
 import { useEffect, useState } from "react";
 
@@ -25,84 +27,88 @@ const ExamDetails = (props) => {
       .catch((error) => console.error))
   };
   
-  useEffect(() => {
-    getExam()
-  }, [])
+  // useEffect(() => {
+  //   getExam()
+  // }, [])
   return (
    
     <>
-      <div>
-        <h3>Exam Details</h3>
-        <Search />
-      </div>
-
-      <Container className="PatientInfo">
-        <Card className="PatientID" key={exam.id}>
+      
+      <Container class="PatientInfo">
+        
+        <Card class="PatientID" key={exam.id}>
           <Card.Body>
             <Card.Title>Patient ID</Card.Title>
             <Card.Text>{exam.patientId}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="Age">
+
+        <Card class="Age">
           <Card.Body>
             <Card.Title>Age</Card.Title>
             <Card.Text>{exam.age}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="Sex">
+        
+        <Card class="Sex">
           <Card.Body>
             <Card.Title>Sex</Card.Title>
             <Card.Text>{exam.sex}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="BMI">
+        
+        <Card class="BMI">
           <Card.Body>
             <Card.Title>BMI</Card.Title>
             <Card.Text>{exam.bmi}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="ZipCode">
+        
+        <Card class="ZipCode">
           <Card.Body>
             <Card.Title>Zip Code</Card.Title>
             <Card.Text>{exam.zipCode}</Card.Text>
           </Card.Body>
         </Card>
       </Container>
-      <Container className="ExamInfo">
-        <Card className="ExamID">
+      
+      <Container class="ExamInfo">
+        
+        <Card class="ExamID" key={exam.id}>
           <Card.Body>
             <Card.Title>Exam ID</Card.Title>
             <Card.Text>{exam.examId}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="Image">
+
+        <Card class="Image">
           <Card.Body>
             <Card.Title>Image URL</Card.Title>
             <Card.Text>URL:</Card.Text>
-            <Card.Image>Image:</Card.Image>
+            {/* Add an image here */}
           </Card.Body>
         </Card>
-        <Card className="Date">
+        <Card class="Date">
           <Card.Body>
             <Card.Title>Date</Card.Title>
             <Card.Text>#</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="KeyFindings">
+        <Card class="KeyFindings">
           <Card.Body>
             <Card.Title>Key Findings</Card.Title>
             <Card.Text>{exam.keyFindings}</Card.Text>
           </Card.Body>
         </Card>
-        <Card className="BrixiaScore">
+        <Card class="BrixiaScore">
           <Card.Body>
             <Card.Title>Brixia Score (seperated by Comma)</Card.Title>
             <Card.Text>{exam.brixiaScore}</Card.Text>
           </Card.Body>
         </Card>
-      </Container>
+  </Container> 
     </>
   );
 };
 
-export default ExamDetails;
+export default ExamDetails
