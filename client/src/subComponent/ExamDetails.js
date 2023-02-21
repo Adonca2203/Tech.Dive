@@ -34,7 +34,7 @@ const ExamDetails = (props) => {
    
     <>
       
-      <Container class="PatientInfo">
+      <Container  class="patientInfo">
         
         <Card class="PatientID" key={exam.id}>
           <Card.Body>
@@ -72,7 +72,7 @@ const ExamDetails = (props) => {
         </Card>
       </Container>
       
-      <Container class="ExamInfo">
+      <Container class="examInfo">
         
         <Card class="ExamID" key={exam.id}>
           <Card.Body>
