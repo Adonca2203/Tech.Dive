@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 
-const ExamDetails = () => {
-  const { id } = useParams();
-  const [exam, setExam] = useState({});
+const ExamDetails = (exam) => {
+  // const { id } = useParams();
+  // const [exam, setExam] = useState({});
 
-  useEffect(() => {
-    fetch(`/api/exams/${id}`)
-      .then(res => res.json())
-      .then(data => setExam(data));
-  }, [id]);
+  // useEffect(() => {
+  //   fetch(`/api/exams/${id}`)
+  //     .then(res => res.json())
+  //     .then(data => setExam(data));
+  // }, [id]);
 
     return (
         <div>
@@ -29,7 +29,3 @@ const ExamDetails = () => {
 }
 
 export default ExamDetails;
-
-
-
-
