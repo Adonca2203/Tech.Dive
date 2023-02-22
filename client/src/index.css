@@ -79,9 +79,22 @@ code {
 
 th,
 td {
-  padding-left: 10px;
+  padding: 15px;
+  text-align:justify;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: lighter;
+
+}
+.table_center {
+  padding-right: 50px;
+  padding-left: 50px;
+  width: 70%;
 }
 
-thead {
-  background-color: antiquewhite;
+.image_sty {
+  width: 80px;
+  height: 60px;
 }
+/* thead {
+  background-color: antiquewhite;
+} */

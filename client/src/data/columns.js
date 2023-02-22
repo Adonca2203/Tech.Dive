@@ -44,5 +44,14 @@ export const Columns = [
         accessor: 'zipCode'
 
     },
-   
+   {
+        Header: 'Update',
+        accessor: 'upDate'
+
+    },
+       {
+        Header: 'Delete',
+        accessor: 'Delete'
+
+    },
 ]
