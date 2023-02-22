@@ -1,9 +1,10 @@
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
 import { Methods, useApi } from './hooks/use-api';
+import { ExamDetails }  from "./subComponent";
 
 
 const router = createBrowserRouter(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
             <Route path='exams/details' element={<ExamDetails />} />
+            <Route path="/exam-details/:id" component={ExamDetails} />   
         </Route>
     )
 )
@@ -45,7 +47,6 @@ function App() {
             <header className="App-header">
                 <ExamList resp={response} />
             </header>
-
         </div>
 
     );

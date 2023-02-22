@@ -7,10 +7,15 @@ import { Columns } from '../data/columns';
 import fakeData from '../data/data.json';
 
 const Exams = () => {
+    const [selectedExam, setSelectedExam] = useState(null);
     const [isPatientInfo, setIsPatientInfo] = useState(false);
     const [isExamInfo, setIsExamInfo] = useState(false);
     const columns = useMemo(() => Columns, []);
     const data = useMemo(() => fakeData, []);
+
+    const handleRowClick = (exam) => {
+        setSelectedExam(exam);
+      }
 
     const dataTable = useTable({ columns, data });
     const {
@@ -45,7 +50,7 @@ const Exams = () => {
                                     rows.map(row => {
                                         prepareRow(row)
                                         return (
-                                            <tr {...row.getRowProps()}>
+                                            <tr {...row.getRowProps()} onClick={() => handleRowClick(row)} >
                                                 {
                                                     row.cells.map((cell, id) => {
                                                         return <td {...cell.getCellProps()}>{cell.render('Cell')} </td>
@@ -59,7 +64,7 @@ const Exams = () => {
                     </div>
 
                 </div>}
-            {isExamInfo && <ExamDetails />}
+            {selectedExam && <ExamDetails exam={selectedExam} />}    
             {isPatientInfo && <PatientDetails />}
         </>
     );
