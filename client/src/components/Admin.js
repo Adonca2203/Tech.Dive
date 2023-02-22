@@ -29,17 +29,24 @@ const Admin = () => {
   }
   const updateData = (e, rowId) => {
      adminRowData.filter(obj => {
-       if(obj._id === rowId){
-        setGetRowData(obj)
+        if(obj._id === rowId){
+          setGetRowData(obj)
        }
     });
     setIsUpdate(!isUpdate);
-
+   
   }
+
   const handelExamInfo = (e, examId) => {
     e.preventDefault();
     setIsExamInf(!isExamInf)
     }
+  const deleteData = (e, rowId) => {
+    setGetRowDataId(rowId);
+    //setIsDeleted(!isDeleted);
+    alert(`Do you want to permanently delet this item ${getRowDataId}`)
+    
+  }
 
   useEffect(() => {
     const fetchPateientDetails = async () => {
@@ -72,7 +79,7 @@ const Admin = () => {
                 onChange= {handelSearch} />
             </div> 
             <div >
-              <table className='table able_center'>
+              <table className='table table_center'>
                 <thead>
                   <tr>
                     {Columns.map((headers, id) =>  <th  key={id}>{headers.Header}</th>)}
@@ -112,7 +119,7 @@ const Admin = () => {
                             <button 
                               style={{color: 'red'}} 
                               type='button' className="btn bg-transparent"
-                              onClick= {() => setIsDeleted(!isDeleted) }>                                     
+                              onClick= {(e) =>  deleteData(e, data._id) }>                                     
                               {data.delete}
                              </button>
                           </td>
@@ -125,7 +132,7 @@ const Admin = () => {
           </div>
         }
           {isCreateExam && <CreateExam />}
-          {isDeleted && alert('Do you want to permanently delet this item')}
+          {isDeleted && alert(`Do you want to permanently delet this item ${getRowDataId}`)}
           {isUpdate && <UpdateExam update={getRowData} />}
           {isExamInf && < ExamDetails />}  
       </div>

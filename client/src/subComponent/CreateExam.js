@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Admin from '../components/Admin';
 
 const CreateExam = () => {
- const [patient, setPatient] = useState(
-     {patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
+ const [patient, setPatient] = useState({})
  const [cancel, setCancel] = useState(false);
 
  const handleCreate = (e) => {
@@ -20,10 +19,11 @@ const CreateExam = () => {
     if(patient.patientId && patient.age && patient.sex ){
     let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
       setPatient(newPatient)
-      console.log(newPatient)
+      //console.log(newPatient)
+      
       alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
       setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
-     
+      
     }
   }
   return (

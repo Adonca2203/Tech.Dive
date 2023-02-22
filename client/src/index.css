@@ -88,7 +88,8 @@ td {
 .table_center {
   padding-right: 50px;
   padding-left: 50px;
-  width: 70%;
+  margin-left: 70px;
+  width: 90%;
 }
 
 .image_sty {
