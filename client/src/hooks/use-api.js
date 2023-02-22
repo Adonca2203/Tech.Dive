@@ -2,14 +2,43 @@ import { useState, useEffect } from 'react';
 
 const API_ROOT = 'http://localhost:9000';
 
-export function useApi({ path } = { path: '' }) {
+export const Methods = {
+    GET: "GET",
+    POST: "POST",
+    PUT: "PUT",
+    PATCH: "PATCH",
+    DEL: "DEL"
+};
+
+/**
+ * React Hook for communitcating with the API
+ * @param {string} path The path to the API endpoint
+ * @param {Methods} method The API method to use (default GET)
+ * @param {Object} data The data to pass to the API payload body if method is not GET
+ * @return {JSON} The API response
+ */
+export function useApi({ path } = { path: '' }, { method } = { method: Methods.GET }, { data } = { data: '' }) {
     const [response, setResponse] = useState();
 
+    if (method.toLowerCase() !== "get") {
+        try {
+            var jsonRep = JSON.parse(data);
+        }
+        catch (err) {
+            console.log(err.message);
+            let message = { message: `Could not make a ${method} request, check that data is valid JSON.` };
+            setResponse(message);
+        }
+    }
+    
     useEffect(() => {
-        fetch(`${API_ROOT}/${path}`)
-            .then(res => res.text())
+        fetch(`${API_ROOT}/${path}`, {
+            method: method,
+            body: jsonRep
+        })
+            .then(res => res.json())
             .then(res => setResponse(res));
-    }, []);
+    }, [path, method, jsonRep]);
 
     return {
         response

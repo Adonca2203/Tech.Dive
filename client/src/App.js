@@ -1,11 +1,9 @@
-//import { useEffect, useState } from "react";
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 import './App.css';
 
 import { Admin, Exams, HeaderCom } from './components';
-import { useApi } from './hooks/use-api';
-import { ExamDetails } from './subComponent';
+import { Methods, useApi } from './hooks/use-api';
 
 
 const router = createBrowserRouter(
@@ -15,19 +13,37 @@ const router = createBrowserRouter(
             <Route path='/admin' element={<Admin />} />
             <Route path='exams/details' element={<ExamDetails />} />
         </Route>
-
     )
 )
+
+const ExamList = (props) => {
+    if (props.resp) {
+        let resp = props.resp;
+        return (
+            <>
+                {
+                    resp.map(exam => (
+                        <div key={exam["_id"]}>
+                            <p>{exam["_id"]}</p>
+                            <p>{exam["keyFindings"]}</p>
+                            <p>{exam["brixiaScore"]}</p>
+                        </div>
+                    ))
+                }
+            </>
+        );
+    }
+    return <p>Loading...</p>
+}
+
 function App() {
-    const { response } = useApi({ path: 'exams' });
+    const { response } = useApi({ path: 'exams' }, {method: Methods.GET});
 
     return (
         <div className="App">
             <RouterProvider router={router} />
             <header className="App-header">
-                <p>
-                    {response}
-                </p>
+                <ExamList resp={response} />
             </header>
 
         </div>
