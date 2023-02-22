@@ -95,6 +95,19 @@ td {
   width: 80px;
   height: 60px;
 }
+.img_sty {
+    width: 200px;
+    height: 200px;
+    padding-top: 10px ;
+    padding-bottom: 10px; 
+}
+.textcent {
+  text-align: center;
+
+}
+label {
+  font-weight: bold;
+}
 /* thead {
   background-color: antiquewhite;
 } */

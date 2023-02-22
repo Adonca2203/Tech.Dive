@@ -32,7 +32,8 @@ const Admin = () => {
        if(obj._id === rowId){
         setGetRowData(obj)
        }
-    })
+    });
+    setIsUpdate(!isUpdate);
 
   }
   const handelExamInfo = (e, examId) => {
@@ -131,5 +132,5 @@ const Admin = () => {
     </>
     );
 }
-                   
+
 export default Admin;
