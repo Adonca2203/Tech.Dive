@@ -27,43 +27,43 @@ const [patient, setPatient] =useState([])
  };
 
 
- useEffect(()=> {GetExam()}, ([]))
- useEffect(()=> {GetPatient()}, ([]))
+//  useEffect(()=> {GetExam()}, ([]))
+//  useEffect(()=> {GetPatient()}, ([]))
   return (
       
     <>
       
-      <Container  class="patientInfo">
+      <Container className="patientInfo">
         
-        <Card class="PatientID" key={exam.id}>
+        <Card className="PatientID" key={exam.id}>
           <Card.Body>
             <Card.Title>Patient ID</Card.Title>
             <Card.Text>{props.patientID}</Card.Text>
           </Card.Body>
         </Card>
 
-        <Card class="Age">
+        <Card className="Age">
           <Card.Body>
             <Card.Title>Age</Card.Title>
             <Card.Text>{props.age}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="Sex">
+        <Card className="Sex">
           <Card.Body>
             <Card.Title>Sex</Card.Title>
             <Card.Text>{props.sex}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="BMI">
+        <Card className="BMI">
           <Card.Body>
             <Card.Title>BMI</Card.Title>
             <Card.Text>{props.bmi}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="ZipCode">
+        <Card className="ZipCode">
           <Card.Body>
             <Card.Title>Zip Code</Card.Title>
             <Card.Text>{props.zipCode}</Card.Text>
@@ -71,35 +71,35 @@ const [patient, setPatient] =useState([])
         </Card>
       </Container>
       
-      <Container class="examInfo">
+      <Container className="examInfo">
         
-        <Card class="ExamID" key={exam.id}>
+        <Card className="ExamID" key={exam.id}>
           <Card.Body>
             <Card.Title>Exam ID</Card.Title>
             <Card.Text>{props._id}</Card.Text>
           </Card.Body>
         </Card>
 
-        <Card class="Image">
+        <Card className="Image">
           <Card.Body>
             <Card.Title>Image URL</Card.Title>
             <Card.Text>URL:</Card.Text>
             Add an image here
           </Card.Body>
         </Card>
-        <Card class="Date">
+        <Card className="Date">
           <Card.Body>
             <Card.Title>Date</Card.Title>
             <Card.Text>{props.date}</Card.Text>
           </Card.Body>
         </Card>
-        <Card class="KeyFindings">
+        <Card className="KeyFindings">
           <Card.Body>
             <Card.Title>Key Findings</Card.Title>
             <Card.Text>{props.keyFindings}</Card.Text>
           </Card.Body>
         </Card>
-        <Card class="BrixiaScore">
+        <Card className="BrixiaScore">
           <Card.Body>
             <Card.Title>Brixia Score (seperated by Comma)</Card.Title>
             <Card.Text>{props.brixiaScore}</Card.Text>
