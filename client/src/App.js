@@ -13,7 +13,7 @@ const router = createBrowserRouter(
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
             <Route path='exams/details' element={<ExamDetails />} />
-            <Route path="/exam-details/:id" component={ExamDetails} />   
+            <Route path="/exam-details/:id" element={<ExamDetails />} />  
         </Route>
     )
 )
