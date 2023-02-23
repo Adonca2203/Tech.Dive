@@ -11,7 +11,7 @@ const router = createBrowserRouter(
         <Route path='/' element={<HeaderCom />}>
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
-            <Route path='/examdetails' element={<ExamDetails />} />
+            <Route path='/exams/details' element={<ExamDetails />} />
         </Route>
     )
 )
