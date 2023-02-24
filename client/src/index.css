@@ -72,7 +72,7 @@ code {
 }
 .tableH {
 
-  margin: 12px;
+  margin: auto;
   padding-right: 55px;
   gap: 5px
 }
@@ -80,6 +80,7 @@ code {
 th,
 td {
   padding-left: 10px;
+  font-size: small;
 }
 
 thead {

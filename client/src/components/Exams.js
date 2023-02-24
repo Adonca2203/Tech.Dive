@@ -1,68 +1,78 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
+import { ExamDetails, PatientDetails, Search } from "../subComponent";
+import { useApi } from "../hooks/use-api";
 
-import { useTable } from 'react-table';
 
-import { ExamDetails, PatientDetails, Search } from '../subComponent';
-import { Columns } from '../data/columns';
-import fakeData from '../data/data.json';
+const Exams = (props) => {
+  const [isPatientInfo, setIsPatientInfo] = useState(false);
+  const [isExamInfo, setIsExamInfo] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null); // Track selected row
+  const { response: exams } = useApi({ path: "exams" });
+  const { response: patients } = useApi({ path: "patients" });
 
-const Exams = () => {
-    const [isPatientInfo, setIsPatientInfo] = useState(false);
-    const [isExamInfo, setIsExamInfo] = useState(false);
-    const columns = useMemo(() => Columns, []);
-    const data = useMemo(() => fakeData, []);
+  // Function to handle row click
+  const handleRowClick = (row) => {
+    setSelectedRow(row); // Set selected row to the clicked row
+    setIsExamInfo(true); // Display ExamDetails component
+    console.log(selectedRow);
+    // Go to ExamDetails Page
+  };
 
-    const dataTable = useTable({ columns, data });
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = dataTable;
-
+  if (exams) {
+    let resp = exams
+    let pats = patients
     return (
-        <>
-            {!(isExamInfo || isPatientInfo) &&
-                <div>
-                    <div>
-                        Exam page
-                        <Search />
-                    </div>
-                    <div>
-                        <table {...getTableProps()} className='tableH'>
-                            <thead >
-                                {headerGroups.map((hg) => (
-                                    <tr {...hg.getHeaderGroupProps()}>
-                                        {
-                                            hg.headers.map((column) => (
-                                                <th {...column.getHeaderProps()}> {column.render('Header')} </th>))}
-                                    </tr>))
-                                }
-                            </thead>
-                            <tbody {...getTableBodyProps()} >
-                                {
-                                    rows.map(row => {
-                                        prepareRow(row)
-                                        return (
-                                            <tr {...row.getRowProps()}>
-                                                {
-                                                    row.cells.map((cell, id) => {
-                                                        return <td {...cell.getCellProps()}>{cell.render('Cell')} </td>
-                                                    })
-                                                }
-                                            </tr>)
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>}
-            {isExamInfo && <ExamDetails />}
-            {isPatientInfo && <PatientDetails />}
-        </>
+      <>
+        {!(isExamInfo || isPatientInfo) && (
+          <div>
+            <div>
+              <h1> Exam page</h1>
+              <Search />
+            </div>
+            <div>
+              <table className="tableH">
+                <thead>
+                  <tr>
+                    <th>Exam ID</th>
+                    <th>Patient ID</th>
+                    <th>Image</th>
+                    <th>Key Findings</th>
+                    <th>Brixia Score</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>BMI</th>
+                    <th>Zip Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {resp.map((exam) => (
+                    <tr onClick={() => handleRowClick(exam)}>
+                      {/* Somehow need to click on this to go to ExamDetails, Maybe using <Link> React component */}
+                      <td> {exam["_id"]}</td>
+                      <td> {exam["patientID"]}</td>
+                      <td>
+                        {" "}
+                        <img
+                          src={exam["image"]}
+                          alt="Photo"
+                          width="50"
+                          height="50"
+                        />{" "}
+                      </td>
+                      <td> {exam["keyFindings"]}</td>
+                      <td> {exam["brixiaScore"]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+        {isPatientInfo && <PatientDetails />}
+      </>
     );
-}
+  }
+  return <p>Loading...</p>
+};
 
-export default Exams
+export default Exams;

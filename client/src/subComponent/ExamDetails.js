@@ -9,36 +9,51 @@ import { useApi, Methods } from '../hooks/use-api';
 //   // const examAPI = useApi({ path: `exams/details/${props.examId}`})
 
 const ExamDetails = (props) => {
-const examAPI = 'http://localhost:9000/exams'
-const patientAPI = 'http://localhost:9000/patients'
+// const examAPI = 'http://localhost:9000/exams'
+// const patientAPI = 'http://localhost:9000/patients'
 
-const [exam, setExam] =useState([])
-const [patient, setPatient] =useState([])
+//this needs a value to compare to
+// const props.id = 
 
- const GetExam = () => {
-  axios.get(examAPI)
-  .then(response => setExam(response.data), (err) => console.error(err))
-  .catch((error) => console.error(error))
- }
- const GetPatient = () => {
-  axios.get(patientAPI)
-  .then(response => setPatient(response.data), (err) => console.error(err))
-  .catch((error) => console.error(error))
- };
+const [exam, setExam] = useState([])
+const [patient, setPatient] = useState([])
+
+const { response: exams } = useApi({ path: `exams` });
+const { response: patients } = useApi({ path: `patients` });
+
+const getExam = () => {
+  exams.map((e)=> (
+    if ({exam['_id']} = props.id){
+      setExam(e)
+    }
+  ))
+}
 
 
-//  useEffect(()=> {GetExam()}, ([]))
-//  useEffect(()=> {GetPatient()}, ([]))
+//  const GetExam = () => {
+//   axios.get(exams)
+//   .then(response => setExam(response.data), (err) => console.error(err))
+//   .catch((error) => console.error(error))
+//  }
+//  const GetPatient = () => {
+//   axios.get(patients)
+//   .then(response => setPatient(response.data), (err) => console.error(err))
+//   .catch((error) => console.error(error))
+//  };
+
+
+ useEffect(()=> {GetExam()}, ([]))
+ useEffect(()=> {GetPatient()}, ([]))
   return (
       
     <>
       
       <Container className="patientInfo">
         
-        <Card className="PatientID" key={exam.id}>
+        <Card className="PatientID" >
           <Card.Body>
             <Card.Title>Patient ID</Card.Title>
-            <Card.Text>{props.patientID}</Card.Text>
+            <Card.Text>{exam["_id"]}</Card.Text>
           </Card.Body>
         </Card>
 
@@ -73,7 +88,7 @@ const [patient, setPatient] =useState([])
       
       <Container className="examInfo">
         
-        <Card className="ExamID" key={exam.id}>
+        <Card className="ExamID">
           <Card.Body>
             <Card.Title>Exam ID</Card.Title>
             <Card.Text>{props._id}</Card.Text>
