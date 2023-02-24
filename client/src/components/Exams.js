@@ -9,7 +9,7 @@ const Exams = (props) => {
   const [selectedRow, setSelectedRow] = useState(null); // Track selected row
   const { response: exams } = useApi({ path: "exams" });
   const { response: patients } = useApi({ path: "patients" });
-  
+
   // Function to handle row click
   const handleRowClick = (row) => {
     setSelectedRow(row); // Set selected row to the clicked row
@@ -18,9 +18,9 @@ const Exams = (props) => {
     // Go to ExamDetails Page
   };
 
-  if (response) {
-    let resp = response
-    let patients = response2
+  if (exams) {
+    let resp = exams
+    let pats = patients
     return (
       <>
         {!(isExamInfo || isPatientInfo) && (
