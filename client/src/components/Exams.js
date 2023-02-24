@@ -4,11 +4,16 @@ import { useApi } from "../hooks/use-api";
 
 
 const Exams = (props) => {
+    const [selectedExam, setSelectedExam] = useState(null);
   const [isPatientInfo, setIsPatientInfo] = useState(false);
   const [isExamInfo, setIsExamInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Track selected row
   const { response: exams } = useApi({ path: "exams" });
   const { response: patients } = useApi({ path: "patients" });
+
+    const handleRowClick = (exam) => {
+        setSelectedExam(exam);
+      }
 
   // Function to handle row click
   const handleRowClick = (row) => {

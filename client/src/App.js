@@ -1,24 +1,44 @@
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 // Import necessary libraries and components
 import "./App.css";
-import { Admin, Exams, HeaderCom } from "./components";
+import { Admin, Exams, HeaderCom } from './components';
+import { Methods, useApi } from './hooks/use-api';
+import { ExamDetails }  from "./subComponent";
+
 
 // Create the router using react-router-dom
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route
-      path="/"
-      element={
-        <div>
-          <HeaderCom /> <Exams />
-        </div>
-      }
-    >
-      <Route path="/admin" element={<Admin />} />
-    </Route>
-  )
-);
+    createRoutesFromElements(
+        <Route path='/' element={<HeaderCom />}>
+            <Route path='exams' element={<Exams />} />
+            <Route path='/admin' element={<Admin />} />
+            <Route path='exams/details' element={<ExamDetails />} />
+            <Route path="/exam-details/:id" element={<ExamDetails />} />  
+        </Route>
+    )
+) )
+
+const ExamList = (props) => {
+    if (props.resp) {
+        let resp = props.resp;
+        return (
+            <>
+                {
+                    resp.map(exam => (
+                        <div key={exam["_id"]}>
+                            <p>{exam["_id"]}</p>
+                            <p>{exam["keyFindings"]}</p>
+                            <p>{exam["brixiaScore"]}</p>
+                        </div>
+                    ))
+                }
+            </>
+        );
+    }
+    return <p>Loading...</p>
+}
 
 function App() {
   // Use the useApi hook to fetch the list of exams
@@ -34,6 +54,7 @@ function App() {
       </header>
     </div>
   );
+
 }
 
 export default App;
