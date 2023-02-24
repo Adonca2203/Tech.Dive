@@ -1,9 +1,8 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
 import './App.css';
-
+import { ExamDetails } from "./subComponent";
 import { Admin, Exams, HeaderCom } from './components';
-import { ExamDetails }  from "./subComponent";
 import { Methods, useApi } from './hooks/use-api';
 
 

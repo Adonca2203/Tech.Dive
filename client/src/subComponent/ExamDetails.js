@@ -1,109 +1,108 @@
 // import { Search } from "../subComponent";
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-
-import axios from 'axios'
+import axios from 'axios';
 import { useEffect, useState } from "react";
+import { useApi, Methods } from '../hooks/use-api';
 
-import { useApi } from '../hooks/use-api';
+// function getExam() {
+//   // const examAPI = useApi({ path: `exams/details/${props.examId}`})
 
-
-
-
-   
 const ExamDetails = (props) => {
+const examAPI = 'http://localhost:9000/exams'
+const patientAPI = 'http://localhost:9000/patients'
 
-  let [exam, setExam] = useState([])
-  // const testID = "63ddab3dc9c1d0397e4c7b08";
-  const { response } = useApi({ path: `exams/${props.id}`})
-  
-  const getExam = () => {
-    axios
-      .get(response)
-      .then(
-        (res => setExam(res.data),
-        (err) => console.error(err)
-      )
-      .catch((error) => console.error))
-  };
-  
-  // useEffect(() => {
-  //   getExam()
-  // }, [])
+const [exam, setExam] =useState([])
+const [patient, setPatient] =useState([])
+
+ const GetExam = () => {
+  axios.get(examAPI)
+  .then(response => setExam(response.data), (err) => console.error(err))
+  .catch((error) => console.error(error))
+ }
+ const GetPatient = () => {
+  axios.get(patientAPI)
+  .then(response => setPatient(response.data), (err) => console.error(err))
+  .catch((error) => console.error(error))
+ };
+
+
+//  useEffect(()=> {GetExam()}, ([]))
+//  useEffect(()=> {GetPatient()}, ([]))
   return (
-   
+      
     <>
       
-      <Container  class="patientInfo">
+      <Container className="patientInfo">
         
-        <Card class="PatientID" key={exam.id}>
+        <Card className="PatientID" key={exam.id}>
           <Card.Body>
             <Card.Title>Patient ID</Card.Title>
-            <Card.Text>{exam.patientId}</Card.Text>
+            <Card.Text>{props.patientID}</Card.Text>
           </Card.Body>
         </Card>
 
-        <Card class="Age">
+        <Card className="Age">
           <Card.Body>
             <Card.Title>Age</Card.Title>
-            <Card.Text>{exam.age}</Card.Text>
+            <Card.Text>{props.age}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="Sex">
+        <Card className="Sex">
           <Card.Body>
             <Card.Title>Sex</Card.Title>
-            <Card.Text>{exam.sex}</Card.Text>
+            <Card.Text>{props.sex}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="BMI">
+        <Card className="BMI">
           <Card.Body>
             <Card.Title>BMI</Card.Title>
-            <Card.Text>{exam.bmi}</Card.Text>
+            <Card.Text>{props.bmi}</Card.Text>
           </Card.Body>
         </Card>
         
-        <Card class="ZipCode">
+        <Card className="ZipCode">
           <Card.Body>
             <Card.Title>Zip Code</Card.Title>
-            <Card.Text>{exam.zipCode}</Card.Text>
+            <Card.Text>{props.zipCode}</Card.Text>
           </Card.Body>
         </Card>
       </Container>
       
-      <Container class="examInfo">
+      <Container className="examInfo">
         
-        <Card class="ExamID" key={exam.id}>
+        <Card className="ExamID" key={exam.id}>
           <Card.Body>
             <Card.Title>Exam ID</Card.Title>
-            <Card.Text>{exam.examId}</Card.Text>
+            <Card.Text>{props._id}</Card.Text>
           </Card.Body>
         </Card>
 
-        <Card class="Image">
+        <Card className="Image">
           <Card.Body>
             <Card.Title>Image URL</Card.Title>
             <Card.Text>URL:</Card.Text>
-            {/* Add an image here */}
+            Add an image here
           </Card.Body>
         </Card>
-        <Card class="Date">
+        <Card className="Date">
           <Card.Body>
             <Card.Title>Date</Card.Title>
-            <Card.Text>#</Card.Text>
+            <Card.Text>{props.date}</Card.Text>
           </Card.Body>
         </Card>
-        <Card class="KeyFindings">
+        <Card className="KeyFindings">
           <Card.Body>
             <Card.Title>Key Findings</Card.Title>
-            <Card.Text>{exam.keyFindings}</Card.Text>
+            <Card.Text>{props.keyFindings}</Card.Text>
           </Card.Body>
         </Card>
-        <Card class="BrixiaScore">
+        <Card className="BrixiaScore">
           <Card.Body>
             <Card.Title>Brixia Score (seperated by Comma)</Card.Title>
-            <Card.Text>{exam.brixiaScore}</Card.Text>
+            <Card.Text>{props.brixiaScore}</Card.Text>
           </Card.Body>
         </Card>
   </Container> 
