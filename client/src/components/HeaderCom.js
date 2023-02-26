@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 
 const HeaderCom = () => {
+ 
     return (
         <div >
             <nav className="navbar navbar-dark bg-dark  " >

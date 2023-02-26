@@ -2,31 +2,32 @@ import React, { useState } from 'react'
 import Admin from '../components/Admin';
 
 const UpdateExam = (props) => {
- const [updatedData, setUpdatedData] = useState(props.update);
- const [patient, setPatient] = useState(
-     {patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
- const [cancel, setCancel] = useState(false);
-console.log(updatedData)
- const handleCreate = (e) => {
-  const name = e.target.name;
-  const value =  e.target.value;
-  setPatient({...patient, [name]:value})
+    const [updatedData, setUpdatedData] = useState(props.update);
+    const [patient, setPatient] = useState(
+      {patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
+    const [cancel, setCancel] = useState(false);
 
-}
+  const handleCreate = (e) => {
+    const name = e.target.name;
+    const value =  e.target.value;
+    setPatient({...patient, [name]:value})
+
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    //let id = patient.patientId.split('-')[3];
-    console.log(patient)
-    if(patient.patientId && patient.age && patient.sex ){
-    let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
-      setPatient(newPatient)
-      console.log(newPatient)
-      alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
-      setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
-     
+      e.preventDefault();
+      //let id = patient.patientId.split('-')[3];
+      //console.log(patient)
+      if(patient.patientId && patient.age && patient.sex ){
+        let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
+        setPatient(newPatient)
+        console.log(newPatient)
+        alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
+        setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
+        setUpdatedData(props.update)
+      }
     }
-  }
+
   return (
     <>
      {!cancel ?
@@ -53,7 +54,7 @@ console.log(updatedData)
                     type='text'
                     id='patientId'
                     name='patientId'
-                    value={updatedData.patientId}
+                    value={patient.patientId || updatedData.patientId}
                     onChange={handleCreate}/>
                </div>
                <div className='col-md-5 '> 
@@ -63,7 +64,7 @@ console.log(updatedData)
                       type='text'
                       id='examId'
                       name='examId'
-                      value={updatedData.examId}
+                      value={patient.examId || updatedData.examId}
                       onChange={handleCreate}/>
                 </div>
              </div>
@@ -75,7 +76,7 @@ console.log(updatedData)
                   type='text'
                   id='age'
                   name='age'
-                  value={updatedData.age}
+                  value={patient.age || updatedData.age}
                   onChange={handleCreate}/>
                </div>
              <div className='col-md-5'> 
@@ -85,7 +86,7 @@ console.log(updatedData)
                       type='text'
                       id='imageUrl'
                       name='ImageUrl'
-                      value={updatedData.imageURL}
+                      value={patient.imageURL || updatedData.imageURL}
                       onChange={handleCreate}/>
                       <img className="img_sty" src={updatedData.imageURL} alt=""/>
              </div>
@@ -98,7 +99,7 @@ console.log(updatedData)
                   type='text'
                   id='sex'
                   name='sex'
-                  value={updatedData.sex}
+                  value={patient.sex || updatedData.sex}
                   onChange={handleCreate}/>
                 </div>
                 <div className='col-md-5'> 
@@ -120,7 +121,7 @@ console.log(updatedData)
                   type='text'
                   id='bni'
                   name='bmi'
-                  value={updatedData.bmi}
+                  value={patient.bmi || updatedData.bmi}
                   onChange={handleCreate}/>
                 </div>
                 <div className='col-md-5'> 
@@ -130,7 +131,7 @@ console.log(updatedData)
                       type='text'
                       id='keyFindings'
                       name='keyFindings'
-                      value={updatedData.keyFindings}
+                      value={patient.keyFindings || updatedData.keyFindings}
                       onChange={handleCreate}/>
                 </div>
               </div>
@@ -142,7 +143,7 @@ console.log(updatedData)
                   type='text'
                   id='zipCode'
                   name='zipCode'
-                  value={updatedData.zipCode}
+                  value={patient.zipCode || updatedData.zipCode}
                   onChange={handleCreate}/>
                 </div>
                 <div className='col-md-5 inputToLeftF'> 
@@ -152,7 +153,7 @@ console.log(updatedData)
                   type='text'
                   id='brixiaScore'
                   name='brixiaScore'
-                  value={updatedData.brixiaScores}
+                  value={patient.brixiaScore || updatedData.brixiaScores}
                   onChange={handleCreate}/>
                 </div>
                </div>

@@ -17,33 +17,30 @@ const Admin = () => {
    //const { response } = useApi({ path: 'exams' });
   const [adminRowData, setAdminRowData] = useState()
   const [search, setSearch] = useState('');
-  // const columns = useMemo(() => Columns, []);
-  // //const data = useMemo(() => response, [response] );
-  // const data = useMemo(() => adminRowData, [adminRowData] );
   const adminDataURL = 'https://czi-covid-lypkrzry4q-uc.a.run.app/api/exams'
 
   const  handelSearch = (e) => {
     const value = e.target.value || undefined;
-    //setFilter("keyFindings", value);
     setSearch(value);
-  }
+   
+  } 
+
   const updateData = (e, rowId) => {
      adminRowData.filter(obj => {
-        if(obj._id === rowId){
+        if(obj.keyFindings.match(search) ){
           setGetRowData(obj)
        }
     });
     setIsUpdate(!isUpdate);
-   
   }
 
   const handelExamInfo = (e, examId) => {
     e.preventDefault();
     setIsExamInf(!isExamInf)
     }
+
   const deleteData = (e, rowId) => {
     setGetRowDataId(rowId);
-    //setIsDeleted(!isDeleted);
     alert(`Do you want to permanently delet this item ${getRowDataId}`)
     
   }
@@ -58,9 +55,17 @@ const Admin = () => {
           setAdminRowData(newData);
         })  
      }
-   fetchPateientDetails();
-   }, [adminDataURL]);
 
+    if(search){
+      const filteredData = adminRowData.filter(obj =>  obj.keyFindings.match(search), ) 
+      setAdminRowData(filteredData);
+     }
+    else{
+      console.log(search)
+         fetchPateientDetails();
+     }
+   }, [adminDataURL, search, adminRowData]);
+ 
   return (
     <>
       <div >
@@ -131,7 +136,7 @@ const Admin = () => {
             </div>
           </div>
         }
-          {isCreateExam && <CreateExam />}
+          {isCreateExam && <CreateExam/>}
           {isDeleted && alert(`Do you want to permanently delet this item ${getRowDataId}`)}
           {isUpdate && <UpdateExam update={getRowData} />}
           {isExamInf && < ExamDetails />}  
