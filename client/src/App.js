@@ -1,13 +1,8 @@
-import {
-  Route,
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+
 // Import necessary libraries and components
 import "./App.css";
 import { Admin, Exams, HeaderCom } from "./components";
-import { useApi } from "./hooks/use-api";
 
 // Create the router using react-router-dom
 const router = createBrowserRouter(
