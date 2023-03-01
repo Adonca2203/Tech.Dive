@@ -1,51 +1,47 @@
 import React, { useState } from 'react'
-import Admin from '../components/Admin';
+import { NavLink} from 'react-router-dom';
 
 const UpdateExam = (props) => {
     const [updatedData, setUpdatedData] = useState(props.update);
     const [patient, setPatient] = useState(
       {patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
-    const [cancel, setCancel] = useState(false);
 
-  const handleCreate = (e) => {
-    const name = e.target.name;
-    const value =  e.target.value;
-    setPatient({...patient, [name]:value})
-
-  }
-
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      //let id = patient.patientId.split('-')[3];
-      //console.log(patient)
-      if(patient.patientId && patient.age && patient.sex ){
-        let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
-        setPatient(newPatient)
-        console.log(newPatient)
-        alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
-        setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
-        setUpdatedData(props.update)
-      }
+    const handleCreate = (e) => {
+      const name = e.target.name;
+      const value =  e.target.value;
+      setPatient({...patient, [name]:value})
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if(patient.patientId && patient.age && patient.sex ){
+          let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
+          setPatient(newPatient);
+          alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
+          setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
+          setUpdatedData(props.update);
+        }
+      }
 
   return (
     <>
-     {!cancel ?
       <div> 
        <div>
        <h3>Edit Exam </h3>
       </div>
-      <div className='createBtn'>
-        <button type='submit' onClick={ handleSubmit } className='btn btn-primary  createBtn'> Update Exam</button>{"  "}
-        <button type='button' onClick={ () => setCancel(!cancel) } className='btn btn-danger'> Cancel</button>
+      <div >
+        <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'> Update Exam</button>{"  "}
+        <NavLink to='/exams'>
+          <button className='btn btn-danger'> Cancel</button>       
+        </NavLink>   
       </div>
       <section className='tableH'>
         <div >
-             <h5 className='rowIn' >Pateient info </h5> 
-             <h5 className='rowIn'>Exam info </h5> 
+             <h5 className='rowIn1'>Pateient info </h5> 
+             <h5 className='rowIn1'>Exam info </h5> 
       </div>
         <div className='container '>
-          <form className='row'>
+          <form   className='row'>
             <div className='row g-2'>
                <div className='col-md-5 inputToLeft'> 
                   <label htmlFor='patientId'>Patient ID</label>
@@ -146,7 +142,7 @@ const UpdateExam = (props) => {
                   value={patient.zipCode || updatedData.zipCode}
                   onChange={handleCreate}/>
                 </div>
-                <div className='col-md-5 inputToLeftF'> 
+                <div className='col-md-5 '> 
                  <lable htmlFor='brixiaScore'>Brixia Score</lable>
                   <input
                   className='form-control textcent'
@@ -156,14 +152,12 @@ const UpdateExam = (props) => {
                   value={patient.brixiaScore || updatedData.brixiaScores}
                   onChange={handleCreate}/>
                 </div>
-               </div>
-              
+               </div>            
          </form>
          </div>
       </section>
-    </div>  : <Admin/> }
-    </>
-    
+    </div>  
+    </>    
   )
 }
 

@@ -1,16 +1,14 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-
 import './App.css';
-
-import { Admin, Exams, HeaderCom } from './components';
+import { Admin, CreateExam, Exams, HeaderCom } from './components';
 import { Methods, useApi } from './hooks/use-api';
-
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<HeaderCom />}>
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
+            <Route path='/exams/create' element={<CreateExam />} />
         </Route>
     )
 )

@@ -20,7 +20,8 @@ code {
 }
 
 .sea-label {
-  margin: 1rem;
+  margin: 2px;
+  padding: 5px;
 }
 
 .nav {
@@ -43,13 +44,12 @@ code {
 }
 
 .btn_sty {
-  padding: 3px;
+  padding: 5px;
   align-items: center;
 }
 
 .createBtn {
   display: inline-block;
-
 }
 
 .createBtn>.button:not(:last-child) {
@@ -58,11 +58,14 @@ code {
 
 .rowIn {
   display: inline;
-  padding: 3px;
-  margin-right: 10rem;
-  margin-top: 42rem;
+  padding: 170px ;
 }
-
+.rowIn1 {
+  display: inline;
+  margin: 150px; 
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
 .inputToLeft {
   margin-left: 30px;
 }
@@ -109,6 +112,26 @@ td {
 label {
   font-weight: bold;
 }
-/* thead {
-  background-color: antiquewhite;
-} */
+.left_div1 {
+  float: left;
+}
+.inputForm {
+  width: 75pc;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  align-items: center;
+  justify-content: center;
+  
+  
+}
+.btnP {
+  padding-top: 20px;
+}
+.btnPa {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+Nlink {
+  text-decoration: none;
+  color: white;
+}
