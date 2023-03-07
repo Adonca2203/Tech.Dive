@@ -20,7 +20,7 @@ const Exams = (props) => {
     setIsExamInfo(false); // Hide ExamDetails component
   };
 
-  if (exams) {
+  if (exams && patients) {
     let resp = exams;
     let pats = patients;
 
@@ -65,7 +65,7 @@ const Exams = (props) => {
 
     return (
       <>
-        {!(isExamInfo || isPatientInfo) && (
+        {!(isExamInfo || isPatientInfo) && 
           <div>
             <div>
               <h1>Exam page</h1>
@@ -78,7 +78,7 @@ const Exams = (props) => {
               </table>
             </div>
           </div>
-        )}
+        }
         {isExamInfo && (
           <div>
             <button onClick={handleBackClick}>Back</button>
