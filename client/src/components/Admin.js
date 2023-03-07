@@ -1,21 +1,17 @@
-import React, { useState, useMemo, useLayoutEffect,useEffect } from 'react'
-//import { useFilters, useTable } from 'react-table';
+import React, { useState,useEffect } from 'react'
 import { NavLink} from 'react-router-dom';
-import { CreateExam, ExamDetails, UpdateExam } from '../subComponent';
 import { Columns } from '../data/columns';
+import { UpdateExam } from '../subComponent';
 //import {useApi } from '../hooks/use-api';
 
 const Admin = () => {
-
-    const [isCreateExam, setCreatExam] = useState(false);
+    
     const [isUpdate, setIsUpdate] = useState(false);
     const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
     const [getRowDataId, setGetRowDataId] = useState('');
     const [getRowData, setGetRowData] = useState({});
-    // // const [exam, setExam] = useState({});
-    //const { response } = useApi({ path: 'exams' });
     const [adminRowData, setAdminRowData] = useState()
     const [search, setSearch] = useState('');
     const adminDataURL = 'https://czi-covid-lypkrzry4q-uc.a.run.app/api/exams'
@@ -23,12 +19,7 @@ const Admin = () => {
     const  handelSearch = (e) => {
       const value = e.target.value || undefined;
       setSearch(value);
-    
     } 
-    // const handleUpdate = () => {
-    //   const id = e.target.
-    //     <NavLink  to='/exams/create' ></NavLink>
-    // }
 
     const updateData = (e, rowId) => {
       setSelectedId(rowId);
@@ -36,42 +27,39 @@ const Admin = () => {
           if(obj._id === rowId )
             setGetRowData(obj)
         });
-      setIsUpdate(!isUpdate);
-     }
- 
+        setIsUpdate(!isUpdate);
+      }
+    
     const handelExamInfo = (e, examId) => {
       e.preventDefault();
-      setIsExamInf(!isExamInf)
+      setIsExamInf(!isExamInf);
       }
 
     const deleteData = (e, rowId) => {
-      setGetRowDataId(rowId);
       alert(`Do you want to permanently delet this item ${getRowDataId}`)  
      }
 
     useEffect(() => {
       const fetchPateientDetails = async () => {
-          const rowData = await fetch(adminDataURL) 
-            rowData.json().then(obj => {
+          const res = await fetch(adminDataURL); 
+            res.json().then(obj => {
             const newData =  obj.exams.map(obj => (
                 {...obj, update: 'Update', delete: 'Delete'}
               ))
             setAdminRowData(newData);
-          })  
-      }
+          }) }  
         if(search){
           const filteredData = adminRowData.filter(obj =>  obj.keyFindings.match(search), ) 
           setAdminRowData(filteredData);
         }
-        else{
-            fetchPateientDetails();
-        }
+        else  fetchPateientDetails();
+
       }, [adminDataURL, search, adminRowData]);
     
     return (
       <>
         <div >
-          { !(isCreateExam || isUpdate || isDeleted || isExamInf  ) &&
+          { !(isUpdate || isDeleted || isExamInf  ) &&
             <div>
               <div className='btn_sty'>
                 <NavLink style={{color: 'white'}} to='/exams/create' >
@@ -116,13 +104,13 @@ const Admin = () => {
                             <td>{data.sex}</td>
                             <td>{data.bmi}</td>
                             <td>{data.zipCode}</td>
-                            <td>               
+                            <td>         
                                   <button 
                                     style={{color: 'blue'}} 
                                     type='button' className="btn bg-transparent"
                                     onClick= {(e) =>  updateData(e, data._id) }>                                        
                                     {data.update}
-                                  </button>                     
+                                  </button>                         
                             </td>
                             <td> 
                               <button 
@@ -141,8 +129,7 @@ const Admin = () => {
             </div>
           }
             {isDeleted && alert(`Do you want to permanently delet this item ${getRowDataId}`)}
-            {isUpdate && <UpdateExam update={getRowData} />}
-            {isExamInf && < ExamDetails />}  
+             {isUpdate && <UpdateExam update={getRowData} />}
         </div>
       </>
       );

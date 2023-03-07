@@ -2,6 +2,7 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 import { Admin, CreateExam, Exams, HeaderCom } from './components';
 import { Methods, useApi } from './hooks/use-api';
+import { UpdateExam } from "./subComponent";
 
 const router = createBrowserRouter(
     createRoutesFromElements(

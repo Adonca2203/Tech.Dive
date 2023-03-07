@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { NavLink} from 'react-router-dom';
+//import {useApi, Methods} from '../hooks/use-api';
 
 const CreateExam = () => {
-
+   
     const [patient, setPatient] = useState({});
 
     const handleCreate = (e) => {
@@ -14,17 +15,17 @@ const CreateExam = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       if(patient.patientId && patient.age && patient.sex ){
-      let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
+        let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
         setPatient(newPatient)
         console.log(newPatient)
         alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
         //setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''}); 
-      } 
+      };
+      
     }
-
+    
     return (
       <>
-   
         <div> 
           <div ><h2 className='btnP'>Create Exam </h2></div> 
           <div>     
@@ -37,7 +38,7 @@ const CreateExam = () => {
             </NavLink>               
           </div></div>
           <section className='tableH'>
-            <div  >
+            <div>
                 <h4  className='rowIn1'>Pateient info </h4> 
                 <h4 className='rowIn1'>Exam info </h4>      
             </div>
