@@ -66,7 +66,7 @@ router.post('/', async (req, res, next) => {
         var newExam = req.body;
 
         created = await Exams.create({
-            patientID: newExam['patientId'],
+            patientID: newExam['patientID'],
             image: newExam['image'],
             keyFindings: newExam['keyFindings'],
             brixiaScore: newExam['brixiaScore'],
