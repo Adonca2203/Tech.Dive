@@ -3,6 +3,7 @@ import { NavLink} from 'react-router-dom';
 import { Columns } from '../data/columns';
 import { UpdateExam } from '../subComponent';
  import {useApi } from '../hooks/use-api';
+ import CreateExam  from "../subComponent/CreateExam"
 
 const Admin = () => {
     
@@ -39,7 +40,6 @@ const Admin = () => {
     const deleteData = (e, rowId) => {
       alert(`Do you want to permanently delet this item ${rowId}`);
       setGetRowDataId(rowId);
-      console.log(getRowDataId)
     }
   
     useEffect(() => {
@@ -53,8 +53,9 @@ const Admin = () => {
           const filteredData = adminNewRowData.filter(obj =>  obj.keyFindings.match(search), ) 
           setAdminNewRowData(filteredData);
         }
+        
     }, [exams, search]);
- 
+
     return (
       <>
         <div >

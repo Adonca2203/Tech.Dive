@@ -1,53 +1,64 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { NavLink} from 'react-router-dom';
-//import {useApi, Methods} from '../hooks/use-api';
+import {useApi, Methods} from '../hooks/use-api';
 
-const CreateExam = () => {
+const CreateExam = (props) => {
    
     const [patient, setPatient] = useState({});
-    //const  {res} = useApi({path: "patients"}, Methods.post, patient );
-  
+    const [response, setResponse] = useState({});
+
     const handleCreate = (e) => {
         const name = e.target.name;
         const value =  e.target.value;
-        setPatient({...patient, [name]:value})
+        setPatient({...patient, [name]:value});
+     
       }
-
-    const handleRandom = () => {
-      
-    }
-
+  
     const handleSubmit = (e) => {
       e.preventDefault();
-      if(patient.patientId && patient.age && patient.sex ){
-        let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
-        setPatient(newPatient)
-        console.log(newPatient)
-        alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
-        setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''}); 
-      };
+      if(patient) {
+        let patientObj = null;
+        let status = 404;
+
+        fetch(`http://localhost:9000/patients/${patient.id}`, {method: 'GET'})
+        .then(res => res.json())
+        .then(res => status === res.status)
+        .then(res => patientObj === res);
+
+      if(status === 404){
+       fetch('http://localhost:9000/patients', {
+            method: 'POST',
+            body: patient
+        })
+            .then(res => res.json())
+            .then(res => setResponse(res));
+      }}
+      if(response){
+        alert(response)
+      }
+      else alert("There was an error creating the item...:(");
+     
     }
-    
+
     return (
       <>
         <div> 
           <div ><h2 className='btnP'>Create Exam </h2></div> 
-          <div>     
-          <div className='createBtn'>
-            <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'>Add Exam</button>{"  "}
-            <button type='submit' className='btn btn-primary  createBtn' > Random Exam</button>{"  "}
-            <NavLink to='/exams'>
-              <button   className='btn btn-danger'> Cancel
-              </button> 
-            </NavLink>               
-          </div></div>
-          <section className='tableH'>
             <div>
-                <h4  className='rowIn1'>Pateient info </h4> 
-                <h4 className='rowIn1'>Exam info </h4>      
-            </div>
-            <div>
-                <form className='inputForm'>
+              <form  className='inputForm'>
+                  <div>     
+                    <div className='createBtn'>
+                      <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'>Add Exam</button>{"  "}
+                      <button type='submit' className='btn btn-primary  createBtn'  > Random Exam</button>{"  "}
+                      <NavLink to='/exams'>
+                        <button   className='btn btn-danger'> Cancel</button> 
+                      </NavLink> 
+                    </div>              
+                  </div>
+                  <div>
+                      <h4  className='rowIn1'>Pateient info </h4> 
+                      <h4  className='rowIn1'>Exam info </h4>      
+                  </div>
                   <div className='row g-3 '>
                     <div className='col-md-5 inputToLeft'>          
                       <label htmlFor='patientId '>Patient ID</label>
@@ -159,8 +170,7 @@ const CreateExam = () => {
                     </div>
                 </div>        
             </form>
-            </div>   
-          </section>
+           </div>      
         </div>  
       </>   
     )
