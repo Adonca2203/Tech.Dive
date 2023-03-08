@@ -11,9 +11,6 @@ const Exams = (props) => {
   const { response: exams } = useApi({ path: "exams" });
   const { response: patients } = useApi({ path: "patients" });
 
-    const handleRowClick = (exam) => {
-        setSelectedExam(exam);
-      }
 
   // Function to handle row click
   const handleRowClick = (row) => {
@@ -59,7 +56,7 @@ const Exams = (props) => {
                         {" "}
                         <img
                           src={exam["image"]}
-                          alt="Photo"
+                          alt="Exam"
                           width="50"
                           height="50"
                         />{" "}
