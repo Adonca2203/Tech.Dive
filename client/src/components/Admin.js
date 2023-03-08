@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import { NavLink} from 'react-router-dom';
 import { Columns } from '../data/columns';
 import { UpdateExam } from '../subComponent';
-//import {useApi } from '../hooks/use-api';
+ import {useApi } from '../hooks/use-api';
 
 const Admin = () => {
     
@@ -12,10 +12,11 @@ const Admin = () => {
     const [isExamInf, setIsExamInf] = useState(false);
     const [getRowDataId, setGetRowDataId] = useState('');
     const [getRowData, setGetRowData] = useState({});
-    const [adminRowData, setAdminRowData] = useState()
+    const [adminNewRowData, setAdminNewRowData] = useState()
     const [search, setSearch] = useState('');
-    const adminDataURL = 'https://czi-covid-lypkrzry4q-uc.a.run.app/api/exams'
-
+    const {response: exams} = useApi({path: "exams"});
+    const {response: patients} = useApi({path: "patients"});
+    
     const  handelSearch = (e) => {
       const value = e.target.value || undefined;
       setSearch(value);
@@ -23,7 +24,7 @@ const Admin = () => {
 
     const updateData = (e, rowId) => {
       setSelectedId(rowId);
-      adminRowData.filter(obj => {
+      adminNewRowData.filter(obj => {
           if(obj._id === rowId )
             setGetRowData(obj)
         });
@@ -36,26 +37,24 @@ const Admin = () => {
       }
 
     const deleteData = (e, rowId) => {
-      alert(`Do you want to permanently delet this item ${getRowDataId}`)  
-     }
-
+      alert(`Do you want to permanently delet this item ${rowId}`);
+      setGetRowDataId(rowId);
+      console.log(getRowDataId)
+    }
+  
     useEffect(() => {
-      const fetchPateientDetails = async () => {
-          const res = await fetch(adminDataURL); 
-            res.json().then(obj => {
-            const newData =  obj.exams.map(obj => (
-                {...obj, update: 'Update', delete: 'Delete'}
-              ))
-            setAdminRowData(newData);
-          }) }  
-        if(search){
-          const filteredData = adminRowData.filter(obj =>  obj.keyFindings.match(search), ) 
-          setAdminRowData(filteredData);
-        }
-        else  fetchPateientDetails();
 
-      }, [adminDataURL, search, adminRowData]);
-    
+      if(exams && patients) {
+        const mergeData = exams.map(eobj => 
+          ({ ...patients.find((pobj) => (pobj._id === eobj.patientID) && pobj), ...eobj  }));
+          setAdminNewRowData(mergeData);
+      }
+      if(search){
+          const filteredData = adminNewRowData.filter(obj =>  obj.keyFindings.match(search), ) 
+          setAdminNewRowData(filteredData);
+        }
+    }, [exams, search]);
+ 
     return (
       <>
         <div >
@@ -83,23 +82,23 @@ const Admin = () => {
                     </tr> 
                   </thead>
                   <tbody>
-                      { adminRowData?.map((data) => {
-                        return(
+                      { adminNewRowData?.map((data) => {
+                        return( 
                           <> 
                           <tr key={data._id} className="tr_row">
-                            <td>{data.patientId}</td>
+                            <td>{data.patientID}</td>
                             <td>                       
                               <button 
                                 style={{color: 'blue'}} 
                                 type='button' 
                                 className="btn bg-transparent"
-                                onClick= {e => handelExamInfo(e, data.examId)}>
-                                {data.examId}
+                                onClick= {e => handelExamInfo(e, data._id)}>
+                                {data._id}
                               </button>
                             </td> 
-                            <td><img className='image_sty' src={data.imageURL} alt=" " /></td>
+                            <td><img className='image_sty' src={data.image} alt=" " /></td>
                             <td>{data.keyFindings}</td>
-                            <td>{data.brixiaScores}</td>
+                            <td>{data.brixiaScore.map(data => `${data},`)}</td>
                             <td>{data.age}</td>
                             <td>{data.sex}</td>
                             <td>{data.bmi}</td>
@@ -109,15 +108,15 @@ const Admin = () => {
                                     style={{color: 'blue'}} 
                                     type='button' className="btn bg-transparent"
                                     onClick= {(e) =>  updateData(e, data._id) }>                                        
-                                    {data.update}
+                                    Update
                                   </button>                         
                             </td>
                             <td> 
                               <button 
                                 style={{color: 'red'}} 
                                 type='button' className="btn bg-transparent"
-                                onClick= {(e) =>  deleteData(e, data._id) }>                                     
-                                {data.delete}
+                                onClick= {(e ) =>  deleteData(e, data._id) }>                                     
+                                Delete
                               </button>
                             </td>
                           </tr>
@@ -129,7 +128,7 @@ const Admin = () => {
             </div>
           }
             {isDeleted && alert(`Do you want to permanently delet this item ${getRowDataId}`)}
-             {isUpdate && <UpdateExam update={getRowData} />}
+            {isUpdate && <UpdateExam update={getRowData} />}
         </div>
       </>
       );

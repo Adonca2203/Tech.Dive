@@ -4,23 +4,19 @@ import { NavLink} from 'react-router-dom';
 const UpdateExam = (props) => {
     const [updatedData, setUpdatedData] = useState(props.update);
     const [patient, setPatient] = useState(
-      {patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
+      {patientID:'', age:'', sex: '', bmi: '', zipCode: '', _id: '', image:'', date: '', keyFindings: '', brixiaScore: ''});
 
     const handleCreate = (e) => {
       const name = e.target.name;
       const value =  e.target.value;
-      setPatient({...patient, [name]:value})
+      setPatient({...patient, [name]:value});
+      
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(patient.patientId && patient.age && patient.sex ){
-          let newPatient = {...patient, id:patient.patientId, date: (new Date()).toLocaleDateString().toString() }
-          setPatient(newPatient);
-          alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
-          setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''});
-          setUpdatedData(props.update);
-        }
+        let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
+        setPatient(newPatient);
       }
 
   return (
@@ -29,41 +25,40 @@ const UpdateExam = (props) => {
        <div>
        <h3>Edit Exam </h3>
       </div>
-      <div >
-        <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'> Update Exam</button>{"  "}
-        <NavLink to='/exams'>
-          <button className='btn btn-danger'> Cancel</button>       
-        </NavLink>   
-      </div>
-      <section className='tableH'>
-        <div >
-             <h5 className='rowIn1'>Pateient info </h5> 
-             <h5 className='rowIn1'>Exam info </h5> 
-      </div>
         <div className='container '>
-          <form   className='row'>
+          <form >
+              <div >
+                <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'> Update Exam</button>{"  "}
+                <NavLink to='/exams'>
+                  <button className='btn btn-danger'> Cancel</button>       
+                </NavLink>   
+            </div>
+            <div >
+              <h5 className='rowIn1'>Pateient info </h5> 
+              <h5 className='rowIn1'>Exam info </h5> 
+            </div>
             <div className='row g-2'>
-               <div className='col-md-5 inputToLeft'> 
-                  <label htmlFor='patientId'>Patient ID</label>
-                    <input
-                    className='form-control textcent'
-                    type='text'
-                    id='patientId'
-                    name='patientId'
-                    value={patient.patientId || updatedData.patientId}
-                    onChange={handleCreate}/>
-               </div>
-               <div className='col-md-5 '> 
-                    <label htmlFor='examId'>Exam ID</label>
-                      <input
-                      className='form-control textcent'
-                      type='text'
-                      id='examId'
-                      name='examId'
-                      value={patient.examId || updatedData.examId}
-                      onChange={handleCreate}/>
-                </div>
-             </div>
+              <div className='col-md-5 inputToLeft'> 
+                <label htmlFor='patientId'>Patient ID</label>
+                <input
+                  className='form-control textcent'
+                  type='text'
+                  id='patientId'
+                  name='patientId'
+                  value={patient.patientID || updatedData.patientID}
+                  onChange={handleCreate}/>
+              </div>
+              <div className='col-md-5 '> 
+                <label htmlFor='examId'>Exam ID</label>
+                <input
+                className='form-control textcent'
+                type='text'
+                id='examId'
+                name='examId'
+                value={patient._id || updatedData._id}
+                onChange={handleCreate}/>
+              </div>
+              </div>
              <div className='row g-2'>
                <div className='col-md-5 inputToLeft'> 
                  <label htmlFor='sex'>Age</label>
@@ -82,9 +77,9 @@ const UpdateExam = (props) => {
                       type='text'
                       id='imageUrl'
                       name='ImageUrl'
-                      value={patient.imageURL || updatedData.imageURL}
+                      value={patient.image || updatedData.image}
                       onChange={handleCreate}/>
-                      <img className="img_sty" src={updatedData.imageURL} alt=""/>
+                      <img className="img_sty" src={updatedData.image} alt=""/>
              </div>
              </div>
              <div className='row g-2'>
@@ -149,13 +144,13 @@ const UpdateExam = (props) => {
                   type='text'
                   id='brixiaScore'
                   name='brixiaScore'
-                  value={patient.brixiaScore || updatedData.brixiaScores}
+                  value={patient.brixiaScore || updatedData.brixiaScore}
                   onChange={handleCreate}/>
                 </div>
                </div>            
          </form>
          </div>
-      </section>
+      
     </div>  
     </>    
   )

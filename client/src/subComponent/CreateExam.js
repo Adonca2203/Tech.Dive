@@ -5,12 +5,17 @@ import { NavLink} from 'react-router-dom';
 const CreateExam = () => {
    
     const [patient, setPatient] = useState({});
-
+    //const  {res} = useApi({path: "patients"}, Methods.post, patient );
+  
     const handleCreate = (e) => {
         const name = e.target.name;
         const value =  e.target.value;
         setPatient({...patient, [name]:value})
       }
+
+    const handleRandom = () => {
+      
+    }
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -19,9 +24,8 @@ const CreateExam = () => {
         setPatient(newPatient)
         console.log(newPatient)
         alert(`new patient with id COVID-19-${newPatient.patientId} has been created`)
-        //setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''}); 
+        setPatient({patientId:'', age:'', sex: '', bmi: '', zipCode: '', examId: '', imageUrl:'', date: '', keyFindings: '', brixiaScore: ''}); 
       };
-      
     }
     
     return (
@@ -31,7 +35,7 @@ const CreateExam = () => {
           <div>     
           <div className='createBtn'>
             <button type='submit' onClick={handleSubmit} className='btn btn-primary  createBtn'>Add Exam</button>{"  "}
-            <button type='submit' className='btn btn-primary  createBtn'> Random Exam</button>{"  "}
+            <button type='submit' className='btn btn-primary  createBtn' > Random Exam</button>{"  "}
             <NavLink to='/exams'>
               <button   className='btn btn-danger'> Cancel
               </button> 
