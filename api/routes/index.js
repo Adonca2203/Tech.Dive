@@ -8,7 +8,8 @@ router.get('/', async (req, res, next) => {
 
     // await DataStore.generateData();
 
-    res.send("This has been moved to /exams and /patients!");
+    // res.send("This has been moved to /exams and /patients!");
+    res.redirect("/exams");
 });
 
 module.exports = router;
