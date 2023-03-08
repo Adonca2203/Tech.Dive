@@ -7,11 +7,11 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const mongoDB = `${process.env.URI}:${process.env.URIPWD}`;
-;var indexRouter = require('./routes/index');
+
+var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var examsRouter = require('./routes/exam');
 var patientRouter = require('./routes/patient');
-const { connect } = require('net');
 
 var app = express();
 
