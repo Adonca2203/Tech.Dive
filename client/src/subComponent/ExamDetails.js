@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useApi } from "../hooks/use-api";
+
+
+
 
 const ExamDetails = ({ exam }) => {
   const tableStyle = {
@@ -24,6 +28,21 @@ const ExamDetails = ({ exam }) => {
     maxWidth: "400px",
     height: "auto",
   };
+
+  const [patient, setPatient] = useState([])
+  const { response: patients } = useApi({ path: "patients" });
+  let pats =  patients
+
+
+  useEffect(() => {
+    fetch("https://hack-diversityapi.onrender.com/patients")
+    .then((response) => response.json())
+    .then ((data) => {
+      setPatient(data)
+    })
+  },[]);
+
+  // console.log(patient.data._id)
 
   return (
     <div>
@@ -54,7 +73,7 @@ const ExamDetails = ({ exam }) => {
           </tr>
           <tr>
             <th style={thStyle}>Age:</th>
-            <td style={tdStyle}>{exam.age}</td>
+            <td style={tdStyle}>{patient.age}</td>
           </tr>
           <tr>
             <th style={thStyle}>Sex:</th>
