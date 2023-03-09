@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useApi } from "../hooks/use-api";
 
 
-
-
 const ExamDetails = ({ exam }) => {
   const tableStyle = {
     fontSize: "24px",
@@ -29,20 +27,47 @@ const ExamDetails = ({ exam }) => {
     height: "auto",
   };
 
-  const [patient, setPatient] = useState([])
-  const { response: patients } = useApi({ path: "patients" });
-  let pats =  patients
+  const PatientData = () => {
+    const [patient, setPatient] = useState([])
+    const { response: patients } = useApi({ path: "patients" });
+    let pats =  patients
+  
+  
+    useEffect(() => {
+      fetch("https://hack-diversityapi.onrender.com/patients")
+      .then((response) => response.json())
+      .then ((data) => {
+        setPatient(data)
+      })
+    },[]);
 
-
-  useEffect(() => {
-    fetch("https://hack-diversityapi.onrender.com/patients")
-    .then((response) => response.json())
-    .then ((data) => {
-      setPatient(data)
-    })
-  },[]);
-
-  // console.log(patient.data._id)
+    if (exam.patient.id === patient.id) {
+    return(
+      <div>
+        {patient.map((patient) => {
+          return (
+            <div key={patient.id}>
+              <tr>
+                <th>Age:</th>
+                <td>{patient.age}</td>
+              </tr>
+              <tr>
+                <th>Sex:</th>
+                <td>{patient.sex}</td>
+              </tr>
+              <tr>
+                <th>BMI:</th>
+                <td>{patient.bmi}</td>
+              </tr>
+  
+            </div>
+          )
+        }
+        )}
+      </div>
+    )
+  }
+}
 
   return (
     <div>
@@ -73,7 +98,7 @@ const ExamDetails = ({ exam }) => {
           </tr>
           <tr>
             <th style={thStyle}>Age:</th>
-            <td style={tdStyle}>{patient.age}</td>
+            <td style={tdStyle}>{exam.age}</td>
           </tr>
           <tr>
             <th style={thStyle}>Sex:</th>
@@ -89,6 +114,7 @@ const ExamDetails = ({ exam }) => {
           </tr>
         </tbody>
       </table>
+
     </div>
   );
 };
