@@ -10,6 +10,7 @@ const router = createBrowserRouter(
             <Route path='exams' element={<Exams />} />
             <Route path='/admin' element={<Admin />} />
             <Route path='/exams/create' element={<CreateExam />} />
+            <Route pathe="/exams/:id" element={<UpdateExam/>}/>
         </Route>
     )
 )

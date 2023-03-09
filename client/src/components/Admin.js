@@ -1,9 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { NavLink} from 'react-router-dom';
 import { Columns } from '../data/columns';
-import { UpdateExam } from '../subComponent';
- import {useApi } from '../hooks/use-api';
- import CreateExam  from "../subComponent/CreateExam"
+import {  UpdateExam } from '../subComponent';
+import {useApi } from '../hooks/use-api';
 
 const Admin = () => {
     
@@ -13,22 +12,22 @@ const Admin = () => {
     const [isExamInf, setIsExamInf] = useState(false);
     const [getRowDataId, setGetRowDataId] = useState('');
     const [getRowData, setGetRowData] = useState({});
-    const [adminNewRowData, setAdminNewRowData] = useState()
+    const [adminNewRowData, setAdminNewRowData] = useState();
     const [search, setSearch] = useState('');
+    const [status, setStatus] = useState('');
     const {response: exams} = useApi({path: "exams"});
     const {response: patients} = useApi({path: "patients"});
-    
+    //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
+
     const  handelSearch = (e) => {
       const value = e.target.value || undefined;
       setSearch(value);
     } 
-
+    
     const updateData = (e, rowId) => {
       setSelectedId(rowId);
-      adminNewRowData.filter(obj => {
-          if(obj._id === rowId )
-            setGetRowData(obj)
-        });
+      const selectedPati =  adminNewRowData.find(obj => obj.patientID === rowId );
+        setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
       }
     
@@ -39,11 +38,17 @@ const Admin = () => {
 
     const deleteData = (e, rowId) => {
       alert(`Do you want to permanently delet this item ${rowId}`);
-      setGetRowDataId(rowId);
+       const deletExam = {
+        methods: "DELETE"
+       };
+          fetch(`http://localhost:9000/exams/${rowId}`,deletExam)
+          .then(res => res.json())
+          .then(data => setStatus(data));
+          setGetRowDataId(rowId);
+      
     }
   
     useEffect(() => {
-
       if(exams && patients) {
         const mergeData = exams.map(eobj => 
           ({ ...patients.find((pobj) => (pobj._id === eobj.patientID) && pobj), ...eobj  }));
@@ -53,9 +58,9 @@ const Admin = () => {
           const filteredData = adminNewRowData.filter(obj =>  obj.keyFindings.match(search), ) 
           setAdminNewRowData(filteredData);
         }
-        
-    }, [exams, search]);
-
+      
+    }, [exams, search,]);
+    
     return (
       <>
         <div >
@@ -75,7 +80,7 @@ const Admin = () => {
                   value= {search}
                   onChange= {handelSearch} />
               </div> 
-              <div >
+              <div className='colAdm'>
                 <table className='table table_center'>
                   <thead>
                     <tr>
@@ -104,13 +109,13 @@ const Admin = () => {
                             <td>{data.sex}</td>
                             <td>{data.bmi}</td>
                             <td>{data.zipCode}</td>
-                            <td>         
-                                  <button 
-                                    style={{color: 'blue'}} 
-                                    type='button' className="btn bg-transparent"
-                                    onClick= {(e) =>  updateData(e, data._id) }>                                        
-                                    Update
-                                  </button>                         
+                            <td> 
+                               <button 
+                                 style={{color: 'blue'}} 
+                                 type='button' className="btn bg-transparent"
+                                 onClick= {(e) =>  updateData(e, data.patientID) }>                                        
+                                 Update
+                                 </button>                   
                             </td>
                             <td> 
                               <button 
@@ -128,7 +133,6 @@ const Admin = () => {
               </div>
             </div>
           }
-            {isDeleted && alert(`Do you want to permanently delet this item ${getRowDataId}`)}
             {isUpdate && <UpdateExam update={getRowData} />}
         </div>
       </>

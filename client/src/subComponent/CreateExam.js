@@ -1,42 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState, useContext } from 'react'
 import { NavLink} from 'react-router-dom';
-import {useApi, Methods} from '../hooks/use-api';
 
 const CreateExam = (props) => {
    
     const [patient, setPatient] = useState({});
-    const [response, setResponse] = useState({});
-
+   
     const handleCreate = (e) => {
         const name = e.target.name;
         const value =  e.target.value;
         setPatient({...patient, [name]:value});
-     
       }
-  
+    
     const handleSubmit = (e) => {
       e.preventDefault();
-      if(patient) {
-        let patientObj = null;
-        let status = 404;
-
-        fetch(`http://localhost:9000/patients/${patient.id}`, {method: 'GET'})
-        .then(res => res.json())
-        .then(res => status === res.status)
-        .then(res => patientObj === res);
-
-      if(status === 404){
-       fetch('http://localhost:9000/patients', {
-            method: 'POST',
-            body: patient
-        })
-            .then(res => res.json())
-            .then(res => setResponse(res));
-      }}
-      if(response){
-        alert(response)
-      }
-      else alert("There was an error creating the item...:(");
+      //else alert("There was an error creating the item...:(");
      
     }
 
