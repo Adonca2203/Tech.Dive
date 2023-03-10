@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const API_ROOT = 'http://localhost:9000';
+const API_ROOT = 'https://hack-diversityapi.onrender.com';
 
 export const Methods = {
     GET: "GET",

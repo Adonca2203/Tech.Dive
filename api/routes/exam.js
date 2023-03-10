@@ -8,31 +8,43 @@ const PaginationMetadata = require('../services/PaginationMetadata');
  */
 router.get('/', async (req, res, next) => {
     //Pagination Metadata
-    const { pageNumber, pageSize } = req.query;
+    var { pageNumber, pageSize } = req.query;
 
     if (!pageNumber) {
-        req.query.pageNumber = 1;
+        pageNumber = 1;
     }
     if (!pageSize) {
-        req.query.pageSize = 10;
+        pageSize = 10;
     }
 
     try {
         const exams = await Exams.find().exec();
         const paginationMetaData = new PaginationMetadata(exams.length,
-            parseInt(req.query.pageSize),
-            parseInt(req.query.pageNumber));
+            parseInt(pageNumber),
+            parseInt(pageSize));
+        let pipeline = [
+            {
+                $lookup: {
+                    from: 'patients',
+                    localField: 'patientID',
+                    foreignField: '_id',
+                    as: 'patient'
+                }
+            },
+            { $limit: parseInt(pageSize) },
+            { $skip: (parseInt(pageNumber - 1) * pageSize) }
+        ];
+        let aggregated = await Exams.aggregate(pipeline).exec();
+        if (aggregated) {
+            const returnData = aggregated;
 
-        const returnData = await Exams.find()
-            .limit(parseInt(req.query.pageSize))
-            .skip((parseInt(req.query.pageNumber - 1) * req.query.pageSize))
-            .exec();
+            res.set({
+                "X-Pagination": JSON.stringify(paginationMetaData)
+            });
 
-        res.set({
-            "X-Pagination": JSON.stringify(paginationMetaData)
-        });
-
-        return res.status(200).send(returnData);
+            return res.status(200).send(returnData);
+        }
+        throw new Error();
     }
     catch (err) {
         console.error(err.message);
@@ -66,7 +78,7 @@ router.post('/', async (req, res, next) => {
         var newExam = req.body;
 
         created = await Exams.create({
-            patientID: newExam['patientId'],
+            patientID: newExam['patientID'],
             image: newExam['image'],
             keyFindings: newExam['keyFindings'],
             brixiaScore: newExam['brixiaScore'],
