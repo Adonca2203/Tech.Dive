@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
-function PatientDetails() {
+const PatientDetails = ({ id }) => {
   return (
-    <div><h3>Patient Details </h3></div>
-  )
-}
+    <div>
+      <h3>Patient Details </h3>
+      <p>{id}</p>
+    </div>
+  );
+};
 
 export default PatientDetails;
