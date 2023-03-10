@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useApi, Methods } from '../hooks/use-api';
-
+import React, { useEffect, useState, useRef } from 'react'
+import { NavLink } from 'react-router-dom';
+//import { useApi, Methods } from '../hooks/use-api';
+const API_ROOT = 'http://localhost:9000';
 const CreatePatient = (props) => {
-	const navigate = useNavigate();
+	const performingCall = useRef(false);
+	const [created, setCreated] = useState();
 	const initPatient = {
 		firstName: "",
 		lastName: "",
@@ -19,13 +20,51 @@ const CreatePatient = (props) => {
 	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		if (performingCall.current || created) return;
 		var form = document.getElementsByTagName("form")[0];
 		if (!form.checkValidity()) {
 			form.reportValidity();
 			return;
 		}
-		navigate("/patients/created", { state: { pat: patient } })
+		fetch(`${API_ROOT}/patients`, {
+			method: "POST",
+			body: JSON.stringify(patient),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(res => res.json())
+			.then(res => setCreated(res));
+		performingCall.current = true;
 	};
+	if (created) {
+		if (created.error) {
+			return (
+				<>
+					{Object.keys(created.error).map((key, i) => (
+						<h2 key={i}>{created.error[key]}</h2>
+					))}
+					<NavLink style={{ color: 'white' }} to='/admin'>
+						<button className='btn btn-primary mx-2'>Back to Admin</button>
+					</NavLink>
+					<NavLink style={{ color: 'white' }} to='/patients/create'>
+						<button className='btn btn-primary mx-2'>Create New Patient</button>
+					</NavLink>
+				</>
+			);
+		}
+		return (
+			<>
+				<h1>{created.message}</h1>
+				<NavLink style={{ color: 'white' }} to='/admin'>
+					<button className='btn btn-primary mx-2'>Back to Admin</button>
+				</NavLink>
+				<NavLink style={{ color: 'white' }} to='/patients/create'>
+					<button className='btn btn-primary mx-2'>Create New Patient</button>
+				</NavLink>
+			</>
+		);
+	}
 	return (
 		<>
 			<div>

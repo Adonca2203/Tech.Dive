@@ -1,7 +1,7 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import './App.css';
 import { Admin, CreateExam, Exams, HeaderCom } from './components';
-import { CreatePatient, CreatePatientPost } from './subComponent';
+import { CreatePatient } from './subComponent';
 import { Methods, useApi } from './hooks/use-api';
 import { UpdateExam } from "./subComponent";
 
@@ -12,7 +12,6 @@ const router = createBrowserRouter(
             <Route path='/admin' element={<Admin />} />
             <Route path='/exams/create' element={<CreateExam />} />
             <Route path='/patients/create' element={<CreatePatient />} />
-            <Route path='/patients/created' element={<CreatePatientPost />} />
             <Route path="/exams/:id" element={<UpdateExam/>}/>
         </Route>
     )
