@@ -11,33 +11,14 @@ const CreateExam = (props) => {
         const name = e.target.name;
         const value =  e.target.value;
         setPatient({...patient, [name]:value});
-     
       }
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      if(patient) {
-        let patientObj = null;
-        let status = 404;
+        if (patient) {
 
-        fetch(`http://localhost:9000/patients/${patient.id}`, {method: 'GET'})
-        .then(res => res.json())
-        .then(res => status === res.status)
-        .then(res => patientObj === res);
-
-      if(status === 404){
-       fetch('http://localhost:9000/patients', {
-            method: 'POST',
-            body: patient
-        })
-            .then(res => res.json())
-            .then(res => setResponse(res));
-      }}
-      if(response){
-        alert(response)
-      }
+        }
       else alert("There was an error creating the item...:(");
-     
     }
 
     return (

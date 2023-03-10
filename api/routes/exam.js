@@ -66,11 +66,11 @@ router.post('/', async (req, res, next) => {
         var newExam = req.body;
 
         created = await Exams.create({
-            patientID: newExam['patientId'],
-            image: newExam['image'],
-            keyFindings: newExam['keyFindings'],
-            brixiaScore: newExam['brixiaScore'],
-            bmi: newExam['bmi']
+            patientID: newExam.patientID,
+            image: newExam.image,
+            keyFindings: newExam.keyFindings,
+            brixiaScore: newExam.brixiaScore,
+            bmi: newExam.bmi
         });
 
         if (created) {

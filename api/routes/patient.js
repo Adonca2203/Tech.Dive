@@ -66,17 +66,18 @@ router.get('/:id', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     try {
         var newPatient = req.body;
-
+        console.log(newPatient);
         created = await Patients.create({
-            firstName: newPatient['firstName'],
-            lastName: newPatient['lastName'],
-            age: newPatient['age'],
-            sex: newPatient['sex'],
-            zipCode: newPatient['zipCode']
+            firstName: newPatient.firstName,
+            lastName: newPatient.lastName,
+            age: newPatient.age,
+            sex: newPatient.sex,
+            zipCode: newPatient.zipCode
         });
 
         if (created) {
-            return res.status(201).send("Successfully created!");
+            let message = { message: "Successfully created!"}
+            return res.status(201).send(message);
         }
     }
     catch (err) {
