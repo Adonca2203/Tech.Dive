@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
-import {  UpdateExam, ExamDetails } from '../subComponent';
-import {useApi } from '../hooks/use-api';
+import { UpdateExam, ExamDetails } from '../subComponent';
+import { useApi } from '../hooks/use-api';
 import CreateExam from "../subComponent/CreateExam";
 
 const Admin = () => {
@@ -40,9 +40,10 @@ const Admin = () => {
     const deleteData = (e, rowId) => {
         alert(`Do you want to permanently delet this item ${rowId}`);
         fetch(`http://localhost:9000/exams/${rowId}`, {
-          method: "DELETE"})
-          .then(res => res.json())
-          .then(res => setStatus(res));
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(res => setStatus(res));
         setGetRowDataId(rowId);
 
     }
@@ -61,76 +62,79 @@ const Admin = () => {
     }, [exams, search,]);
 
     return (
-      <>
-        <div >
-          { !(isUpdate || isDeleted || isExamInf  ) &&
-            <div>
-              <div className='btn_sty'>
-                <NavLink style={{color: 'white'}} to='/exams/create' >
-                  <button className='btn btn-primary'>Create Exam </button>    
-                </NavLink>  
-              </div>  
-              <NavLink style={{color: 'white'}} to='/exams/exam' >ggg</NavLink>      
-              <div>
-                <label className='sea-label'>Search:</label>
-                <input 
-                  type='text' 
-                  id='search'
-                  name='search'
-                  value= {search}
-                  onChange= {handelSearch} />
-              </div> 
-              <div className='colAdm'>
-                <table className='table table_center'>
-                  <thead>
-                    <tr>
-                      {Columns.map((headers, id) =>  <th  key={id}>{headers.Header}</th>)}
-                    </tr> 
-                  </thead>
-                  <tbody>
-                      { adminNewRowData?.map((data) => {
-                        return( 
-                          <> 
-                          <tr key={data._id} className="tr_row">
-                            <td>{data.patientID}</td>
-                            <td>
-                              <NavLink  to='/exams/exam'>{data._id}</NavLink>                    
-                            </td> 
-                            <td><img className='image_sty' src={data.image} alt=" " /></td>
-                            <td>{data.keyFindings}</td>
-                            <td>{data.brixiaScore.map(data => `${data},`)}</td>
-                            <td>{data.age}</td>
-                            <td>{data.sex}</td>
-                            <td>{data.bmi}</td>
-                            <td>{data.zipCode}</td>
-                            <td> 
-                               <button 
-                                 style={{color: 'blue'}} 
-                                 type='button' className="btn bg-transparent"
-                                 onClick= {(e) =>  updateData(e, data.patientID) }>                                        
-                                 Update
-                                 </button>                   
-                            </td>
-                            <td> 
-                              <button 
-                                style={{color: 'red'}} 
-                                type='button' className="btn bg-transparent"
-                                onClick= {(e ) =>  deleteData(e, data._id) }>                                     
-                                Delete
-                              </button>
-                            </td>
-                          </tr>
-                          </>)       
-                      })}     
-                  </tbody>
-                </table>  
-              </div>
+        <>
+            <div >
+                {!(isUpdate || isDeleted || isExamInf) &&
+                    <div>
+                        <div className='btn_sty'>
+                            <NavLink style={{ color: 'white' }} to='/exams/create' >
+                                <button className='btn btn-primary'>Create Exam </button>
+                            </NavLink>
+                            <NavLink style={{ color: 'white' }} to='/patients/create' >
+                                <button className='btn btn-primary mx-3'>Create Patient </button>
+                            </NavLink>
+                        </div>
+                        <NavLink style={{ color: 'white' }} to='/exams/exam' >ggg</NavLink>
+                        <div>
+                            <label className='sea-label'>Search:</label>
+                            <input
+                                type='text'
+                                id='search'
+                                name='search'
+                                value={search}
+                                onChange={handelSearch} />
+                        </div>
+                        <div className='colAdm'>
+                            <table className='table table_center'>
+                                <thead>
+                                    <tr>
+                                        {Columns.map((headers, id) => <th key={id}>{headers.Header}</th>)}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {adminNewRowData?.map((data) => {
+                                        return (
+                                            <>
+                                                <tr key={data._id} className="tr_row">
+                                                    <td>{data.patientID}</td>
+                                                    <td>
+                                                        <NavLink to='/exams/exam'>{data._id}</NavLink>
+                                                    </td>
+                                                    <td><img className='image_sty' src={data.image} alt=" " /></td>
+                                                    <td>{data.keyFindings}</td>
+                                                    <td>{data.brixiaScore.map(data => `${data},`)}</td>
+                                                    <td>{data.age}</td>
+                                                    <td>{data.sex}</td>
+                                                    <td>{data.bmi}</td>
+                                                    <td>{data.zipCode}</td>
+                                                    <td>
+                                                        <button
+                                                            style={{ color: 'blue' }}
+                                                            type='button' className="btn bg-transparent"
+                                                            onClick={(e) => updateData(e, data.patientID)}>
+                                                            Update
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            style={{ color: 'red' }}
+                                                            type='button' className="btn bg-transparent"
+                                                            onClick={(e) => deleteData(e, data._id)}>
+                                                            Delete
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </>)
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                {isUpdate && <UpdateExam update={getRowData} />}
             </div>
-          }
-            {isUpdate && <UpdateExam update={getRowData} />}
-        </div>
-      </>
-      );
-  }
+        </>
+    );
+}
 
 export default Admin;
