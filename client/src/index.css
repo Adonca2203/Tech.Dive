@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 .ul_top li {
@@ -16,7 +16,6 @@ code {
   margin: 5px;
   padding: 10px;
   color: white;
-
 }
 
 .sea-label {
@@ -30,8 +29,6 @@ code {
   justify-content: center;
   align-items: center;
   text-decoration: underline;
-
-
 }
 
 .nav li.active {
@@ -49,10 +46,9 @@ code {
 
 .createBtn {
   display: inline-block;
-
 }
 
-.createBtn>.button:not(:last-child) {
+.createBtn > .button:not(:last-child) {
   padding: 4px;
 }
 
@@ -71,18 +67,34 @@ code {
   margin-left: 24rem;
 }
 .tableH {
-
+  width: 80%;
   margin: auto;
-  padding-right: 55px;
-  gap: 5px
+  display: table;
+  border-spacing: 0;
+  border-collapse: collapse;
 }
 
 th,
 td {
-  padding-left: 10px;
-  font-size: small;
+  text-align: left;
+  padding: 16px;
+  border-bottom: 1px solid rgba(244, 244, 244, 10);
+}
+
+.clickable {
+  color: #033fb4;
+}
+
+.clickable:hover {
+  color: #0056b3;
+  opacity: 0.7;
 }
 
 thead {
-  background-color: antiquewhite;
+  vertical-align: middle;
+  border-color: inherit;
+}
+tbody {
+  vertical-align: middle;
+  border-color: inherit;
 }

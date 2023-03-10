@@ -7,6 +7,7 @@ const Exams = (props) => {
   const [isPatientInfo, setIsPatientInfo] = useState(false);
   const [isExamInfo, setIsExamInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Track selected row
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const { response: exams } = useApi({ path: "exams" });
   const { response: patients } = useApi({ path: "patients" });
 
@@ -16,10 +17,15 @@ const Exams = (props) => {
     setSelectedRow(row); // Set selected row to the clicked row
     setIsExamInfo(true); // Display ExamDetails component
   };
+  const handlePatientClick = (id) => {
+    setSelectedPatient(id); // Set selected row to the clicked row
+    setIsPatientInfo(true); // Display ExamDetails component
+  };
 
   // Function to handle back button click
   const handleBackClick = () => {
     setIsExamInfo(false); // Hide ExamDetails component
+    setIsPatientInfo(false);
   };
 
   if (exams && patients) {
@@ -47,10 +53,17 @@ const Exams = (props) => {
     const tableBody = (
       <tbody>
         {resp.map((exam) => (
-          <tr key={exam._id} onClick={() => handleRowClick(exam)}>
+          <tr key={exam._id}>
             {/* Clicking on this row displays ExamDetails component */}
-            <td>{exam._id}</td>
-            <td>{exam.patientID}</td>
+            <td className="clickable" onClick={() => handleRowClick(exam)}>
+              {exam._id}
+            </td>
+            <td
+              className="clickable"
+              onClick={() => handlePatientClick(exam.patientID)}
+            >
+              {exam.patientID}
+            </td>
             <td>
               <img src={exam.image} alt="Photo" width="50" height="50" />
             </td>
@@ -58,7 +71,7 @@ const Exams = (props) => {
             <td>{exam.brixiaScore}</td>
             <td>{pats.find((p) => p._id === exam.patientID).age}</td>
             <td>{pats.find((p) => p._id === exam.patientID).sex}</td>
-            <td>{pats.find((p) => p._id === exam.patientID).bmi}</td>
+            <td>{exam.bmi}</td>
             <td>{pats.find((p) => p._id === exam.patientID).zipCode}</td>
           </tr>
         ))}
@@ -67,27 +80,33 @@ const Exams = (props) => {
 
     return (
       <>
-        {!(isExamInfo || isPatientInfo) && 
+        {!(isExamInfo || isPatientInfo) && (
           <div>
             <div>
               <h1>Exam page</h1>
               <Search />
             </div>
             <div>
-              <table className="tableH">
+              <table className="tableH" role="table">
                 {tableHeader}
                 {tableBody}
               </table>
             </div>
           </div>
-        }
+        )}
         {isExamInfo && (
           <div>
             <button onClick={handleBackClick}>Back</button>
             <ExamDetails exam={selectedRow} />
           </div>
         )}
-        {isPatientInfo && <PatientDetails />}
+        {isPatientInfo && (
+          <div>
+            {" "}
+            <button onClick={handleBackClick}>Back</button>
+            <PatientDetails id={selectedPatient} />
+          </div>
+        )}
       </>
     );
   }
