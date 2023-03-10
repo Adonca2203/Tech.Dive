@@ -13,6 +13,7 @@ const router = createBrowserRouter(
             <Route path='/exams/create' element={<CreateExam />} />
             <Route path='/patients/create' element={<CreatePatient />} />
             <Route path='/patients/created' element={<CreatePatientPost />} />
+            <Route path="/exams/:id" element={<UpdateExam/>}/>
         </Route>
     )
 )
@@ -52,4 +53,3 @@ function App() {
 }
 
 export default App;
-
