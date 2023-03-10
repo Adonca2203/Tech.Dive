@@ -35,7 +35,7 @@ const ExamDetails = ({ exam }) => {
 
     console.log(pats)
     console.log(resp)
-const question =  
+
 
 
   return (
