@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { NavLink} from 'react-router-dom';
 import { Columns } from '../data/columns';
-import {  UpdateExam } from '../subComponent';
+import {  UpdateExam, ExamDetails } from '../subComponent';
 import {useApi } from '../hooks/use-api';
 
 const Admin = () => {
@@ -34,6 +34,7 @@ const Admin = () => {
     const handelExamInfo = (e, examId) => {
       e.preventDefault();
       setIsExamInf(!isExamInf);
+      <ExamDetails examId={examId}/>
       }
 
     const deleteData = (e, rowId) => {
@@ -70,7 +71,8 @@ const Admin = () => {
                 <NavLink style={{color: 'white'}} to='/exams/create' >
                   <button className='btn btn-primary'>Create Exam </button>    
                 </NavLink>  
-              </div>        
+              </div>  
+              <NavLink style={{color: 'white'}} to='/exams/exam' >ggg</NavLink>      
               <div>
                 <label className='sea-label'>Search:</label>
                 <input 
@@ -93,14 +95,8 @@ const Admin = () => {
                           <> 
                           <tr key={data._id} className="tr_row">
                             <td>{data.patientID}</td>
-                            <td>                       
-                              <button 
-                                style={{color: 'blue'}} 
-                                type='button' 
-                                className="btn bg-transparent"
-                                onClick= {e => handelExamInfo(e, data._id)}>
-                                {data._id}
-                              </button>
+                            <td>
+                              <NavLink  to='/exams/exam'>{data._id}</NavLink>                    
                             </td> 
                             <td><img className='image_sty' src={data.image} alt=" " /></td>
                             <td>{data.keyFindings}</td>
@@ -129,7 +125,7 @@ const Admin = () => {
                           </>)       
                       })}     
                   </tbody>
-                </table>
+                </table>  
               </div>
             </div>
           }

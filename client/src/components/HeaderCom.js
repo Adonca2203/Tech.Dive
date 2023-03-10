@@ -7,7 +7,7 @@ const HeaderCom = () => {
         <div >
             <nav className="navbar navbar-dark bg-dark " >
                 <ul className='navbar navbar-dark bg-dark nav'>
-                    <li><img src="https://reactjs.org/logo-og.png" alt='#' className='icon'/></li>
+                    <li><img src="https://reactjs.org/logo-og.png" alt='#' className='icon' /></li>
                     <li className='navl'><NavLink style={{ color: 'white' }} to='/exams' >Exams</NavLink></li>
                     <li className='navl'> <NavLink style={{ color: 'white' }} to='/admin' >Admin</NavLink></li>
                 </ul>

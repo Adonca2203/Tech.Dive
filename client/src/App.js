@@ -2,15 +2,16 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import './App.css';
 import { Admin, CreateExam, Exams, HeaderCom } from './components';
 import { Methods, useApi } from './hooks/use-api';
-import { UpdateExam } from "./subComponent";
+import { ExamDetails, UpdateExam } from "./subComponent";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path='/' element={<HeaderCom />}>
             <Route path='exams' element={<Exams />} />
-            <Route path='/admin' element={<Admin />} />
+            <Route path='admin' element={<Admin />} />
             <Route path='/exams/create' element={<CreateExam />} />
-            <Route pathe="/exams/:id" element={<UpdateExam/>}/>
+            <Route path='/exams/exam' element={<ExamDetails/>}/>
+            <Route path='/exams/update' element={<UpdateExam/>}/>
         </Route>
     )
 )
