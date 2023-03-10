@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Exams from "../components/Exams";
 import { useApi } from "../hooks/use-api";
 
 
@@ -26,50 +27,16 @@ const ExamDetails = ({ exam }) => {
     maxWidth: "400px",
     height: "auto",
   };
-
-  const PatientData = (props) => {
     const [patient, setPatient] = useState([])
     const { response: patients } = useApi({ path: "patients" });
+    const { response: exams } = useApi({ path: "exams" });
     let pats =  patients
-  
-  
-    useEffect(() => {
-      fetch("https://hack-diversityapi.onrender.com/patients")
-      .then((response) => response.json())
-      .then ((data) => {
-        setPatient(data)
-      })
-    },[]);
+    let resp = exams
 
-//  if (patient.id === exam.patientID) {
-    return(
-      <div>
-        {patient.map((patient) => {
-          return (
-            <table style={tableStyle} key={patient.id}>
-              <tbody>
-              <tr>
-                <th style={thStyle}>Age:</th>
-                <td style={tdStyle}>{pats.find((patient)=>patients._id === exam.patientID).age}</td>
-              </tr>
-              <tr>
-                <th style={thStyle}>Sex:</th>
-                <td style={tdStyle}>{patient.sex}</td>
-              </tr>
-              <tr>
-                <th style={thStyle}>Zip Code</th>
-                <td style={tdStyle}>{patient.zipCode}</td>
-              </tr>
-              </tbody>
-  
-            </table>
-          )
-        }
-        )}
-      </div>
-    )
-  }
-// }
+    console.log(pats)
+    console.log(resp)
+const question =  
+
 
   return (
     <div>
@@ -114,7 +81,7 @@ const ExamDetails = ({ exam }) => {
             <th style={thStyle}>Zip Code:</th>
             <td style={tdStyle}>{exam.zipCode}</td>
           </tr>
-          <PatientData />
+        
         </tbody>
         
       </table>
