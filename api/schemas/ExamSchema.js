@@ -11,7 +11,6 @@ const ExamsSchema = new Schema({
 	bmi: { type: Number, required: true },
 	date: { type: Date, default: Date.now() }
 });
-
 var Exams = mongoose.model('Exam', ExamsSchema);
 
 Exams.createCollection();

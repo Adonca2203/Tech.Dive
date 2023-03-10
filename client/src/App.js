@@ -1,4 +1,5 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
+
 import './App.css';
 import { Admin, CreateExam, Exams, HeaderCom } from './components';
 import { CreatePatient } from './subComponent';
@@ -7,49 +8,40 @@ import { ExamDetails, UpdateExam } from "./subComponent";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<HeaderCom />}>
-      <Route path="exams" element={<Exams />} />
-      <Route path="admin" element={<Admin />} />
-      <Route path="/exams/create" element={<CreateExam />} />
-      <Route path="/exams/exam" element={<ExamDetails />} />
-      <Route path="/exams/update" element={<UpdateExam />} />
-      <Route path="/patients/create" element={<CreatePatient />} />
+    // Set the root route to render HeaderCom and Exams components
+    <Route
+      path="/"
+      element={
+        <div>
+          <HeaderCom /> <Exams />
+        </div>
+      }
+    >
+      {/* Set up the /admin route to render the Admin component */}
+          <Route path="/admin" element={<Admin />} />
+          <Route path="admin" element={<Admin />} />
+          <Route path="/exams/create" element={<CreateExam />} />
+          <Route path="/exams/exam" element={<ExamDetails />} />
+          <Route path="/exams/update" element={<UpdateExam />} />
+          <Route path="/patients/create" element={<CreatePatient />} />
     </Route>
   )
 );
 
-const ExamList = (props) => {
-    if (props.resp) {
-        let resp = props.resp;
-        return (
-            <>
-                {
-                    resp.map(exam => (
-                        <div key={exam["_id"]}>
-                            <p>{exam["_id"]}</p>
-                            <p>{exam["keyFindings"]}</p>
-                            <p>{exam["brixiaScore"]}</p>
-                        </div>
-                    ))
-                }
-            </>
-        );
-    }
-    return <p>Loading...</p>
-}
-
 function App() {
     const { response } = useApi({ path: 'exams' }, {method: Methods.GET});
 
-    return (
-        <div className="App">
-            <RouterProvider router={router} />
-            <header className="App-header">
-            </header>
-
-        </div>
-
-    );
+  // Render the app component
+  return (
+    <div className="App">
+      {/* Set up the router to be used in the app */}
+      <RouterProvider router={router} />
+      <header className="App-header">
+        {/* Render the Exams component, passing in the response as a prop */}
+      </header>
+    </div>
+  );
 }
 
+// Export the App component
 export default App;

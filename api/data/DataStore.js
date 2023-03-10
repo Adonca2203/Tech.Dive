@@ -2,7 +2,6 @@ var Exam = require('../schemas/ExamSchema');
 const Patient = require('../schemas/PatientSchema');
 
 var ExamDataStore = (() => {
-    var instance;
 
     async function generatePatientData() {
         Patient.create({
