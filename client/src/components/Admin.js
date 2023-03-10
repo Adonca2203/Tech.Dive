@@ -39,12 +39,10 @@ const Admin = () => {
 
     const deleteData = (e, rowId) => {
         alert(`Do you want to permanently delet this item ${rowId}`);
-        const deletExam = {
-            methods: "DELETE"
-        };
-        fetch(`http://localhost:9000/exams/${rowId}`, deletExam)
-            .then(res => res.json())
-            .then(data => setStatus(data));
+        fetch(`http://localhost:9000/exams/${rowId}`, {
+          method: "DELETE"})
+          .then(res => res.json())
+          .then(res => setStatus(res));
         setGetRowDataId(rowId);
 
     }
