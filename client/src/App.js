@@ -1,20 +1,22 @@
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import './App.css';
 import { Admin, CreateExam, Exams, HeaderCom } from './components';
+import { CreatePatient } from './subComponent';
 import { Methods, useApi } from './hooks/use-api';
 import { ExamDetails, UpdateExam } from "./subComponent";
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path='/' element={<HeaderCom />}>
-            <Route path='exams' element={<Exams />} />
-            <Route path='admin' element={<Admin />} />
-            <Route path='/exams/create' element={<CreateExam />} />
-            <Route path='/exams/exam' element={<ExamDetails/>}/>
-            <Route path='/exams/update' element={<UpdateExam/>}/>
-        </Route>
-    )
-)
+  createRoutesFromElements(
+    <Route path="/" element={<HeaderCom />}>
+      <Route path="exams" element={<Exams />} />
+      <Route path="admin" element={<Admin />} />
+      <Route path="/exams/create" element={<CreateExam />} />
+      <Route path="/exams/exam" element={<ExamDetails />} />
+      <Route path="/exams/update" element={<UpdateExam />} />
+      <Route path="/patients/create" element={<CreatePatient />} />
+    </Route>
+  )
+);
 
 const ExamList = (props) => {
     if (props.resp) {
@@ -43,7 +45,6 @@ function App() {
         <div className="App">
             <RouterProvider router={router} />
             <header className="App-header">
-                <ExamList resp={response} />
             </header>
 
         </div>
@@ -52,4 +53,3 @@ function App() {
 }
 
 export default App;
-

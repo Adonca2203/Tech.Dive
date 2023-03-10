@@ -1,11 +1,12 @@
-import React, { useState,useEffect } from 'react'
-import { NavLink} from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
 import {  UpdateExam, ExamDetails } from '../subComponent';
 import {useApi } from '../hooks/use-api';
+import CreateExam from "../subComponent/CreateExam";
 
 const Admin = () => {
-    
+
     const [isUpdate, setIsUpdate] = useState(false);
     const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
@@ -15,53 +16,52 @@ const Admin = () => {
     const [adminNewRowData, setAdminNewRowData] = useState();
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('');
-    const {response: exams} = useApi({path: "exams"});
-    const {response: patients} = useApi({path: "patients"});
+    const { response: exams } = useApi({ path: "exams" });
+    const { response: patients } = useApi({ path: "patients" });
     //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
 
-    const  handelSearch = (e) => {
-      const value = e.target.value || undefined;
-      setSearch(value);
-    } 
-    
+    const handelSearch = (e) => {
+        const value = e.target.value || undefined;
+        setSearch(value);
+    }
+
     const updateData = (e, rowId) => {
-      setSelectedId(rowId);
-      const selectedPati =  adminNewRowData.find(obj => obj.patientID === rowId );
+        setSelectedId(rowId);
+        const selectedPati = adminNewRowData.find(obj => obj.patientID === rowId);
         setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
-      }
-    
+    }
+
     const handelExamInfo = (e, examId) => {
-      e.preventDefault();
-      setIsExamInf(!isExamInf);
-      <ExamDetails examId={examId}/>
-      }
+        e.preventDefault();
+        setIsExamInf(!isExamInf);
+    }
 
     const deleteData = (e, rowId) => {
-      alert(`Do you want to permanently delet this item ${rowId}`);
-       const deletExam = {
-        methods: "DELETE"
-       };
-          fetch(`http://localhost:9000/exams/${rowId}`,deletExam)
-          .then(res => res.json())
-          .then(data => setStatus(data));
-          setGetRowDataId(rowId);
-      
+        alert(`Do you want to permanently delet this item ${rowId}`);
+        const deletExam = {
+            methods: "DELETE"
+        };
+        fetch(`http://localhost:9000/exams/${rowId}`, deletExam)
+            .then(res => res.json())
+            .then(data => setStatus(data));
+        setGetRowDataId(rowId);
+
     }
-  
+
     useEffect(() => {
-      if(exams && patients) {
-        const mergeData = exams.map(eobj => 
-          ({ ...patients.find((pobj) => (pobj._id === eobj.patientID) && pobj), ...eobj  }));
-          setAdminNewRowData(mergeData);
-      }
-      if(search){
-          const filteredData = adminNewRowData.filter(obj =>  obj.keyFindings.match(search), ) 
-          setAdminNewRowData(filteredData);
+        if (exams && patients) {
+            const mergeData = exams.map(eobj =>
+                ({ ...patients.find((pobj) => (pobj._id === eobj.patientID) && pobj), ...eobj }));
+            setAdminNewRowData(mergeData);
         }
-      
+        if (search) {
+            const filteredData = adminNewRowData.filter(obj => obj.keyFindings.match(search),)
+            setAdminNewRowData(filteredData);
+        }
+
     }, [exams, search,]);
-    
+
     return (
       <>
         <div >
