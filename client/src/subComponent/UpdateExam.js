@@ -12,7 +12,13 @@ const UpdateExam = (props) => {
     
     const handleCreate = (e) => {
       const name = e.target.name;
-      const value =  e.target.value;
+      let value =  e.target.value;
+      if (name === "brixiaScore") {
+        value = value.replace(/[^0-9 \,]/, "");
+        let valueArr = value.split(",");
+        setExam({ ...exam, [name]: valueArr });
+        return;
+      }
       setPatient({...patient, [name]:value});
       if (
         name === "bmi" ||
@@ -145,18 +151,20 @@ const UpdateExam = (props) => {
               <input
                 className="form-control textcent"
                 type="text"
-                id="first_name"
-                name="first_name"
+                id="firstName"
+                name="firstName"
                 value={patient.firstName}
-                onChange={handleCreate}/>          
+                onChange={handleCreate}
+              />
               <lable htmlFor="zipCode">Last Name</lable>
               <input
                 className="form-control textcent"
                 type="text"
-                id="last_name"
-                name="last_name"
+                id="lastName"
+                name="lastName"
                 value={patient.lastName}
-                onChange={handleCreate}/>          
+                onChange={handleCreate}
+              />
             </div>
             <div class="column">
               <div className="rowIn1">
@@ -209,7 +217,7 @@ const UpdateExam = (props) => {
                 type="text"
                 id="brixiaScore"
                 name="brixiaScore"
-                value={patient.brixiaScore}
+                value={exam.brixiaScore}
                 onChange={handleCreate}
               />
             </div>
