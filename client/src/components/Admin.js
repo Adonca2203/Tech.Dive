@@ -59,7 +59,7 @@ const Admin = () => {
             setAdminNewRowData(filteredData);
         }
 
-    }, [exams, search,]);
+    }, [exams, search, adminNewRowData]);
 
     return (
         <>

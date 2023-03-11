@@ -32,7 +32,8 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-decoration: underline;
+  text-decoration:null;
+  width: 100pc;
 }
 
 .nav li.active {
@@ -94,7 +95,7 @@ td {
 .table_center {
   padding-right: 50px;
   padding-left: 50px;
-  margin-left: 70px;
+  margin-left: 10px;
   width: 90%;
 }
 .image_sty {
