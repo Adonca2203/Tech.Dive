@@ -13,13 +13,13 @@ const router = createBrowserRouter(
       path="/"
       element={
         <div>
-          <HeaderCom /> <Exams />
+          <HeaderCom /> 
         </div>
       }
     >
       {/* Set up the /admin route to render the Admin component */}
           <Route path="/admin" element={<Admin />} />
-          <Route path="admin" element={<Admin />} />
+          <Route path="/exams" element={<Exams />} />
           <Route path="/exams/create" element={<CreateExam />} />
           <Route path="/exams/exam" element={<ExamDetails />} />
           <Route path="/exams/update" element={<UpdateExam />} />

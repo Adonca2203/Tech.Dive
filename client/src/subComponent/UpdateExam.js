@@ -1,33 +1,49 @@
 import React, { useState } from 'react'
 import { NavLink} from 'react-router-dom';
+import {initExam} from '../data/exam';
+const API_ROOT = "http://localhost:9000";
 
 const UpdateExam = (props) => {
 
     const [patient, setPatient] = useState(props.update);
-  
+    const [exam, setExam] = useState(initExam);
+    
     const handleCreate = (e) => {
       const name = e.target.name;
       const value =  e.target.value;
       setPatient({...patient, [name]:value});
-       
+      if (
+        name === "bmi" ||
+        name === "image" ||
+        name === "keyFindings" ||
+        name === " brixiaScore"
+      ) {
+        setExam({
+          ...exam,
+          patientID: patient.patientID,
+          date: new Date().toLocaleDateString().toString(),
+          bmi: patient.bmi,
+          image: patient.image,
+          keyFindings: patient.keyFindings,
+        });
+      }      
     }
+
     const handleUpdate = (e) => {
       e.preventDefault();
-      let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
-      setPatient(newPatient);
+      //let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
+      //setPatient(newPatient);
       alert(`Are you sure you want to update this item? ${patient.patientID} `)
-      console.log(patient)
       try{
-        fetch("", {
-        method: 'POST', 
-        body: JSON.stringify(patient)
-        })
+        fetch(`${API_ROOT}/exams/${patient._id}`, {
+          method: "PATCH",
+          body: JSON.stringify(exam),
+        });
       }catch(err){
         alert(err.message);
       }
-     
     }
- 
+ console.log(exam)
   return (
     <>
       <div className='centerG'>  
@@ -51,6 +67,7 @@ const UpdateExam = (props) => {
                   id='patientId'
                   name='patientID'
                   value={patient.patientID }
+                  disabled
                   onChange={handleCreate}/>
               <label htmlFor='sex'>Age</label>
               <input
@@ -96,6 +113,7 @@ const UpdateExam = (props) => {
                 id='examId'
                 name='_Id'
                 value={patient._id }
+                disabled
                 onChange={handleCreate}/>
               <label htmlFor='examId'>Image URL</label>
               <input

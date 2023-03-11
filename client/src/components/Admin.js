@@ -74,7 +74,6 @@ const Admin = () => {
                                 <button className='btn btn-primary mx-3'>Create Patient </button>
                             </NavLink>
                         </div>
-                        <NavLink style={{ color: 'white' }} to='/exams/exam' >ggg</NavLink>
                         <div>
                             <label className='sea-label'>Search:</label>
                             <input
