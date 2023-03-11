@@ -39,8 +39,16 @@ code {
 }
 .table_center {
   padding: auto;
-  margin-left: 100px;
+  margin-left: 50px;
   width: 90%;
+  align-items: center;
+  align-content: center;
+}
+.trTd {
+  padding: 0 auto;
+  text-align:center;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: lighter;
   align-items: center;
   align-content: center;
 }
@@ -127,6 +135,9 @@ label {
   margin-right: 10rem;
   align-items: center;
   justify-content: center; 
+}
+.trCont {
+  padding: 0 auto;
 }
 .btnP {
   padding-top: 20px;
