@@ -1,14 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import Exams from "../components/Exams";
 import { useApi } from "../hooks/use-api";
 
 
 const PatientDetails = ({ id }) => {
-const [patient, setPatient] = useState([])
+// const [patient, setPatient] = useState([])
+const { response: exams } = useApi({ path: "exams" });
 const { response: patients } = useApi({ path: "patients" });
 
 let pats =  patients
-console.log(pats)
+// console.log(pats)
 
 const tableStyle = {
   fontSize: "24px",
@@ -40,16 +41,20 @@ const imgStyle = {
     <table style={tableStyle}>
       <tbody>
         <tr>
+          <th style={thStyle}>Patient ID</th>
+          <td style={tdStyle}>{id}</td>
+        </tr>
+        <tr>
           <th style={thStyle}>Age:</th>
-          <td style={tdStyle}>{}</td>
+          <td style={tdStyle}>{id}</td>
         </tr>
         <tr>
           <th style={thStyle}>Sex:</th>
-          <td style={tdStyle}>{}</td>
+          <td style={tdStyle}>{id}</td>
         </tr>
         <tr>
           <th style={thStyle}>Zip Code:</th>
-          <td style={tdStyle}>{}</td>
+          <td style={tdStyle}>{id}</td>
         </tr>
       
       </tbody>

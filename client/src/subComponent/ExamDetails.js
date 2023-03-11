@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Exams from "../components/Exams";
 import { useApi } from "../hooks/use-api";
 
@@ -56,18 +56,9 @@ const ExamDetails = ({ exam }) => {
             <td style={tdStyle}>{exam.brixiaScore}</td>
           </tr>
           <tr>
-            <th style={thStyle}>Sex:</th>
-            <td style={tdStyle}>{exam.sex}</td>
-          </tr>
-          <tr>
             <th style={thStyle}>BMI:</th>
             <td style={tdStyle}>{exam.bmi}</td>
           </tr>
-          <tr>
-            <th style={thStyle}>Zip Code:</th>
-            <td style={tdStyle}>{exam.zipCode}</td>
-          </tr>
-        
         </tbody>
         
       </table>
