@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 export const Columns = [
     {
         Header: 'Patient ID',
-        accessor: 'patientId'
-
+        accessor: 'patientId',
+        
     },
     {
         Header: 'Exam ID',
@@ -18,7 +18,7 @@ export const Columns = [
     },
     {
         Header: 'Image',
-        accessor: 'image'
+        accessor: 'imageURL'
 
     },
     {
@@ -28,7 +28,7 @@ export const Columns = [
     },
     {
         Header: 'Brixia Score',
-        accessor: 'brixiaScore'
+        accessor: 'brixiaScores'
 
     },
     {
@@ -50,6 +50,16 @@ export const Columns = [
         Header: 'Zip Code',
         accessor: 'zipCode'
 
-    }
+    },
+   {
+        Header: 'Update',
+        accessor: 'upDate'
+
+    },
+       {
+        Header: 'Delete',
+        accessor: 'Delete'
+
+    },
 ]
 

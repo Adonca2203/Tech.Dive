@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useRef } from 'react';
 const API_ROOT = 'https://hack-diversityapi.onrender.com';
+//const API_ROOT = "http://localhost:9000";
+
 
 export const Methods = {
     GET: "GET",
@@ -22,7 +23,7 @@ export function useApi({ path } = { path: '' }, { method } = { method: Methods.G
 
     if (method.toLowerCase() !== "get") {
         try {
-            var jsonRep = JSON.parse(data);
+            var jsonRep = JSON.stringify(data);
         }
         catch (err) {
             console.log(err.message);
@@ -30,15 +31,18 @@ export function useApi({ path } = { path: '' }, { method } = { method: Methods.G
             setResponse(message);
         }
     }
-    
+
     useEffect(() => {
         fetch(`${API_ROOT}/${path}`, {
             method: method,
-            body: jsonRep
+            body: jsonRep,
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
             .then(res => res.json())
             .then(res => setResponse(res));
-    }, [path, method, jsonRep]);
+    }, []);
 
     return {
         response
