@@ -39,7 +39,7 @@ const Admin = () => {
 
     const deleteData = (e, rowId) => {
         alert(`Do you want to permanently delet this item ${rowId}`);
-        fetch(`http://localhost:9000/exams/${rowId}`, {
+        fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
             method: "DELETE"
         })
             .then(res => res.json())
