@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { NavLink} from 'react-router-dom';
 import {initExam} from '../data/exam';
 import {initPatient} from '../data/patient';
-const API_ROOT = "http://localhost:9000";
+const API_ROOT = "https://hack-diversityapi.onrender.com";
 
 const UpdateExam = (props) => {
 

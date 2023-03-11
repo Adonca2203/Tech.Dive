@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-//const API_ROOT = 'https://hack-diversityapi.onrender.com';
-const API_ROOT = "http://localhost:9000";
+const API_ROOT = 'https://hack-diversityapi.onrender.com';
+//const API_ROOT = "http://localhost:9000";
 
 
 export const Methods = {
