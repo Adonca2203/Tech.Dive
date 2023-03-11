@@ -27,7 +27,8 @@ code {
 }
 
 .nav {
-  margin-left: auto;
+  margin-left: o auto;
+  margin-right: 0 auto;
   gap: 1rem;
   display: flex;
   justify-content: center;
