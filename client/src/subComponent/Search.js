@@ -1,14 +1,15 @@
 
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 
 const Search = () => {
     const [search, setSearch] = useState('');
 
   return (
     <div>
-       <label className='sea-label'>Search:</label>
+       <label className='sea-label'><h3>Search:</h3></label>
         <input 
            type='text' 
+           placeholder='Search Key Findings ...'
            id='search'
            name='search'
            value= {search}
