@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useApi } from '../hooks/use-api.js';
 import {initExam} from '../data/exam';
-const API_ROOT = 'http://localhost:9000';
+const API_ROOT = 'https://hack-diversityapi.onrender.com';
 
 const SearchItem = (props) => {
     const { items, addPatient } = props;
