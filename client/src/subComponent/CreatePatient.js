@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { NavLink } from 'react-router-dom';
-//import { useApi, Methods } from '../hooks/use-api';
-const API_ROOT = 'http://localhost:9000';
+const API_ROOT = 'https://hack-diversityapi.onrender.com';
 const CreatePatient = (props) => {
 	const performingCall = useRef(false);
 	const [created, setCreated] = useState();
