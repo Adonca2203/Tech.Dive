@@ -86,8 +86,7 @@ const UpdateExam = (props) => {
             <button
               type="submit"
               onClick={handleUpdate}
-              className="btn btn-primary  createBtn"
-            >
+              className="btn btn-primary  createBtn" >
               {" "}
               Update Exam
             </button>
@@ -147,7 +146,7 @@ const UpdateExam = (props) => {
                 value={patient.zipCode}
                 onChange={handleCreate}
               />
-              <label htmlFor="patientId textcent">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <input
                 className="form-control textcent"
                 type="text"
@@ -156,7 +155,7 @@ const UpdateExam = (props) => {
                 value={patient.firstName}
                 onChange={handleCreate}
               />
-              <lable htmlFor="zipCode">Last Name</lable>
+              <lable htmlFor="lastName">Last Name</lable>
               <input
                 className="form-control textcent"
                 type="text"
