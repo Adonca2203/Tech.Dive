@@ -8,8 +8,10 @@ const PatientDetails = ({ id }) => {
 const { response: exams } = useApi({ path: "exams" });
 const { response: patients } = useApi({ path: "patients" });
 
-let pats =  patients
+
 // console.log(pats)
+
+
 
 const tableStyle = {
   fontSize: "24px",
@@ -34,6 +36,17 @@ const imgStyle = {
   maxWidth: "400px",
   height: "auto",
 };
+
+
+// exams.map((exam) => (
+//   <tr key={patients._id}>
+//     <td>{exam.patientID.age}</td>
+//     <td>{patients.sex}</td>
+//     <td>{patients.zipCode}</td>  
+//   </tr>
+// ))
+
+
 
   return (
     <div>
