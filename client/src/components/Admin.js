@@ -1,73 +1,139 @@
-import React, { useState, useMemo } from 'react'
-import { useTable } from 'react-table';
-
-import { CreateExam, ExamDetails, UpdateExam, Search } from '../subComponent';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
-import fakeData from '../data/data.json';
+import { UpdateExam, ExamDetails } from '../subComponent';
+import { useApi } from '../hooks/use-api';
+import CreateExam from "../subComponent/CreateExam";
 
 const Admin = () => {
-    const [isCreateExam, setCreatExam] = useState(false);
+
     const [isUpdate, setIsUpdate] = useState(false);
+    const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
+    const [getRowDataId, setGetRowDataId] = useState('');
+    const [getRowData, setGetRowData] = useState({});
+    const [adminNewRowData, setAdminNewRowData] = useState();
+    const [search, setSearch] = useState('');
+    const [status, setStatus] = useState('');
+    const { response: exams } = useApi({ path: "exams" });
+    const { response: patients } = useApi({ path: "patients" });
+    //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
 
-    const columns = useMemo(() => Columns, []);
-    const data = useMemo(() => fakeData, []);
+    const handelSearch = (e) => {
+        const value = e.target.value || undefined;
+        setSearch(value);
+    }
 
-    const dataTable = useTable({ columns, data });
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        rows,
-        prepareRow,
-    } = dataTable;
+    const updateData = (e, rowId) => {
+        setSelectedId(rowId);
+        const selectedPati = adminNewRowData.find(obj => obj.patientID === rowId);
+        setGetRowData(selectedPati);
+        setIsUpdate(!isUpdate);
+    }
+
+    const handelExamInfo = (e, examId) => {
+        e.preventDefault();
+        setIsExamInf(!isExamInf);
+    }
+
+    const deleteData = (e, rowId) => {
+        alert(`Do you want to permanently delet this item ${rowId}`);
+        fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(res => setStatus(res));
+        setGetRowDataId(rowId);
+
+    }
+
+    useEffect(() => {
+        if (exams && patients) {
+            const mergeData = exams.map(eobj =>
+                ({ ...patients.find((pobj) => (pobj._id === eobj.patientID) && pobj), ...eobj }));
+            setAdminNewRowData(mergeData);
+        }
+        if (search) {
+            const filteredData = adminNewRowData.filter(obj => obj.keyFindings.match(search),)
+            setAdminNewRowData(filteredData);
+        }
+
+    }, [exams, search,]);
 
     return (
         <>
-            {!(isCreateExam || isUpdate || isDeleted || isExamInf) &&
-                <div >
-                    <div className='btn_sty'>
-                        <button className='btn btn-primary' onClick={() => setCreatExam(!isCreateExam)} >Create Exam</button>
-                    </div>
+            <div >
+                {!(isUpdate || isDeleted || isExamInf) &&
                     <div>
-                        <Search />
-                    </div>
-                    <div>
-                        <table {...getTableProps()} className='tableH'>
-                            <thead className='tableH'>
-                                {headerGroups.map((hg) => (
-                                    <tr {...hg.getHeaderGroupProps()}>
-                                        {
-                                            hg.headers.map((column) => (
-                                                <th {...column.getHeaderProps()}> {column.render('Header')} </th>))}
-                                    </tr>))
-                                }
-                            </thead>
-                            <tbody {...getTableBodyProps()} className='tableH' >
-                                {
-                                    rows.map(row => {
-                                        prepareRow(row)
+                        <div className='btn_sty'>
+                            <NavLink style={{ color: 'white' }} to='/exams/create' >
+                                <button className='btn btn-primary'>Create Exam </button>
+                            </NavLink>
+                            <NavLink style={{ color: 'white' }} to='/patients/create' >
+                                <button className='btn btn-primary mx-3'>Create Patient </button>
+                            </NavLink>
+                        </div>
+                        <div>
+                            <label className='sea-label'>Search:</label>
+                            <input
+                                type='text'
+                                id='search'
+                                name='search'
+                                value={search}
+                                onChange={handelSearch} />
+                        </div>
+                        <div className='colAdm'>
+                            <table className='table table_center'>
+                                <thead>
+                                    <tr>
+                                        {Columns.map((headers, id) => <th key={id}>{headers.Header}</th>)}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {adminNewRowData?.map((data) => {
                                         return (
-                                            <tr {...row.getRowProps()}>
-                                                {
-                                                    row.cells.map((cell, id) => {
-                                                        return <td {...cell.getCellProps()}>{cell.render('Cell')} </td>
-                                                    })
-                                                }
-                                            </tr>)
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                                            <>
+                                                <tr key={data._id} className="tr_row">
+                                                    <td>{data.patientID}</td>
+                                                    <td>
+                                                        <NavLink to='/exams/exam'>{data._id}</NavLink>
+                                                    </td>
+                                                    <td><img className='image_sty' src={data.image} alt=" " /></td>
+                                                    <td>{data.keyFindings}</td>
+                                                    <td>{data.brixiaScore.map(data => `${data},`)}</td>
+                                                    <td>{data.age}</td>
+                                                    <td>{data.sex}</td>
+                                                    <td>{data.bmi}</td>
+                                                    <td>{data.zipCode}</td>
+                                                    <td>
+                                                        <button
+                                                            style={{ color: 'blue' }}
+                                                            type='button' className="btn bg-transparent"
+                                                            onClick={(e) => updateData(e, data.patientID)}>
+                                                            Update
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            style={{ color: 'red' }}
+                                                            type='button' className="btn bg-transparent"
+                                                            onClick={(e) => deleteData(e, data._id)}>
+                                                            Delete
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </>)
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>}
-            {isCreateExam && <CreateExam />}
-            {isDeleted && alert('record deleted')}
-            {isUpdate && <UpdateExam />}
-            {isExamInf && <ExamDetails />}
+                }
+                {isUpdate && <UpdateExam update={getRowData} />}
+            </div>
         </>
-    )
+    );
 }
 
 export default Admin;

@@ -1,9 +1,11 @@
-// Import necessary libraries and components from react-router-dom and the App.css file
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
-import "./App.css";
-import { Admin, Exams, HeaderCom } from "./components";
 
-// Create the router using react-router-dom by defining the routes
+import './App.css';
+import { Admin, CreateExam, Exams, HeaderCom } from './components';
+import { CreatePatient } from './subComponent';
+import { Methods, useApi } from './hooks/use-api';
+import { ExamDetails, UpdateExam } from "./subComponent";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     // Set the root route to render HeaderCom and Exams components
@@ -11,18 +13,23 @@ const router = createBrowserRouter(
       path="/"
       element={
         <div>
-          <HeaderCom /> <Exams />
+          <HeaderCom /> 
         </div>
       }
     >
       {/* Set up the /admin route to render the Admin component */}
-      <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/exams" element={<Exams />} />
+          <Route path="/exams/create" element={<CreateExam />} />
+          <Route path="/exams/exam" element={<ExamDetails />} />
+          <Route path="/exams/update" element={<UpdateExam />} />
+          <Route path="/patients/create" element={<CreatePatient />} />
     </Route>
   )
 );
 
 function App() {
-  // Use the useApi hook to fetch the list of exams
+    const { response } = useApi({ path: 'exams' }, {method: Methods.GET});
 
   // Render the app component
   return (
