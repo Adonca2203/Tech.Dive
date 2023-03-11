@@ -83,7 +83,7 @@ const Admin = () => {
                                 value={search}
                                 onChange={handelSearch} />
                         </div>
-                        <div className='colAdm'>
+                        <div >
                             <table className='table table_center'>
                                 <thead>
                                     <tr>

@@ -27,13 +27,15 @@ code {
 }
 
 .nav {
-  margin: auto;
+  margin-left: auto;
   gap: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   text-decoration:null;
+  text-align: center;
   width: 100pc;
+  margin-bottom: 20px;
 }
 
 .nav li.active {
@@ -93,10 +95,11 @@ td {
   font-weight: lighter;
 }
 .table_center {
-  padding-right: 50px;
-  padding-left: 50px;
-  margin-left: 10px;
+  padding: auto;
+  margin-left: 100px;
   width: 90%;
+  align-items: center;
+  align-content: center;
 }
 .image_sty {
   width: 80px;
@@ -144,10 +147,12 @@ label {
 }
 .colAdm {
   padding: 0 auto;
-  width: 90.00%;
-  height: 80pc;
-  margin-left: 100px;
-  margin-right: 100px;
+  width: 80.00%;
+  height: 90pc;
+  margin-left: 0 auto;
+  margin-right: 50px;
+  align-items: center;
+  
 }
 .centerG {
   max-width: 900px;
