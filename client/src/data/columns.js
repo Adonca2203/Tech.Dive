@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 export const Columns = [
     {
         Header: 'Patient ID',
@@ -6,7 +9,11 @@ export const Columns = [
     },
     {
         Header: 'Exam ID',
-        accessor: 'examId'
+        accessor: 'examId',
+        Cell: ({ value }) => { 
+            return <Link to={`/exam-details/${value}`}>{value}</Link>;
+          },
+       
 
     },
     {
@@ -55,3 +62,4 @@ export const Columns = [
 
     },
 ]
+
