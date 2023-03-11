@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import PatientDetails from '../subComponent/PatientDetails';
+import {Methods, useApi } from '../hooks/use-api';
 
 const ExamDetails = (exam) => {
   const [isPatientInfo, setIsPatientInfo] = useState(false);
   const[isExamInfo, setIsExamInfo] = useState(false);
+  const { response } = useApi({ path: 'exams'  }, { method: Methods.GET });
   
     return (
         <>
      { !(isExamInfo || isPatientInfo)  &&
         <div>   
+        {response && <p>{response.message}</p>}
         <h3>Exam Details</h3>
           <p>Patient ID: {exam.patientId}</p>
           <p>Exam ID: {exam.examId}</p>

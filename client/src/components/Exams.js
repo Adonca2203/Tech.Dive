@@ -16,7 +16,7 @@ const Exams = () => {
     const handleRowClick = (exam) => {
         setSelectedExam(exam);
       }
-
+ 
     const dataTable = useTable({ columns, data });
     const {
         getTableProps,
