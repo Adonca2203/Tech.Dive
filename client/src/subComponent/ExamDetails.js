@@ -27,16 +27,6 @@ const ExamDetails = ({ exam }) => {
     maxWidth: "400px",
     height: "auto",
   };
-    const [patient, setPatient] = useState([])
-    const { response: patients } = useApi({ path: "patients" });
-    const { response: exams } = useApi({ path: "exams" });
-    let pats =  patients
-    let resp = exams
-
-    console.log(pats)
-    console.log(resp)
-
-
 
   return (
     <div>
@@ -64,10 +54,6 @@ const ExamDetails = ({ exam }) => {
           <tr>
             <th style={thStyle}>Brixia Score:</th>
             <td style={tdStyle}>{exam.brixiaScore}</td>
-          </tr>
-          <tr>
-            <th style={thStyle}>Age:</th>
-            <td style={tdStyle}>{exam.age}</td>
           </tr>
           <tr>
             <th style={thStyle}>Sex:</th>
