@@ -31,14 +31,19 @@ code {
   margin-right: 0 auto;
   gap: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content:flex-start;
   text-decoration:null;
-  text-align: center;
   width: 100pc;
   margin-bottom: 20px;
+  
 }
-
+.table_center {
+  padding: auto;
+  margin-left: 100px;
+  width: 90%;
+  align-items: center;
+  align-content: center;
+}
 .nav li.active {
   background-color: gray;
 }
@@ -95,13 +100,7 @@ td {
   font-family:'Times New Roman', Times, serif;
   font-weight: lighter;
 }
-.table_center {
-  padding: auto;
-  margin-left: 100px;
-  width: 90%;
-  align-items: center;
-  align-content: center;
-}
+
 .image_sty {
   width: 80px;
   height: 60px;
