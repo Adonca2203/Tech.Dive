@@ -3,12 +3,14 @@ import { ExamDetails, PatientDetails, Search } from "../subComponent";
 import { useApi } from "../hooks/use-api";
 
 const Exams = (props) => {
+    const [selectedExam, setSelectedExam] = useState(null);
   const [isPatientInfo, setIsPatientInfo] = useState(false);
   const [isExamInfo, setIsExamInfo] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null); // Track selected row
   const [selectedPatient, setSelectedPatient] = useState(null);
   const { response: exams } = useApi({ path: "exams" });
   const { response: patients } = useApi({ path: "patients" });
+
 
   // Function to handle row click
   const handleRowClick = (row) => {

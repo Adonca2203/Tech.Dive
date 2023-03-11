@@ -1,4 +1,4 @@
-import Columns from './columns.js';
-import examData from './data.js';
+import Columns from './columns';
+import examData from './data.json';
 
-export { Columns, examData };
+export { Columns, examData }
