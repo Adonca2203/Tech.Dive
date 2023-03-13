@@ -108,7 +108,15 @@ code {
   border-spacing: 0;
   border-collapse: collapse;
 }
-
+#exam > h3 {
+  padding:200px ;
+  display: inline;
+}
+#rowEx > div{
+  display: block;
+  padding: auto;
+ margin: auto;
+}
 th,
 td {
   padding: 15px;

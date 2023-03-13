@@ -4,10 +4,13 @@ import { Columns } from '../data/columns';
 import { UpdateExam, ExamDetails } from '../subComponent';
 import { useApi } from '../hooks/use-api';
 import CreateExam from "../subComponent/CreateExam";
+import Exam from '../subComponent/Exam';
 
 const Admin = () => {
 
     const [isUpdate, setIsUpdate] = useState(false);
+    const [isExam, setIsExam] = useState(false);
+    const [examData, setExamData] = useState({});
     const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
@@ -24,12 +27,19 @@ const Admin = () => {
         const value = e.target.value || undefined;
         setSearch(value);
     }
-
+ console.log(exams)
     const updateData = (e, rowId) => {
         setSelectedId(rowId);
         const selectedPati = adminNewRowData.find(obj => obj.patientID === rowId);
         setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
+     
+    }
+    const  handleExam = (e, id) =>{
+     setIsExam(!isExam);
+      const selectedExam = exams.find( (obj) => obj._id === id );
+      setExamData(selectedExam);
+    
     }
 
     const handelExamInfo = (e, examId) => {
@@ -64,7 +74,7 @@ const Admin = () => {
     return (
       <>
         <div>
-          {!(isUpdate || isDeleted || isExamInf) && (
+          {!(isUpdate || isDeleted || isExamInf || isExam) && (
             <div>
               <div className="btn_sty">
                 <NavLink style={{ color: "white" }} to="/exams/create">
@@ -104,7 +114,13 @@ const Admin = () => {
                           <tr key={data._id} className="trTd">
                             <td>{data.patientID}</td>
                             <td>
-                              <NavLink to="/exams/exam">{data._id}</NavLink>
+                              <button
+                                style={{ color: "blue" }}
+                                type="button"
+                                className="btn bg-transparent"
+                                onClick={(e) => handleExam(e, data._id)} >                             
+                                {data._id}
+                              </button>
                             </td>
                             <td>
                               <img
@@ -151,6 +167,7 @@ const Admin = () => {
             </div>
           )}
           {isUpdate && <UpdateExam update={getRowData} />}
+          {isExam && <Exam examData={examData} />}
         </div>
       </>
     );
