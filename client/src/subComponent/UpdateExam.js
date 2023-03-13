@@ -79,9 +79,9 @@ const UpdateExam = (props) => {
  console.log(exam)
   return (
     <>
-      <div className="centerG">
+      <div>
         <h3>Edit Exam </h3>
-        <form>
+        <form className="centerG">
           <div>
             <button
               type="submit"
@@ -96,8 +96,8 @@ const UpdateExam = (props) => {
               <button className="btn btn-danger"> Cancel</button>
             </NavLink>
           </div>
-          <div class="row">
-            <div class="column">
+          <div className="row">
+            <div className="column">
               <div className="rowIn1">
                 <h5>Pateient Info </h5>
               </div>
@@ -147,7 +147,7 @@ const UpdateExam = (props) => {
                 value={patient.zipCode}
                 onChange={handleCreate}
               />
-              <label htmlFor="patientId textcent">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <input
                 className="form-control textcent"
                 type="text"
@@ -156,13 +156,22 @@ const UpdateExam = (props) => {
                 value={patient.firstName}
                 onChange={handleCreate}
               />
-              <lable htmlFor="zipCode">Last Name</lable>
+              <lable htmlFor="lastName">Last Name</lable>
               <input
                 className="form-control textcent"
                 type="text"
                 id="lastName"
                 name="lastName"
                 value={patient.lastName}
+                onChange={handleCreate}
+              />
+              <lable htmlFor="brixiaScore">Brixia Score</lable>
+              <input
+                className="form-control textcent"
+                type="text"
+                id="brixiaScore"
+                name="brixiaScore"
+                value={exam.brixiaScore}
                 onChange={handleCreate}
               />
             </div>
@@ -208,16 +217,8 @@ const UpdateExam = (props) => {
                 type="text"
                 id="keyFindings"
                 name="keyFindings"
+                rows="3"
                 value={patient.keyFindings}
-                onChange={handleCreate}
-              />
-              <lable htmlFor="brixiaScore">Brixia Score</lable>
-              <input
-                className="form-control textcent"
-                type="text"
-                id="brixiaScore"
-                name="brixiaScore"
-                value={exam.brixiaScore}
                 onChange={handleCreate}
               />
             </div>
