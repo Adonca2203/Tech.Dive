@@ -1,17 +1,9 @@
 import React from "react";
-import Exams from "../components/Exams";
 import { useApi } from "../hooks/use-api";
 
 
-const PatientDetails = ({ id }) => {
-// const [patient, setPatient] = useState([])
-const { response: exams } = useApi({ path: "exams" });
-const { response: patients } = useApi({ path: "patients" });
-
-
-// console.log(pats)
-
-
+const PatientDetails = ({id, patients }) => {
+  const patient = patients.find((p) => p._id === id);
 
 const tableStyle = {
   fontSize: "24px",
@@ -38,16 +30,6 @@ const imgStyle = {
 };
 
 
-// exams.map((exam) => (
-//   <tr key={patients._id}>
-//     <td>{exam.patientID.age}</td>
-//     <td>{patients.sex}</td>
-//     <td>{patients.zipCode}</td>  
-//   </tr>
-// ))
-
-
-
   return (
     <div>
     <h1 style={{ fontSize: "36px" }}>Patient Details</h1>
@@ -59,15 +41,15 @@ const imgStyle = {
         </tr>
         <tr>
           <th style={thStyle}>Age:</th>
-          <td style={tdStyle}>{id}</td>
+          <td style={tdStyle}>{patient.age}</td>
         </tr>
         <tr>
           <th style={thStyle}>Sex:</th>
-          <td style={tdStyle}>{id}</td>
+          <td style={tdStyle}>{patient.sex}</td>
         </tr>
         <tr>
           <th style={thStyle}>Zip Code:</th>
-          <td style={tdStyle}>{id}</td>
+          <td style={tdStyle}>{patient.zipCode}</td>
         </tr>
       
       </tbody>
