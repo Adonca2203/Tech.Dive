@@ -104,7 +104,7 @@ const Exams = (props) => {
           <div>
             {" "}
             <button onClick={handleBackClick}>Back</button>
-            <PatientDetails id={selectedPatient} />
+            <PatientDetails id={selectedPatient} patients={patients} />
           </div>
         )}
       </>
