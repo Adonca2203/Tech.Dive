@@ -124,7 +124,7 @@ const CreateExam = (props) => {
             <h2 className="btnP">Create Exam </h2>
           </div>
           <div>
-            <form className="inputForm">
+            <form className="centerFor">
               <div>
                 <div className="createBtn">
                   <button

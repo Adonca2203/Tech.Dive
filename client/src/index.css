@@ -11,9 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 @-ms-viewport{
   width: device-width;
 }
+
 .ul_top li {
   display: inline;
   margin: 5px;
@@ -22,8 +24,9 @@ code {
 }
 
 .sea-label {
-  margin: 2px;
-  padding: 5px;
+  margin-right: 20px;
+  margin-top: auto;
+
 }
 
 .nav {
@@ -33,9 +36,13 @@ code {
   display: flex;
   justify-content:flex-start;
   text-decoration:null;
-  width: 100pc;
+  width: auto;
   margin-bottom: 20px;
   
+}
+.navBa {
+  max-width: 100pc;
+  height: 450px;
 }
 .table_center {
   padding: auto;
@@ -61,8 +68,9 @@ code {
 }
 
 .btn_sty {
-  padding: 5px;
+  padding: 15px;
   align-items: center;
+  margin-left: 25px;
 }
 
 .createBtn {
@@ -108,13 +116,15 @@ td {
   font-family:'Times New Roman', Times, serif;
   font-weight: lighter;
 }
-
+form {
+  margin-left: 400px;
+}
 .image_sty {
   width: 80px;
   height: 60px;
 }
 .img_sty {
-    width: 200px;
+    width: 150px;
     height: 200px;
     padding-top: 10px ;
     padding-bottom: 10px; 
@@ -136,6 +146,7 @@ label {
   align-items: center;
   justify-content: center; 
 }
+
 .trCont {
   padding: 0 auto;
 }
@@ -166,14 +177,23 @@ label {
   
 }
 .centerG {
-  max-width: 900px;
+  max-width: 70pc;
   margin: 0 auto;
   align-items: center;
   text-align: center;
   padding: 16px;
   
 }
-
+.centerFor {
+  max-width: 80pc;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  padding: 20px;
+  max-height: auto;
+ 
+}
 .clickable {
   color: #033fb4;
 }
@@ -196,4 +216,7 @@ tbody {
 }
 a:link {
     text-decoration: none;
+}
+textarea {
+ rows: auto;
 }

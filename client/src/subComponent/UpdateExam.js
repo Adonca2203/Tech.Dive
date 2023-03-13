@@ -79,14 +79,15 @@ const UpdateExam = (props) => {
  console.log(exam)
   return (
     <>
-      <div className="centerG">
+      <div>
         <h3>Edit Exam </h3>
-        <form>
+        <form className="centerG">
           <div>
             <button
               type="submit"
               onClick={handleUpdate}
-              className="btn btn-primary  createBtn" >
+              className="btn btn-primary  createBtn"
+            >
               {" "}
               Update Exam
             </button>
@@ -95,8 +96,8 @@ const UpdateExam = (props) => {
               <button className="btn btn-danger"> Cancel</button>
             </NavLink>
           </div>
-          <div class="row">
-            <div class="column">
+          <div className="row">
+            <div className="column">
               <div className="rowIn1">
                 <h5>Pateient Info </h5>
               </div>
@@ -164,6 +165,15 @@ const UpdateExam = (props) => {
                 value={patient.lastName}
                 onChange={handleCreate}
               />
+              <lable htmlFor="brixiaScore">Brixia Score</lable>
+              <input
+                className="form-control textcent"
+                type="text"
+                id="brixiaScore"
+                name="brixiaScore"
+                value={exam.brixiaScore}
+                onChange={handleCreate}
+              />
             </div>
             <div class="column">
               <div className="rowIn1">
@@ -207,16 +217,8 @@ const UpdateExam = (props) => {
                 type="text"
                 id="keyFindings"
                 name="keyFindings"
+                rows="3"
                 value={patient.keyFindings}
-                onChange={handleCreate}
-              />
-              <lable htmlFor="brixiaScore">Brixia Score</lable>
-              <input
-                className="form-control textcent"
-                type="text"
-                id="brixiaScore"
-                name="brixiaScore"
-                value={exam.brixiaScore}
                 onChange={handleCreate}
               />
             </div>

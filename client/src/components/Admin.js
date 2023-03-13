@@ -101,12 +101,12 @@ const Admin = () => {
                     {adminNewRowData?.map((data) => {
                       return (
                         <>
-                          <tr key={data._id}>
-                            <td className="trTd">{data.patientID}</td>
-                            <td className="trTd">
+                          <tr key={data._id} className="trTd">
+                            <td>{data.patientID}</td>
+                            <td>
                               <NavLink to="/exams/exam">{data._id}</NavLink>
                             </td>
-                            <td className="trTd">
+                            <td>
                               <img
                                 className="image_sty"
                                 src={data.image}
@@ -114,14 +114,14 @@ const Admin = () => {
                               />
                             </td>
                             <td className="trTd">{data.keyFindings}</td>
-                            <td className="trTd">
+                            <td>
                               {data.brixiaScore.map((data) => `${data},`)}
                             </td>
-                            <td className="trTd">{data.age}</td>
-                            <td className="trTd">{data.sex}</td>
-                            <td className="trTd">{data.bmi}</td>
-                            <td className="trTd">{data.zipCode}</td>
-                            <td className="trTd">
+                            <td>{data.age}</td>
+                            <td>{data.sex}</td>
+                            <td>{data.bmi}</td>
+                            <td>{data.zipCode}</td>
+                            <td>
                               <button
                                 style={{ color: "blue" }}
                                 type="button"

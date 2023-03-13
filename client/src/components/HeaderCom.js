@@ -4,7 +4,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 const HeaderCom = () => {
  
     return (
-         <div class="row">
+         <div className="row">
             <nav>
                 <ul className='navbar navbar-dark bg-dark nav'>
                     <li><img src="https://reactjs.org/logo-og.png" alt='#' className='icon' /></li>
