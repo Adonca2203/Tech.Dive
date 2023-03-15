@@ -27,7 +27,7 @@ const Admin = () => {
         const value = e.target.value || undefined;
         setSearch(value);
     }
- console.log(exams)
+
     const updateData = (e, rowId) => {
         setSelectedId(rowId);
         const selectedPati = adminNewRowData.find(obj => obj.patientID === rowId);
@@ -40,11 +40,6 @@ const Admin = () => {
       const selectedExam = exams.find( (obj) => obj._id === id );
       setExamData(selectedExam);
     
-    }
-
-    const handelExamInfo = (e, examId) => {
-        e.preventDefault();
-        setIsExamInf(!isExamInf);
     }
 
     const deleteData = (e, rowId) => {
@@ -69,7 +64,7 @@ const Admin = () => {
             setAdminNewRowData(filteredData);
         }
 
-    }, [exams, search, adminNewRowData]);
+    }, [exams, search, adminNewRowData, patients]);
 
     return (
       <>

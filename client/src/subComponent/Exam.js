@@ -5,13 +5,17 @@ const Exam = (props) => {
   return (
     <>
       <div>
-        <div id="exam">
-          <h3> Patient Info </h3>  
-          <h3>Exam Info </h3> 
+        <div className="row">
+          <div className="col-lg-5">
+            <h3> Patient Info </h3>{" "}
+          </div>
+          <div className="col-lg-4">
+            <h3>Exam Info </h3>
+          </div>
         </div>
-             
-        <div className="row" id="rowEx">
-          <div className="column">
+
+        <div className="row">
+          <div className="col-lg-4">
             <label>Patient ID</label>
             <p>{props.examData.patientID}</p>
             <label htmlFor="sex">Age</label>
@@ -24,8 +28,8 @@ const Exam = (props) => {
             <p>{props.examData.zipCode}</p>
             <lable htmlFor="brixiaScore">Brixia Score</lable>
             <p>{props.examData.brixiaScore}</p>
-          </div>
-          <div class="column">
+          </div>  
+          <div className="col-lg-6">
             <label>Exam ID</label>
             <p>{props.examData._id}</p>
             <label htmlFor="examId">Image URL</label>
