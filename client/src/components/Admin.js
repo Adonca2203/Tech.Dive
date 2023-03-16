@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
-import { UpdateExam, ExamDetails } from '../subComponent';
+import { UpdateExam } from '../subComponent';
 import { useApi } from '../hooks/use-api';
-import CreateExam from "../subComponent/CreateExam";
 import Exam from '../subComponent/Exam';
 
 const Admin = () => {
@@ -21,7 +20,6 @@ const Admin = () => {
     const [status, setStatus] = useState('');
     const { response: exams } = useApi({ path: "exams" });
     const { response: patients } = useApi({ path: "patients" });
-    //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
 
     const handelSearch = (e) => {
         const value = e.target.value || undefined;
@@ -33,24 +31,21 @@ const Admin = () => {
         const selectedPati = adminNewRowData.find(obj => obj.patientID === rowId);
         setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
-     
     }
     const  handleExam = (e, id) =>{
-     setIsExam(!isExam);
-      const selectedExam = exams.find( (obj) => obj._id === id );
-      setExamData(selectedExam);
-    
+      setIsExam(!isExam);
+      const selectedExam = adminNewRowData.find( (obj) => obj._id === id );
+      setExamData(selectedExam); 
     }
-
+    
     const deleteData = (e, rowId) => {
         alert(`Do you want to permanently delet this item ${rowId}`);
         fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
             method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(res => setStatus(res));
-        setGetRowDataId(rowId);
-
+        }) 
+          .then(res => res.json())
+          .then(res => setStatus(res));
+          setGetRowDataId(rowId);
     }
 
     useEffect(() => {
@@ -113,7 +108,8 @@ const Admin = () => {
                                 style={{ color: "blue" }}
                                 type="button"
                                 className="btn bg-transparent"
-                                onClick={(e) => handleExam(e, data._id)} >                             
+                                onClick={(e) => handleExam(e, data._id)}
+                              >
                                 {data._id}
                               </button>
                             </td>
@@ -121,7 +117,7 @@ const Admin = () => {
                               <img
                                 className="image_sty"
                                 src={data.image}
-                                alt=" "
+                                alt=""
                               />
                             </td>
                             <td className="trTd">{data.keyFindings}</td>

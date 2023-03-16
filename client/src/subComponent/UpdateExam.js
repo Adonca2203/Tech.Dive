@@ -21,24 +21,24 @@ const UpdateExam = (props) => {
       }
       setPatient({...patient, [name]:value});
       if (
+        name === "patientID" ||
         name === "bmi" ||
         name === "image" ||
-        name === "keyFindings" ||
-        name === " brixiaScore"
+        name === "keyFindings" 
       ) {
         setExam({
           ...exam,
           patientID: patient.patientID,
-          date: new Date().toLocaleDateString().toString(),
+          date: new Date().toLocaleDateString(),
           bmi: patient.bmi,
           image: patient.image,
           keyFindings: patient.keyFindings,
         });
       } 
-      if(name === 'firstName' || name === 'lastName' ) {
+      if(name === 'firstName' || name === 'lastName' || name === "age" || name || "zipCode" || name === "sex" ) {
         setPatData({
           ...patData, 
-          firstName: patient.firstName,
+           firstName: patient.firstName,
            lastName: patient.lastName,
            age: patient.age,
            zipCode: patient.zipCode,
@@ -48,35 +48,35 @@ const UpdateExam = (props) => {
     }
 
     const handleUpdate = (e) => {
-      e.preventDefault();
-      //let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
-      //setPatient(newPatient);
-      alert(`Are you sure you want to update this item? ${patient.patientID} `)
-      try{
-        fetch(`${API_ROOT}/exams/${patient._id}`, {
-          method: "PATCH",
-          body: JSON.stringify(exam),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }catch(err){
-        alert(err.message);
-      }
-     try {
-       fetch(`${API_ROOT}/patients/${patient.patientID}`, {
-         method: "PATCH",
-         body: JSON.stringify(patData),
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
-     } catch (err) {
-       alert(err.message);
+          e.preventDefault();
+          //let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
+          //setPatient(newPatient);
+          alert(`Are you sure you want to update this item? ${patient.patientID} `)
+          try{
+            fetch(`${API_ROOT}/exams/${patient._id}`, {
+              method: "PATCH",
+              body: JSON.stringify(exam),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+          }catch(err){
+            alert(err.message);
+          }
+        try {
+          fetch(`${API_ROOT}/patients/${patient.patientID}`, {
+            method: "PATCH",
+            body: JSON.stringify(patData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        } catch (err) {
+          alert(err.message);
      }
 
     }
- console.log(exam)
+
   return (
     <>
       <div>
@@ -133,7 +133,7 @@ const UpdateExam = (props) => {
               <input
                 className="form-control textcent"
                 type="text"
-                id="bni"
+                id="bmi"
                 name="bmi"
                 value={patient.bmi}
                 onChange={handleCreate}
@@ -171,7 +171,7 @@ const UpdateExam = (props) => {
                 type="text"
                 id="brixiaScore"
                 name="brixiaScore"
-                value={exam.brixiaScore}
+                value={patient.brixiaScore}
                 onChange={handleCreate}
               />
             </div>
@@ -208,7 +208,7 @@ const UpdateExam = (props) => {
                 type="text"
                 id="date"
                 name="date"
-                value={new Date().toLocaleDateString().toString()}
+                value={new Date().toLocaleDateString()}
                 onChange={handleCreate}
               />
               <label htmlFor="keyFindings">Key Findings</label>
