@@ -4,11 +4,11 @@ const Exam = (props) => {
 
   return (
     <>
-      <div id="divExa">
+      <div className="centerG">
         <div className="row">
-          <div className="col-lg-4">
+          <div className=" col-lg-offset-2 col-lg-3 col-sm-offset-1 col-sm-3 ">
             <div className="card">
-              <div className="row" id="examCont">
+              <div className="row">
                 <div>
                   <div className="card">
                     <h3 className="card-header"> Patient Info </h3>
@@ -42,9 +42,9 @@ const Exam = (props) => {
               <p>{props.examData.brixiaScore}</p>
             </div>
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-5 col-lg-offset-2  col-sm-3 col-sm-offset-1 ">
             <div className="card">
-              <div className="row" id="examCont">
+              <div className="row">
                 <div>
                   <div className="card">
                     <h3 className="card-header"> Exam Info </h3>
