@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
-import { UpdateExam, ExamDetails } from '../subComponent';
+import { UpdateExam } from '../subComponent';
 import { useApi } from '../hooks/use-api';
-import CreateExam from "../subComponent/CreateExam";
+import Exam from '../subComponent/Exam';
 
 const Admin = () => {
 
     const [isUpdate, setIsUpdate] = useState(false);
+    const [isExam, setIsExam] = useState(false);
+    const [examData, setExamData] = useState({});
     const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
@@ -18,7 +20,6 @@ const Admin = () => {
     const [status, setStatus] = useState('');
     const { response: exams } = useApi({ path: "exams" });
     const { response: patients } = useApi({ path: "patients" });
-    //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
 
     const handelSearch = (e) => {
         const value = e.target.value || undefined;
@@ -31,21 +32,20 @@ const Admin = () => {
         setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
     }
-
-    const handelExamInfo = (e, examId) => {
-        e.preventDefault();
-        setIsExamInf(!isExamInf);
+    const  handleExam = (e, id) =>{
+      setIsExam(!isExam);
+      const selectedExam = adminNewRowData.find( (obj) => obj._id === id );
+      setExamData(selectedExam); 
     }
-
+    
     const deleteData = (e, rowId) => {
         alert(`Do you want to permanently delet this item ${rowId}`);
         fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
             method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(res => setStatus(res));
-        setGetRowDataId(rowId);
-
+        }) 
+          .then(res => res.json())
+          .then(res => setStatus(res));
+          setGetRowDataId(rowId);
     }
 
     useEffect(() => {
@@ -59,12 +59,12 @@ const Admin = () => {
             setAdminNewRowData(filteredData);
         }
 
-    }, [exams, search, adminNewRowData]);
+    }, [exams, search, adminNewRowData, patients]);
 
     return (
       <>
         <div>
-          {!(isUpdate || isDeleted || isExamInf) && (
+          {!(isUpdate || isDeleted || isExamInf || isExam) && (
             <div>
               <div className="btn_sty">
                 <NavLink style={{ color: "white" }} to="/exams/create">
@@ -104,13 +104,20 @@ const Admin = () => {
                           <tr key={data._id} className="trTd">
                             <td>{data.patientID}</td>
                             <td>
-                              <NavLink to="/exams/exam">{data._id}</NavLink>
+                              <button
+                                style={{ color: "blue" }}
+                                type="button"
+                                className="btn bg-transparent"
+                                onClick={(e) => handleExam(e, data._id)}
+                              >
+                                {data._id}
+                              </button>
                             </td>
                             <td>
                               <img
                                 className="image_sty"
                                 src={data.image}
-                                alt=" "
+                                alt=""
                               />
                             </td>
                             <td className="trTd">{data.keyFindings}</td>
@@ -151,6 +158,7 @@ const Admin = () => {
             </div>
           )}
           {isUpdate && <UpdateExam update={getRowData} />}
+          {isExam && <Exam examData={examData} />}
         </div>
       </>
     );
