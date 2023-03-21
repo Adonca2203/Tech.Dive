@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
 import { UpdateExam } from '../subComponent';
@@ -43,7 +43,6 @@ const Admin = () => {
     const [search, setSearch] = useState('');
     const { response: exams } = useApi({ path: "exams" });
     const { response: patients } = useApi({ path: "patients" });
-    let needUpdate = true;
 
     const handelSearch = (e) => {
         const value = e.target.value || undefined;
@@ -66,9 +65,10 @@ const Admin = () => {
         setSelectedId(rowId);
         setIsDeleted(true);
     }
-    const deselectDelete = () => {
+    const deselectDelete = (newData) => {
         setSelectedId(null);
         setIsDeleted(false);
+        window.location.reload(false);
     }
     useEffect(() => {
         if (exams && patients) {
