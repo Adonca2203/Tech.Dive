@@ -11,9 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
 @-ms-viewport{
   width: device-width;
 }
+
 .ul_top li {
   display: inline;
   margin: 5px;
@@ -22,19 +24,41 @@ code {
 }
 
 .sea-label {
-  margin: 2px;
-  padding: 5px;
+  margin-right: 20px;
+  margin-top: auto;
+
 }
 
 .nav {
-  margin: auto;
+  margin-left: o auto;
+  margin-right: 0 auto;
   gap: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: underline;
+  justify-content:flex-start;
+  text-decoration:null;
+  width: auto;
+  margin-bottom: 20px;
+  
 }
-
+.navBa {
+  max-width: 100pc;
+  height: 450px;
+}
+.table_center {
+  padding: auto;
+  margin-left: 50px;
+  width: 90%;
+  align-items: center;
+  align-content: center;
+}
+.trTd {
+  padding: 0 auto;
+  text-align:center;
+  font-family:'Times New Roman', Times, serif;
+  font-weight: lighter;
+  align-items: center;
+  align-content: center;
+}
 .nav li.active {
   background-color: gray;
 }
@@ -44,8 +68,9 @@ code {
 }
 
 .btn_sty {
-  padding: 5px;
+  padding: 15px;
   align-items: center;
+  margin-left: 25px;
 }
 
 .createBtn {
@@ -83,7 +108,15 @@ code {
   border-spacing: 0;
   border-collapse: collapse;
 }
-
+#exam > h3 {
+  padding:200px ;
+  display: inline;
+}
+#rowEx > div{
+  display: block;
+  padding: auto;
+ margin: auto;
+}
 th,
 td {
   padding: 15px;
@@ -91,11 +124,8 @@ td {
   font-family:'Times New Roman', Times, serif;
   font-weight: lighter;
 }
-.table_center {
-  padding-right: 50px;
-  padding-left: 50px;
-  margin-left: 70px;
-  width: 90%;
+form {
+  margin-left: 400px;
 }
 .image_sty {
   width: 80px;
@@ -106,6 +136,7 @@ td {
     height: 200px;
     padding-top: 10px ;
     padding-bottom: 10px; 
+    margin: auto ;
 }
 .textcent {
   text-align: center;
@@ -123,6 +154,10 @@ label {
   margin-right: 10rem;
   align-items: center;
   justify-content: center; 
+}
+
+.trCont {
+  padding: 0 auto;
 }
 .btnP {
   padding-top: 20px;
@@ -143,20 +178,31 @@ label {
 }
 .colAdm {
   padding: 0 auto;
-  width: 90.00%;
-  height: 80pc;
-  margin-left: 100px;
-  margin-right: 100px;
+  width: 80.00%;
+  height: 90pc;
+  margin-left: 0 auto;
+  margin-right: 50px;
+  align-items: center;
+  
 }
 .centerG {
-  max-width: 900px;
+  max-width: 70pc;
   margin: 0 auto;
   align-items: center;
-  text-align: left;
+  text-align: center;
   padding: 16px;
-  border-bottom: 1px solid rgba(244, 244, 244, 10);
+  
 }
-
+.centerFor {
+  max-width: 80pc;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  align-content: center;
+  padding: 20px;
+  max-height: auto;
+ 
+}
 .clickable {
   color: #033fb4;
 }
@@ -179,4 +225,15 @@ tbody {
 }
 a:link {
     text-decoration: none;
+}
+textarea {
+ rows: auto;
+}
+#divExa {
+  margin-top: 50px;
+  margin-left: 40px;
+
+}
+#examCont {
+margin-bottom: 20px;
 }

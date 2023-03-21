@@ -21,24 +21,24 @@ const UpdateExam = (props) => {
       }
       setPatient({...patient, [name]:value});
       if (
+        name === "patientID" ||
         name === "bmi" ||
         name === "image" ||
-        name === "keyFindings" ||
-        name === " brixiaScore"
+        name === "keyFindings" 
       ) {
         setExam({
           ...exam,
           patientID: patient.patientID,
-          date: new Date().toLocaleDateString().toString(),
+          date: new Date().toLocaleDateString(),
           bmi: patient.bmi,
           image: patient.image,
           keyFindings: patient.keyFindings,
         });
       } 
-      if(name === 'firstName' || name === 'lastName' ) {
+      if(name === 'firstName' || name === 'lastName' || name === "age" || name || "zipCode" || name === "sex" ) {
         setPatData({
           ...patData, 
-          firstName: patient.firstName,
+           firstName: patient.firstName,
            lastName: patient.lastName,
            age: patient.age,
            zipCode: patient.zipCode,
@@ -48,40 +48,40 @@ const UpdateExam = (props) => {
     }
 
     const handleUpdate = (e) => {
-      e.preventDefault();
-      //let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
-      //setPatient(newPatient);
-      alert(`Are you sure you want to update this item? ${patient.patientID} `)
-      try{
-        fetch(`${API_ROOT}/exams/${patient._id}`, {
-          method: "PATCH",
-          body: JSON.stringify(exam),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }catch(err){
-        alert(err.message);
-      }
-     try {
-       fetch(`${API_ROOT}/patients/${patient.patientID}`, {
-         method: "PATCH",
-         body: JSON.stringify(patData),
-         headers: {
-           "Content-Type": "application/json",
-         },
-       });
-     } catch (err) {
-       alert(err.message);
+          e.preventDefault();
+          //let newPatient = {...patient,  date: (new Date()).toLocaleDateString().toString() };
+          //setPatient(newPatient);
+          alert(`Are you sure you want to update this item? ${patient.patientID} `)
+          try{
+            fetch(`${API_ROOT}/exams/${patient._id}`, {
+              method: "PATCH",
+              body: JSON.stringify(exam),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+          }catch(err){
+            alert(err.message);
+          }
+        try {
+          fetch(`${API_ROOT}/patients/${patient.patientID}`, {
+            method: "PATCH",
+            body: JSON.stringify(patData),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+        } catch (err) {
+          alert(err.message);
      }
 
     }
- console.log(exam)
+
   return (
     <>
-      <div className="centerG">
+      <div>
         <h3>Edit Exam </h3>
-        <form>
+        <form className="centerG">
           <div>
             <button
               type="submit"
@@ -96,8 +96,8 @@ const UpdateExam = (props) => {
               <button className="btn btn-danger"> Cancel</button>
             </NavLink>
           </div>
-          <div class="row">
-            <div class="column">
+          <div className="row">
+            <div className="column">
               <div className="rowIn1">
                 <h5>Pateient Info </h5>
               </div>
@@ -133,7 +133,7 @@ const UpdateExam = (props) => {
               <input
                 className="form-control textcent"
                 type="text"
-                id="bni"
+                id="bmi"
                 name="bmi"
                 value={patient.bmi}
                 onChange={handleCreate}
@@ -147,7 +147,7 @@ const UpdateExam = (props) => {
                 value={patient.zipCode}
                 onChange={handleCreate}
               />
-              <label htmlFor="patientId textcent">First Name</label>
+              <label htmlFor="firstName">First Name</label>
               <input
                 className="form-control textcent"
                 type="text"
@@ -156,13 +156,22 @@ const UpdateExam = (props) => {
                 value={patient.firstName}
                 onChange={handleCreate}
               />
-              <lable htmlFor="zipCode">Last Name</lable>
+              <lable htmlFor="lastName">Last Name</lable>
               <input
                 className="form-control textcent"
                 type="text"
                 id="lastName"
                 name="lastName"
                 value={patient.lastName}
+                onChange={handleCreate}
+              />
+              <lable htmlFor="brixiaScore">Brixia Score</lable>
+              <input
+                className="form-control textcent"
+                type="text"
+                id="brixiaScore"
+                name="brixiaScore"
+                value={patient.brixiaScore}
                 onChange={handleCreate}
               />
             </div>
@@ -199,7 +208,7 @@ const UpdateExam = (props) => {
                 type="text"
                 id="date"
                 name="date"
-                value={new Date().toLocaleDateString().toString()}
+                value={new Date().toLocaleDateString()}
                 onChange={handleCreate}
               />
               <label htmlFor="keyFindings">Key Findings</label>
@@ -208,16 +217,8 @@ const UpdateExam = (props) => {
                 type="text"
                 id="keyFindings"
                 name="keyFindings"
+                rows="3"
                 value={patient.keyFindings}
-                onChange={handleCreate}
-              />
-              <lable htmlFor="brixiaScore">Brixia Score</lable>
-              <input
-                className="form-control textcent"
-                type="text"
-                id="brixiaScore"
-                name="brixiaScore"
-                value={exam.brixiaScore}
                 onChange={handleCreate}
               />
             </div>

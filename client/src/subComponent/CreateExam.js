@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useApi } from '../hooks/use-api.js';
-import {initExam} from '../data/exam';
+import { initExam } from '../data/exam';
 const API_ROOT = 'https://hack-diversityapi.onrender.com';
 
 const SearchItem = (props) => {
@@ -85,7 +85,7 @@ const CreateExam = (props) => {
         let q = `${item.firstName} ${item.lastName}`;
         setQuery(q);
     };
-   
+
     if (!patients) return <p>Loading...</p>
 
     if (created) {
@@ -116,128 +116,128 @@ const CreateExam = (props) => {
             </>
         );
     }
-    
+
     return (
-      <>
-        <div>
-          <div>
-            <h2 className="btnP">Create Exam </h2>
-          </div>
-          <div>
-            <form className="inputForm">
-              <div>
-                <div className="createBtn">
-                  <button
-                    type="submit"
-                    onClick={handleSubmit}
-                    className="btn btn-primary createBtn"
-                  >
-                    Add Exam
-                  </button>
-                  {"  "}
-                  <NavLink to="/exams">
-                    <button className="btn btn-danger">Cancel</button>
-                  </NavLink>
+        <>
+            <div>
+                <div>
+                    <h2 className="btnP">Create Exam </h2>
                 </div>
-              </div>
-              <div>
-                <h4>Exam info</h4>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="patientId">
-                    <input
-                      className="form-control text-center"
-                      type="search"
-                      placeholder="Patient Name..."
-                      id="patientId"
-                      name="patientId"
-                      value={query}
-                      required
-                      onChange={updatePatientList}
-                    />
-                    <span className="sr-only">Search patient</span>
-                  </label>
-                  <ul className="list-group">
-                    <SearchItem items={items} addPatient={addPatient} />
-                  </ul>
+                <div>
+                    <form className="centerFor">
+                        <div>
+                            <div className="createBtn">
+                                <button
+                                    type="submit"
+                                    onClick={handleSubmit}
+                                    className="btn btn-primary createBtn"
+                                >
+                                    Add Exam
+                                </button>
+                                {"  "}
+                                <NavLink to="/exams">
+                                    <button className="btn btn-danger">Cancel</button>
+                                </NavLink>
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Exam info</h4>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="patientId">
+                                    <input
+                                        className="form-control text-center"
+                                        type="search"
+                                        placeholder="Patient Name..."
+                                        id="patientId"
+                                        name="patientId"
+                                        value={query}
+                                        required
+                                        onChange={updatePatientList}
+                                    />
+                                    <span className="sr-only">Search patient</span>
+                                </label>
+                                <ul className="list-group">
+                                    <SearchItem items={items} addPatient={addPatient} />
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="image">Image</label>
+                                <input
+                                    className="form-control text-center"
+                                    type="text"
+                                    id="image"
+                                    name="image"
+                                    required
+                                    value={exam.image}
+                                    onChange={handleUpdate}
+                                />
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="bmi">BMI</label>
+                                <input
+                                    className="form-control text-center"
+                                    type="number"
+                                    step="0.01"
+                                    id="bmi"
+                                    name="bmi"
+                                    required
+                                    value={exam.bmi}
+                                    onChange={handleUpdate}
+                                />
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="keyFindings">Key Findings</label>
+                                <textarea
+                                    className="form-control text-center"
+                                    type="text"
+                                    id="keyFindings"
+                                    name="keyFindings"
+                                    value={exam.keyFindings}
+                                    required
+                                    onChange={handleUpdate}
+                                />
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="keyFindings">Brixia Score</label>
+                                <input
+                                    className="form-control text-center"
+                                    type="text"
+                                    id="brixiaScore"
+                                    name="brixiaScore"
+                                    value={exam.brixiaScore}
+                                    onChange={handleUpdate}
+                                />
+                            </div>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-center mt-3">
+                            <div className="col-md-5 inputToLeft">
+                                <label htmlFor="age">Date</label>
+                                <input
+                                    className="form-control text-center"
+                                    type="text"
+                                    id="date"
+                                    name="date"
+                                    value={
+                                        new Date().toLocaleDateString().toString() || exam.date
+                                    }
+                                    onChange={handleUpdate}
+                                />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="image">Image</label>
-                  <input
-                    className="form-control text-center"
-                    type="text"
-                    id="image"
-                    name="image"
-                    required
-                    value={exam.image}
-                    onChange={handleUpdate}
-                  />
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="bmi">BMI</label>
-                  <input
-                    className="form-control text-center"
-                    type="number"
-                    step="0.01"
-                    id="bmi"
-                    name="bmi"
-                    required
-                    value={exam.bmi}
-                    onChange={handleUpdate}
-                  />
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="keyFindings">Key Findings</label>
-                  <textarea
-                    className="form-control text-center"
-                    type="text"
-                    id="keyFindings"
-                    name="keyFindings"
-                    value={exam.keyFindings}
-                    required
-                    onChange={handleUpdate}
-                  />
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="keyFindings">Brixia Score</label>
-                  <input
-                    className="form-control text-center"
-                    type="text"
-                    id="brixiaScore"
-                    name="brixiaScore"
-                    value={exam.brixiaScore}
-                    onChange={handleUpdate}
-                  />
-                </div>
-              </div>
-              <div className="d-flex align-items-center justify-content-center mt-3">
-                <div className="col-md-5 inputToLeft">
-                  <label htmlFor="age">Date</label>
-                  <input
-                    className="form-control text-center"
-                    type="text"
-                    id="date"
-                    name="date"
-                    value={
-                      new Date().toLocaleDateString().toString() || exam.date
-                    }
-                    onChange={handleUpdate}
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </>
+            </div>
+        </>
     );
 }
 

@@ -1,13 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Columns } from '../data/columns';
-import { UpdateExam, ExamDetails } from '../subComponent';
+import { UpdateExam } from '../subComponent';
 import { useApi } from '../hooks/use-api';
-import CreateExam from "../subComponent/CreateExam";
+import Exam from '../subComponent/Exam';
+
+const DeleteConfirm = (props) => {
+    const { rowId, deselectDelete: deselect } = props;
+    const [status, setStatus] = useState('');
+    const HandeConfirmClick = () => {
+        fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(res => setStatus(res));
+        deselect();
+    };
+    const HandleBackClick = () => {
+        deselect();
+    };
+    return (
+        <>
+            <h1>Are you sure you want to delete this exam?</h1>
+            <div className="btn-group">
+                <button type="button" className="btn btn-primary btn-block mx-4" onClick={HandleBackClick}>Back</button>
+                <button type="button" className="btn btn-danger btn-block" onClick={HandeConfirmClick}>Confirm</button>
+            </div>
+        </>
+    );
+};
 
 const Admin = () => {
-
     const [isUpdate, setIsUpdate] = useState(false);
+    const [isExam, setIsExam] = useState(false);
+    const [examData, setExamData] = useState({});
     const [selectedId, setSelectedId] = useState('');
     const [isDeleted, setIsDeleted] = useState(false);
     const [isExamInf, setIsExamInf] = useState(false);
@@ -15,10 +41,8 @@ const Admin = () => {
     const [getRowData, setGetRowData] = useState({});
     const [adminNewRowData, setAdminNewRowData] = useState();
     const [search, setSearch] = useState('');
-    const [status, setStatus] = useState('');
     const { response: exams } = useApi({ path: "exams" });
     const { response: patients } = useApi({ path: "patients" });
-    //const { response } = useApi({ path: `exams/${exam._id}`}, { method: 'DEL' });
 
     const handelSearch = (e) => {
         const value = e.target.value || undefined;
@@ -31,23 +55,21 @@ const Admin = () => {
         setGetRowData(selectedPati);
         setIsUpdate(!isUpdate);
     }
-
-    const handelExamInfo = (e, examId) => {
-        e.preventDefault();
-        setIsExamInf(!isExamInf);
+    const handleExam = (e, id) => {
+        setIsExam(!isExam);
+        const selectedExam = adminNewRowData.find((obj) => obj._id === id);
+        setExamData(selectedExam);
     }
 
     const deleteData = (e, rowId) => {
-        alert(`Do you want to permanently delet this item ${rowId}`);
-        fetch(`https://hack-diversityapi.onrender.com/exams/${rowId}`, {
-            method: "DELETE"
-        })
-            .then(res => res.json())
-            .then(res => setStatus(res));
-        setGetRowDataId(rowId);
-
+        setSelectedId(rowId);
+        setIsDeleted(true);
     }
-
+    const deselectDelete = (newData) => {
+        setSelectedId(null);
+        setIsDeleted(false);
+        window.location.reload(false);
+    }
     useEffect(() => {
         if (exams && patients) {
             const mergeData = exams.map(eobj =>
@@ -59,78 +81,107 @@ const Admin = () => {
             setAdminNewRowData(filteredData);
         }
 
-    }, [exams, search,]);
+    }, [exams, search, adminNewRowData, patients]);
 
     return (
         <>
-            <div >
-                {!(isUpdate || isDeleted || isExamInf) &&
+            <div>
+                {!(isUpdate || isDeleted || isExamInf || isExam) && (
                     <div>
-                        <div className='btn_sty'>
-                            <NavLink style={{ color: 'white' }} to='/exams/create' >
-                                <button className='btn btn-primary'>Create Exam </button>
+                        <div className="btn_sty">
+                            <NavLink style={{ color: "white" }} to="/exams/create">
+                                <button className="btn btn-primary">Create Exam </button>
                             </NavLink>
-                            <NavLink style={{ color: 'white' }} to='/patients/create' >
-                                <button className='btn btn-primary mx-3'>Create Patient </button>
+                            <NavLink style={{ color: "white" }} to="/patients/create">
+                                <button className="btn btn-primary mx-3">
+                                    Create Patient{" "}
+                                </button>
                             </NavLink>
                         </div>
                         <div>
-                            <label className='sea-label'>Search:</label>
+                            <label className="sea-label">Search:</label>
                             <input
-                                type='text'
-                                id='search'
-                                name='search'
+                                type="text"
+                                id="search"
+                                name="search"
                                 value={search}
-                                onChange={handelSearch} />
+                                onChange={handelSearch}
+                            />
                         </div>
-                        <div className='colAdm'>
-                            <table className='table table_center'>
+                        <div>
+                            <table className="table table_center ">
                                 <thead>
                                     <tr>
-                                        {Columns.map((headers, id) => <th key={id}>{headers.Header}</th>)}
+                                        {Columns.map((headers, id) => (
+                                            <th className="trTd" key={id}>
+                                                {headers.Header}
+                                            </th>
+                                        ))}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {adminNewRowData?.map((data) => {
                                         return (
                                             <>
-                                                <tr key={data._id} className="tr_row">
+                                                <tr key={data._id} className="trTd">
                                                     <td>{data.patientID}</td>
                                                     <td>
-                                                        <NavLink to='/exams/exam'>{data._id}</NavLink>
+                                                        <button
+                                                            style={{ color: "blue" }}
+                                                            type="button"
+                                                            className="btn bg-transparent"
+                                                            onClick={(e) => handleExam(e, data._id)}
+                                                        >
+                                                            {data._id}
+                                                        </button>
                                                     </td>
-                                                    <td><img className='image_sty' src={data.image} alt=" " /></td>
-                                                    <td>{data.keyFindings}</td>
-                                                    <td>{data.brixiaScore.map(data => `${data},`)}</td>
+                                                    <td>
+                                                        <img
+                                                            className="image_sty"
+                                                            src={data.image}
+                                                            alt=""
+                                                        />
+                                                    </td>
+                                                    <td className="trTd">{data.keyFindings}</td>
+                                                    <td>
+                                                        {data.brixiaScore.map((data) => `${data},`)}
+                                                    </td>
                                                     <td>{data.age}</td>
                                                     <td>{data.sex}</td>
                                                     <td>{data.bmi}</td>
                                                     <td>{data.zipCode}</td>
                                                     <td>
                                                         <button
-                                                            style={{ color: 'blue' }}
-                                                            type='button' className="btn bg-transparent"
-                                                            onClick={(e) => updateData(e, data.patientID)}>
+                                                            style={{ color: "blue" }}
+                                                            type="button"
+                                                            className="btn bg-transparent"
+                                                            onClick={(e) => updateData(e, data.patientID)}
+                                                        >
                                                             Update
                                                         </button>
                                                     </td>
-                                                    <td>
+                                                    <td className="trTd">
                                                         <button
-                                                            style={{ color: 'red' }}
-                                                            type='button' className="btn bg-transparent"
-                                                            onClick={(e) => deleteData(e, data._id)}>
+                                                            style={{ color: "red" }}
+                                                            type="button"
+                                                            className="btn bg-transparent"
+                                                            onClick={(e) => deleteData(e, data._id)}
+                                                        >
                                                             Delete
                                                         </button>
                                                     </td>
                                                 </tr>
-                                            </>)
+                                            </>
+                                        );
                                     })}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                }
+                )}
                 {isUpdate && <UpdateExam update={getRowData} />}
+                {isExam && <Exam examData={examData} />}
+                {isDeleted && <DeleteConfirm rowId={selectedId} deselectDelete={deselectDelete} />}
             </div>
         </>
     );

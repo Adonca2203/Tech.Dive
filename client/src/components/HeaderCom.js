@@ -4,12 +4,12 @@ import { NavLink, Outlet } from 'react-router-dom';
 const HeaderCom = () => {
  
     return (
-        <div >
-            <nav className="navbar navbar-dark bg-dark " >
+         <div className="row">
+            <nav>
                 <ul className='navbar navbar-dark bg-dark nav'>
-                    <li><img src="https://reactjs.org/logo-og.png" alt='#' className='icon' /></li>
-                    <li className='navl'><NavLink style={{ color: 'white' }} to='/exams' >Exams</NavLink></li>
-                    <li className='navl'> <NavLink style={{ color: 'white' }} to='/admin' >Admin</NavLink></li>
+                    <li><img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt='#' className='icon' /></li>
+                    <li><NavLink style={{ color: 'white' }} to='/exams' >Exams</NavLink></li>
+                    <li> <NavLink style={{ color: 'white' }} to='/admin' >Admin</NavLink></li>
                 </ul>
             </nav>
           
